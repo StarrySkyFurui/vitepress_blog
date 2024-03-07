@@ -1,0 +1,17 @@
+{
+  "name": "vitepress_blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/StarrySkyFurui/vitepress_blog.git",
+  "author": "rui.fu <rui.fu@dbappsecurity.com.cn>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev docs --port 3333",
+    "build": "vitepress build docs",
+    "serve": "vitepress serve docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.0.0-rc.44"
+  }
+}
