@@ -6,18 +6,18 @@
       alt: logo
     name: 欢迎你的到来！
     # text: 关注web前端开发为主的博客网站和网址导航
-    # tagline: 内容包括 Vue、Uniapp、Css、Ts、Vite、Webpack、网络安全、前端部署、前端面试、前沿技术等的生态网站，方便快速访问。
-    tagline: 关注web前端开发为主的博客网站，内容包括 Vue、Vue-Router、VueX、Uniapp、H5、Css、Js、Ts、Vite、Webpack、Http、Https、WebSocket、SSE、Git命令、权限控制、网络安全、前端部署、前端面试、前沿技术等的生态网站，方便快速访问。
+    # tagline: 内容包括 Vue、Uniapp、Css、TypeScript、Vite、Webpack、网络安全、前端部署、前端面试、前沿技术等的生态网站，方便快速访问。
+    tagline: 关注web前端开发为主的博客网站，内容包括 Vue、Vue-Router、VueX、Uniapp、HTML、Css、JavaScript、TypeScript、Vite、Webpack、Http、Https、WebSocket、SSE、Git命令、权限控制、网络安全、前端部署、前端面试、前沿技术等的生态网站，方便快速访问。
     actions:
     - theme: brand
       text: 欢迎访问
-      link: /technical/
+      link: /technical/html
     - theme: alt
       text: 去 GitLab
       link: https://github.com/StarrySkyFurui/vitepress_blog
   features:
   - title: 技术方面
-    details: 技术栈相关，包括 Vue、Vue-Router、VueX、Uniapp、H5、Css、Js、Ts、Vite、Webpack、Http、Https、WebSocket、SSE、Git命令、权限控制等
+    details: 技术栈相关，包括 Vue、Vue-Router、VueX、Uniapp、HTML、Css、JavaScript、TypeScript、Vite、Webpack、Http、Https、WebSocket、SSE、Git命令、权限控制等
     link: /technical/
     linkText: 了解更多
   - title: 前端工程化
