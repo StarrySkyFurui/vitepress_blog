@@ -1,4 +1,4 @@
-### 判断数组
+## 判断数组
 1、instanceof 运算符用于检验构造函数的prototype属性是否出现在对象的原型链中的任何位置，返回一个布尔值
 ```
 let arr = []
@@ -22,11 +22,25 @@ console.log(Object.prototype.toString.call(arr));//[object Array]
 let arr = []
 console.log(Array.isArray(arr));//true
 ```
-### 遍历数组
-数组常用遍历有 forEach、every、some、filter、map、reduce、reduceRight、find、findIndex 等方法，很多方法都可以达到同样的效果。数组方法不仅要会用，而且要用好。要用好就要知道什么时候用什么方法。
-### 数组操作
-### 数组排序
-### 常用方法
+## 遍历数组
+数组常用遍历有 for、forEach、for-in、for-of、map、reduce、every、some、filter、reduceRight、find、findIndex 等方法，很多方法都可以达到同样的效果。
+
+1、for 语句
+```
+var arr = [1,2,4,6]
+for(var i = 0, len = arr.length; i < len; i++){
+    console.log(arr[i])
+}
+```
+> 这是标准for循环的写法也是最传统的语句，字符串也支持，定义一个变量i作为索引，以跟踪访问的位置，len是数组的长度，条件就是i不能超过len。
+2、forEach 语句
+```
+
+```
+
+## 数组操作
+## 数组排序
+## 常用方法
 1、 数组分割
 ```
 const listChunk = (list = [], chunkSize = 1) => {
