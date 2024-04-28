@@ -19,11 +19,9 @@ function getTechnical() {
       collapsible: true,
       collapsed: true,
       items: [
-        { text: "数据类型", link: "/technical/js/dataType" },
-        { text: "Array 常用方法合集", link: "/technical/js/array" },
-        { text: "String 常用方法合集", link: "/technical/js/string" },
-        { text: "ES6 特性", link: "/technical/js/es6" },
-        { text: "ES10 特性", link: "/technical/js/es10" },
+        { text: "基础知识", link: "/technical/js/base" },
+        { text: "Array 数组", link: "/technical/js/array" },
+        { text: "String 字符串", link: "/technical/js/string" },
       ],
     },
     {

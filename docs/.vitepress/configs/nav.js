@@ -3,7 +3,7 @@ export default [
     text: "技术方面",
     items: [
       { text: "HTML / CSS 基础知识", link: "/technical/html" },
-      { text: "JavaScript 基础知识", link: "/technical/js" },
+      { text: "JavaScript 基础知识", link: "/technical/js/base" },
       { text: "TypeScript 基础知识", link: "/technical/ts" },
       { text: "Webpack / Vite 打包", link: "/technical/webpack" },
       { text: "Vue 生态合集", link: "/technical/vue" },
