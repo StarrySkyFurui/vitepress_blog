@@ -2,11 +2,11 @@ export default [
   {
     text: "技术方面",
     items: [
-      { text: "HTML / CSS 基础知识", link: "/technical/html" },
+      { text: "HTML / CSS 基础知识", link: "/technical/html/html" },
       { text: "JavaScript 基础知识", link: "/technical/js/base" },
-      { text: "TypeScript 基础知识", link: "/technical/ts" },
-      { text: "Webpack / Vite 打包", link: "/technical/webpack" },
-      { text: "Vue 生态合集", link: "/technical/vue" },
+      { text: "TypeScript 基础知识", link: "/technical/ts/base" },
+      { text: "Webpack / Vite 构建", link: "/technical/build/base" },
+      { text: "Vue 生态合集", link: "/technical/vue/vue" },
       // { text: '移动端 基础知识', link: '/technical/mobile' },
       // { text: 'Node 基础知识', link: '/technical/node' },
       { text: "浏览器 / 网络", link: "/technical/browser" },

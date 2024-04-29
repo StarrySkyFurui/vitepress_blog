@@ -10,8 +10,8 @@ function getTechnical() {
       collapsible: true,
       collapsed: true,
       items: [
-        { text: "HTML 基础知识", link: "/technical/html" },
-        { text: "CSS 基础知识", link: "/technical/css" },
+        { text: "HTML 基础知识", link: "/technical/html/html" },
+        { text: "CSS 基础知识", link: "/technical/html/css" },
       ],
     },
     {
@@ -29,17 +29,18 @@ function getTechnical() {
       collapsible: true,
       collapsed: true,
       items: [
-        { text: "基础知识", link: "/technical/ts/basic" },
+        { text: "基础知识", link: "/technical/ts/base" },
         { text: "内置工具", link: "/technical/ts/tool" },
       ],
     },
     {
-      text: "Webpack / Vite 打包",
+      text: "Webpack / Vite 构建",
       collapsible: true,
       collapsed: true,
       items: [
-        { text: "Webpack 基础知识", link: "/technical/webpack" },
-        { text: "Vite 基础知识", link: "/technical/vite" },
+        { text: "基础知识", link: "/technical/build/base" },
+        { text: "Webpack", link: "/technical/build/webpack" },
+        { text: "Vite", link: "/technical/build/vite" },
       ],
     },
     {
@@ -82,10 +83,7 @@ function getTechnical() {
         },
       ],
     },
-    {
-      text: "Git 常规使用",
-      link: "/technical/git",
-    },
+    { text: "Git 常规使用", link: "/technical/git" },
     { text: "Node 基础知识", link: "/technical/node" },
     { text: "WebSocket", link: "/technical/websocket" },
     { text: "SSE 会话", link: "/technical/sse" },

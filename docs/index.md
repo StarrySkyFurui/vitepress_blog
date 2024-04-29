@@ -11,14 +11,14 @@
     actions:
     - theme: brand
       text: 欢迎访问
-      link: /technical/html
+      link: /technical/html/html
     - theme: alt
       text: 去 GitLab
       link: https://github.com/StarrySkyFurui/vitepress_blog
   features:
   - title: 技术方面
     details: 技术栈相关，包括 Vue、Vue-Router、VueX、Uniapp、HTML、Css、JavaScript、TypeScript、Vite、Webpack、Http、Https、WebSocket、SSE、Git命令、权限控制等
-    link: /technical/
+    link: /technical/html/html
     linkText: 了解更多
   - title: 前端工程化
     details: 模块化、规范化、组件化、前端部署【方式包括 Jenkins + Rancher、Docker镜像、nginx 反向代理、Git的 CI+CD】
