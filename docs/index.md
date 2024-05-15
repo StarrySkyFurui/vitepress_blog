@@ -22,7 +22,7 @@
     linkText: 了解更多
   - title: 前端工程化
     details: 模块化、规范化、组件化、前端部署【方式包括 Jenkins + Rancher、Docker镜像、nginx 反向代理、Git的 CI+CD】
-    link: /engineering/
+    link: /engineering/modules
     linkText: 了解更多
   # - title: 网络安全
   #   details: 关于前端网络安全方面，包括 XSS（跨站脚本攻击）、CSRF（跨站请求伪造）、SQL注入攻击、DNS挟持、HTTP挟持等

@@ -2,16 +2,16 @@
 块格式上下文（BFC）是 Web 页面的可视化 CSS 渲染的部分，是块级盒布局发生的区域，也是浮动元素与其他元素交互的区域。
 一个 HTML 盒（Box）满足以下任意一条，会创建块格式化上下文：
 
-float的值不是none.
-position的值不是static或relative.
-display的值是table-cell、table-caption、inline-block、flex、或inline-flex。
-overflow的值不是visible。
+- `float` 的值不是 `none`;
+- `position` 的值不是 `static` 或 `relative`;
+- `overflow` 的值不是 `visible`;
+- `display` 的值是 `table-cell`、`table-caption`、`inline-block`、`flex` 或 `inline-flex`。
 
 在 BFC 中，每个盒的左外边缘都与其包含的块的左边缘相接。
 两个相邻的块级盒在垂直方向上的边距会发生合并（collapse）。
 
 ## 盒模型
-CSS 盒模型描述了以文档树中的元素而生成的矩形框，并根据排版模式进行布局。每个盒子都有一个内容区域（例如文本，图像等）以及周围可选的 padding、border 和 margin 区域。
+CSS 盒模型描述了以文档树中的元素而生成的矩形框，并根据排版模式进行布局。每个盒子都有一个内容区域（例如文本，图像等）以及周围可选的 `padding``、border` 和 `margin` 区域。
 
 CSS 盒模型负责计算：
 
@@ -21,19 +21,19 @@ CSS 盒模型负责计算：
 
 盒模型有以下规则：
 
-块级元素的大小由 width、height、padding、border 和 margin 决定。
-如果没有指定 height，则块级元素的高度等于其包含子元素的内容高度加上 padding（除非有浮动元素，请参阅下文）。
-如果没有指定 width，则非浮动块级元素的宽度等于其父元素的宽度减去父元素的 padding。
-元素的 height 是由内容的 height 来计算的。
-元素的 width 是由内容的 width 来计算的。
-默认情况下，padding 和 border 不是元素 width 和 height 的组成部分。
+块级元素的大小由 `width`、`height`、`padding`、`border` 和 `margin` 决定。
+如果没有指定 `height`，则块级元素的高度等于其包含子元素的内容高度加上 `padding`（除非有浮动元素，请参阅下文）。
+如果没有指定 `width`，则非浮动块级元素的宽度等于其父元素的宽度减去父元素的 `padding`。
+元素的 `height` 是由内容的 `height` 来计算的。
+元素的 `width` 是由内容的 `width` 来计算的。
+默认情况下，`padding` 和 `border` 不是元素 `width` 和 `height` 的组成部分。
 
 * { box-sizing: border-box; }会产生怎样的效果？
 
-元素默认应用了 box-sizing: content-box，元素的宽高只会决定内容（content）的大小。
-box-sizing: border-box 改变计算元素 width 和 height 的方式，border 和 padding 的大小也将计算在内。
-元素的height = 内容（content）的高度 + 垂直方向的padding + 垂直方向border的宽度
-元素的width = 内容（content）的宽度 + 水平方向的padding + 水平方向border的宽度
+元素默认应用了 `box-sizing: content-box`，元素的宽高只会决定内容（content）的大小。
+`box-sizing`: `border-box` 改变计算元素 `width` 和 `height` 的方式，`border` 和 `padding` 的大小也将计算在内。
+元素的 height = 内容（content）的高度 + 垂直方向的 padding + 垂直方向 border 的宽度
+元素的 width = 内容（content）的宽度 + 水平方向的 padding + 水平方向 border 的宽度
 
 ## 响应式布局
 是一种设计方法，允许一个网站在不同的设备（从桌面电脑显示器到手机和平板）上具有不同的布局。这是通过使用CSS媒体查询来实现的，它可以根据屏幕宽度调整样式规则。
@@ -188,7 +188,7 @@ div {
 - 易于编写嵌套选择器。
 - 引入变量，增添主题功能。可以在不同的项目中共享主题文件。
 - 通过混合（Mixins）生成重复的 CSS。
-- 将代码分割成多个文件。不进行预处理的 CSS，虽然也可以分割成多个文件，但需要建立多个 HTTP 请求加载这些文件。
+- 将代码分割成多个文件。不进行预处理的 CSS，虽然也可以分割成多个文件，但需要建立多个 `HTTP` 请求加载这些文件。
 
 ### 缺点
 - 需要预处理工具。
@@ -197,7 +197,7 @@ div {
 ## position 定位
 - static
   
-    这是默认值，除非另行指定，否则元素按照正常的文档流定位，不会受到top、right、bottom、left等属性的影响。
+    这是默认值，除非另行指定，否则元素按照正常的文档流定位，不会受到`top、right、bottom、left` 等属性的影响。
 
 - relative
   
@@ -205,11 +205,11 @@ div {
 
 - absolute
 - 
-    元素相对于最近的已定位祖先元素进行定位，如果没有已定位的祖先元素，则相对于文档的body元素进行定位，使用top、right、bottom、left属性来调整位置，元素原本所占空间不保留。
+    元素相对于最近的已定位祖先元素进行定位，如果没有已定位的祖先元素，则相对于文档的body元素进行定位，使用 `top、right、bottom、left` 属性来调整位置，元素原本所占空间不保留。
 
 - fixed
   
-    元素相对于浏览器窗口进行定位，不随滚动条的滚动而改变位置，可以使用top、right、bottom、left属性来调整位置。
+    元素相对于浏览器窗口进行定位，不随滚动条的滚动而改变位置，可以使用 `top、right、bottom、left`属性来调整位置。
 
 - sticky
     
@@ -217,12 +217,12 @@ div {
 
 
 ## float 浮动
-- float 属性可以指定一个元素应沿其容器的左侧或右侧放置，允许文本和内联元素环绕它
+- `float` 属性可以指定一个元素应沿其容器的左侧或右侧放置，允许文本和内联元素环绕它
 - 绝对定位、浮动都会让元素脱离标准流，以达到灵活布局的效果
-- 可以通过float属性让元素产生浮动效果，float的常用取值
-    + none：不浮动，默认值
-    + left：向左浮动
-    + right：向右浮动
+- 可以通过 `float` 属性让元素产生浮动效果，`float `的常用取值
+    + `none`：不浮动，默认值
+    + `left`：向左浮动
+    + `right`：向右浮动
 ### 浮动规则
 - 规则一：向左浮动或者向右浮动
     + 向左或向右方向移动，直到自己的边界紧贴着包含块（一般是父元素）或者其他浮动元素的边界为止
@@ -234,21 +234,21 @@ div {
     + 如果水平方向剩余的空间不够显示浮动元素，浮动元素将向下移动，直到有充足的空间为止
 - 规则四：浮动元素会将行内级元素内容推出
     + 浮动元素不能与行内级内容层叠，行内级内容将会被浮动元素推出
-    + 比如行内级元素、inline-block元素、块级元素的文字内容
+    + 比如行内级元素、`inline-block` 元素、块级元素的文字内容
 - 规则五：浮动只能左右浮动, 不能超出本行的高度
-    + 行内级元素、inline-block元素浮动后，其顶部将与所在行的顶部对齐
+    + 行内级元素、`inline-block` 元素浮动后，其顶部将与所在行的顶部对齐
   
 
 ## 清除浮动
 > 场景：由于浮动元素脱离了标准流，所以不向父元素汇报高度，父元素在计算总高度的时候，就不会计算浮动子元素的高度，导致了高度塌陷的问题
 
 ### 解决方法
-- 使用额外的标签，应用 css 的 clear 属性
+- 使用额外的标签，应用 `clear` 属性
 ```
 <div style="float: left;">浮动内容</div>
 <div style="clear: both;"></div>
 ```
-- 使用伪元素 ::after 来清除父元素的浮动
+- 使用伪元素 `::after` 来清除父元素的浮动
 ```
 <div class="clearfix">浮动内容</div>
 .clearfix::after {
@@ -257,7 +257,7 @@ div {
     clear: both;
     }
 ```
-- 使用 overflow 属性为非 visible 的值（如 auto 或 hidden）
+- 使用 `overflow` 属性为非 `visible` 的值（如 `auto` 或 `hidden）`
 ```
 <div class="overflow-method">浮动内容</div>
 .overflow-method {
@@ -266,14 +266,14 @@ div {
 ```
 
 ## flex 布局
-- 使用 display: flex; 创建一个flex容器：
+- 使用 `display: flex;` 创建一个flex容器：
 ```
 .container {
   display: flex;
 }
 ```
 
-- 水平或垂直排列flex项目，使用 flex-direction：
+- 水平或垂直排列 `flex` 项目，使用 `flex-direction`：
 ```
 .container {
   flex-direction: row; /* 水平排列 */
@@ -281,7 +281,7 @@ div {
 }
 ```
 
-- 控制flex项目的对齐方式，使用 justify-content 和 align-items：
+- 控制 `flex` 项目的对齐方式，使用 `justify-content` 和 `align-items`：
 ```
 /* 水平对齐 */
 .container {
@@ -301,35 +301,35 @@ div {
 }
 ```
 
-- 控制flex项目的排列顺序，使用 flex-flow（是 flex-direction 和 flex-wrap 的简写）：
+- 控制 `flex` 项目的排列顺序，使用 `flex-flow`（是 `flex-direction` 和 `flex-wrap` 的简写）：
 ```
 .container {
   flex-flow: row wrap; /* 水平排列，并且换行 */
 }
 ```
 
-- 使用 flex-grow 属性来控制flex项目的增长比例：
+- 使用 `flex-grow` 属性来控制 `flex` 项目的增长比例：
 ```
 .item {
   flex-grow: 1; /* 所有项目都将增长，以填满任何空白空间 */
 }
 ```
 
-- 使用 flex-shrink 属性来控制flex项目的收缩比例：
+- 使用 `flex-shrink` 属性来控制 `flex` 项目的收缩比例：
 ```
 .item {
   flex-shrink: 0; /* 防止项目在空间不足时收缩 */
 }
 ```
 
-- 使用 flex-basis 属性来设置flex项目在分配多余空间之前的初始大小：
+- 使用 `flex-basis` 属性来设置 `flex` 项目在分配多余空间之前的初始大小：
 ```
 .item {
   flex-basis: 100px; /* 设置项目的基础大小为100px */
 }
 ```
 
-- 使用 align-self 属性来对单个flex项目进行垂直对齐：
+- 使用 `align-self` 属性来对单个 `flex` 项目进行垂直对齐：
 ```
 .item {
   align-self: flex-start; /* 顶部对齐 */
@@ -382,8 +382,8 @@ display:-webkit-box; // 作为弹性伸缩盒子模型显示。
 ```
 
 - flex + margin 
-  
-    父级元素设置 flex，子元素设置 margin: auto;。可以理解为子元素被四周的 margin “挤” 到了中间
+
+父级元素设置 flex，子元素设置 margin: auto;。可以理解为子元素被四周的 margin “挤” 到了中间
 ```
 .container {
     ... // 如上
@@ -486,53 +486,51 @@ display:-webkit-box; // 作为弹性伸缩盒子模型显示。
 
 ### 全屏背景图片的实现
 #### 属性
-- background-image:可添加多张背景图片。
+- `background-image`:可添加多张背景图片。
   
-    参数：url()  ||    none(默认)
+    参数：url() || none(默认)
 
-> 背景图不占位置（不受padding的影响），img插入图片才占位且有4像素的距离，即背景图不能撑出高度。4像素的距离用 vertical-align清除	  
+> 背景图不占位置（不受padding的影响） 
                  
-- background-size:背景图片的大小
+- `background-size`:背景图片的大小
 
     参数：百分比 ||  精确值 ||  auto(默认) ||  cover || contain
-
-        auto:背景图像的真实大小。
-
-        cover:将背景图像等比缩放到完全覆盖容器，背景图像有可能超出容器。
-            图片边缘距父元素边框中最远边等比例放大
-
-        contain:将背景图像等比缩放到宽度或高度与容器的宽度或高度相等。
+    1. auto:背景图像的真实大小。
+    2. cover:将背景图像等比缩放到完全覆盖容器，背景图像有可能超出容器。
+    3. 图片边缘距父元素边框中最远边等比例放大
+    4. contain:将背景图像等比缩放到宽度或高度与容器的宽度或高度相等。
             背景图像始终被包含在容器内。
             图片边缘距父元素边框中最近边等比例放大
 > 一般只设置一个值（宽度），高度就等比例缩放; 用于调整背景图像是否完整显示
-			     
-- background-position复合属性：背景图像位置 （ background-position-x  ， background-position-y）
+
+
+- `background-position` 复合属性：背景图像位置 （ background-position-x  ， background-position-y）
   
     参数：x坐标和y坐标，可以使用**方位名词**和**精确单位**
 
-    * 方位：top,center,bottom,left,center,right
-    * 精确单位：百分数或由浮点数字和单位标识符组成的长度值（表示与容器边缘的偏移量）,如：20px 50px表示：以图片左上角为基准，向右偏移20px,向下偏移50px
+    * 方位：`top,center,bottom,left,right`
+    * 精确单位：百分数或由浮点数字和单位标识符组成的长度值（表示与容器边缘的偏移量）,如：`20px 50px` 表示：以图片左上角为基准，向右偏移 `20px`,向下偏移 `50px`
 > 该属性定位不受对象的补丁属性（padding）设置影响, 默认值为：(0% 0%)，即图片定位于对象不包括补丁（padding）的内容区域左上角
      
-- background-repeat: 背景图像的平铺
+- `background-repeat`: 背景图像的平铺
     参数：repeat（默认）  ||  no-repeat || repeat-x || repeat-y
            
-- background-attachment：背景图像是否固定或者随着页面的其余部分滚动
+- `background-attachment`:背景图像是否固定或者随着页面的其余部分滚动
     参数：scroll || fixed
         scroll ：背景图像是随着对象内容滚动
         fixed：背景图像固定
           	  
-- background-color： 背景颜色
+- `background-color`:背景颜色
     参数：transparent（默认） || color
     背景半透明是指盒子背景半透明，盒子里面的内容不受影响
 		  
-- background-origin:背景图像的位置
+- `background-origin`:背景图像的位置
     border-box ：背景图片从边框的左上角开始
     padding-box (默认)：背景图像从填充边缘的左上角开始
     content-box ：背景图片从内容的左上角开始
 		  
 - **background:背景复合写法**
-    background: 背景颜色 背景图像地址 背景平铺 背景图像滚动 背景图片位置;
+    `background`: 背景颜色 背景图像地址 背景平铺 背景图像滚动 背景图片位置;
 #### 用法
 ```
 // 方法一

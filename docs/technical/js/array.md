@@ -1,29 +1,29 @@
-## 判断数组
-1、instanceof 运算符用于检验构造函数的prototype属性是否出现在对象的原型链中的任何位置，返回一个布尔值
+### 判断数组
+1、`instanceof` 运算符用于检验构造函数的 prototype 属性是否出现在对象的原型链中的任何位置，返回一个布尔值
 ```
 let arr = []
 console.log(arr instanceof Array); // true
 ```
 
-2、constructor 实例的构造函数属性constructor指向构造函数，通过constructor属性可以判断是否为一个数组
+2、`constructor` 实例的构造函数属性 `constructor` 指向构造函数，通过 `constructor` 属性可以判断是否为一个数组
 ```
 let arr = []
 console.log(arr.constructor === Array);//true
 ```
 
-3、Object.prototype.toString.call()可以获取到对象的不同类型
+3、`Object.prototype.toString.call()` 可以获取到对象的不同类型
 ```
 let arr = []
 console.log(Object.prototype.toString.call(arr));//[object Array]
 ```
 
-4、Array.isArray() 用于确定传递的值是否是一个数组，返回一个布尔值
+4、`Array.isArray()` 用于确定传递的值是否是一个数组，返回一个布尔值
 ```
 let arr = []
 console.log(Array.isArray(arr));//true
 ```
-## 遍历数组
-数组常用遍历有 for、forEach、for-in、for-of、map、reduce、every、some、filter、reduceRight、find、findIndex 等方法，很多方法都可以达到同样的效果。
+### 遍历数组
+数组常用遍历有 `for、forEach、for-in、for-of、map、reduce、every、some、filter、reduceRight、find、findIndex` 等方法，很多方法都可以达到同样的效果。
 
 1、for 语句
 ```
@@ -38,9 +38,9 @@ for(var i = 0, len = arr.length; i < len; i++){
 
 ```
 
-## 数组操作
-## 数组排序
-## 常用方法
+### 数组操作
+### 数组排序
+### 常用方法
 1、 数组分割
 ```
 const listChunk = (list = [], chunkSize = 1) => {
@@ -63,7 +63,7 @@ console.log(listChunk(['a', 'b', 'c', 'd'], -1));// []
 
 2、数组去重
 
-* 利用ES6的Set
+* 利用ES6的 `Set`
 
 ```
 /** Set中不允许出现重复的元素 */
@@ -74,7 +74,7 @@ console.log(arr2); // [ 1, 2, 3, 4 ]
 console.log(arr3); // [ 1, 2, 3, 4 ]
 ```
 
-* 利用ES6的Map
+* 利用ES6的 `Map`
 
 ```
 /** 创建一个空Map数据结构，遍历需要去重的数组，把数组的每一个元素作为key存到Map中。由于Map中不会出现相同的key值，所以最终得到的就是去重后的结果。*/
@@ -96,7 +96,7 @@ function unique(arr) {
 console.log(unique(arr)); // 1, 0, 8, 3, -9, 7
 ```
 
-* 利用reduce去重
+* 利用 `reduce` 去重
 
 ```
 let arr = [1, 2, 3, 4, 3, 2, 4]
@@ -241,7 +241,7 @@ let charObject = charArray.reduce(function (allchars, char) {
 console.log(charObject); // { a: 2, b: 1, c: 2 }
 ```
 
-7、实现数组的map方法
+7、实现数组的 `map` 方法
 ```
 //循环实现
 const myMap = function(fn, context) {
@@ -270,7 +270,7 @@ Array.prototype.reduceMap = function(fn, context) {
 console.log([1,2,3].reduceMap(number => number + 1)); //[ 2, 3, 4 ]
 ```
 
-8、实现数组的reduce方法
+8、实现数组的 `reduce` 方法
 ```
 Array.prototype.myReduce = function(fn, initValue) {
     let arr = Array.prototype.slice.call(this)
