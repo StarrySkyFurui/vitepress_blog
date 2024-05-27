@@ -51,7 +51,7 @@ function getTechnical() {
         { text: "Vue 基础知识", link: "/technical/vue/vue" },
         { text: "VueX 基础知识", link: "/technical/vue/vuex" },
         { text: "Axios 基础知识", link: "/technical/vue/axios" },
-        { text: "Vue-Cli 脚手架", link: "/technical/vue/vuecli" },
+        // { text: "Vue-Cli 脚手架", link: "/technical/vue/vuecli" },
         { text: "Vue-Router 基础知识", link: "/technical/vue/router" },
       ],
     },
