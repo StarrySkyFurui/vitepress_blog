@@ -16,12 +16,12 @@ export default [
   {
     text: "前端工程化",
     items: [
-      { text: "模块化", link: "/engineering/modules" },
+      // { text: "模块化", link: "/engineering/modules" },
       // { text: '组件化', link: '/engineering/' },
       { text: "规范化", link: "/engineering/standard/named" },
       // { text: '基础建设', link: '/engineering/infrastructure' },
       { text: "性能优化", link: "/engineering/performance" },
-      { text: "前端部署", link: "/engineering/deploy" },
+      { text: "前端部署", link: "/engineering/deploy/nginx" },
     ],
   },
   // {

@@ -95,10 +95,10 @@ function getTechnical() {
 // 获取前端工程化的侧边栏
 function getEngineering() {
   return [
-    {
-      text: "模块化",
-      link: "/engineering/modules",
-    },
+    // {
+    //   text: "模块化",
+    //   link: "/engineering/modules",
+    // },
     {
       text: "规范化",
       collapsible: true,
