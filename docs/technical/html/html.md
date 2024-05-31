@@ -65,7 +65,7 @@ window.localStorage.clear(); //清空内容
 2. 可以在同一个窗口下访问
 3. 数据大小为 5M 左右
 
-```txt
+```js
 window.sessionStorage.setItem(key,value); //设置存储的内容
 window.sessionStorage.getItem(key); //获取内容
 window.sessionStorage.removeItem(key);//删除内容

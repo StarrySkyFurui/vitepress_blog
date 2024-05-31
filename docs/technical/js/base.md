@@ -9,8 +9,8 @@
 * `Boolean`(布尔): 表示真(true)和假()的两个特殊的值; 默认值 false
 * `Undefined`(未定义): 表示"未定义" 或不存在, 由于没有定义, 所以没有任何值
 * `Null`(空值): 即此处的值为空, 默认值 null
-* `Symbol`【Es6新增，表示独一无二的值】
-* `BigInt`【Es10新增】
+* `Symbol`【ES6新增，表示独一无二的值】
+* `BigInt`【ES10新增】
 
 引用数据类型 `Object`:
 * `Array`(数组): 数组
@@ -19,7 +19,7 @@
 * `Date`(日期对象)
 * `Math`(数学对象)
 * `Function`(函数对象)
-```
+```js
 <script>
     var a=1;
     var b=a;s
@@ -48,7 +48,7 @@
 
 引用数据类型的变量，其变量名实际上是一个指针，和基本数据类型的变量一起存放在栈内存中，而这个指针指向堆内存中的一块内存，对引用数据类型的变量的操作实际上是通过指针，对堆内存的这些数据进行修改。所以通过赋值符号进行赋值的引用数据类型变量，实际上只是将指针赋值给了这个新的变量，使其指向同一块堆内存而已。
 > 如果使用赋值符号（=）进行了重新赋值，即改变了引用数据类型变量的地址
-```
+```js
     var obj1 = {
         name: 'qiqi',
         age: 17
@@ -79,7 +79,7 @@
 
 `typeof` 可以对基本类型 `number、string、boolean、undefined` 做出准确的判断（`null` 除外，typeof null===“object”）；而对于引用类型，除了 `function` 之外返回的都是 `object`。
 
-```
+```js
 typeof 'biubiubiu';            // string
 typeof 123;                    // number
 typeof false;                  // boolean
@@ -95,7 +95,7 @@ Tip: `null` 的类型是 `object` ，这是由于历史原因造成的。JavaScr
 
 2、`instanceof` 运算符返回一个布尔值，常用于区分数组和对象，`instanceof` 运算符判断左操作数对象的原型链上是否有右边这个构造函数的 `prototype` 属性，也就是说指定对象是否是某个构造函数的实例，最后返回布尔值。
 
-```
+```js
 [] instanceof Array; //true
 [] instanceof Object; //true
 new Date() instanceof Date;//true
@@ -123,7 +123,7 @@ new Person() instanceof Object;//true
 `var`：声明一个变量，在该变量被声明之后，可以在下文代码中对该变量进行重新赋值，并且每次赋值都会覆盖上一次的值，它不受限于块级作用域，但受限于局部作用域；
 `let`：和 `var` 一样，用于声明一个变量，但是 `let` 声明的变量只在当前块级作用域中生效，只有在当前块级作用域内进行重新赋值，才会覆盖上一次的值；
 `const`：用于声明一个常量，和 `let` 一样，只在块级作用域中生效，并且不可以重新赋值。
-```
+```js
 if (true) {
     var a = 1
     a = 2
@@ -185,7 +185,7 @@ console.log(c) // Uncaught ReferenceError: c is not defined
 4）call、apply是立即执行，bind是返回绑定this之后的函数，如果这个新的函数作为构造函数被调用，那么this不再指向传入给bind的第一个参数，而是指向新生成的对象
 * 手写 call apply bind
   
-```
+```js
 // 手写call
 Function.prototype.Call = function(context, ...args) {
   // context为undefined或null时，则this默认指向全局window
