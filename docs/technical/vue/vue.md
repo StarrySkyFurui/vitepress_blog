@@ -74,30 +74,27 @@ Vue 组件的生命周期包括以下阶段：
   
 6. 新特性
 * Vue3 引入了Teleport，允许将组件渲染到文档的其他位置。在处理全局元素，如弹窗、提示、加载指示器等需要脱离当前组件层次结构的情况时可以使用。
-```
+```vue
 <teleport to="#target-element">
     <!-- 这里的内容会被渲染到指定的#target-element位置 -->
 </teleport>
 ```
 * Vue3 支持在 `<style>` 标签中使用CSS变量。
-```
+```vue
 <template>
   <div :class="['container', { dynamicColor: useDynamicColor }]">
     <button @click="toggleColor">Toggle Color</button>
     <p class="text">Hello, World!</p>
   </div>
 </template>
-
 <script>
 import { ref } from 'vue';
-
 export default {
   setup() {
     const useDynamicColor = ref(false);
     const toggleColor = () => {
       useDynamicColor.value = !useDynamicColor.value;
     };
-
     return {
       useDynamicColor,
       toggleColor,
@@ -105,23 +102,19 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .container {
   /* 定义CSS变量 */
   --primary-color: #3f51b5;
 }
-
 .text {
   /* 使用CSS变量 */
   color: var(--primary-color);
 }
-
 .dynamicColor .text {
   /* 当动态类存在时，覆盖CSS变量 */
   --primary-color: var(--dynamic-color);
 }
-
 /* 在JavaScript中动态改变CSS变量 */
 :root {
   --dynamic-color: {{ useDynamicColor ? '#f44336' : '#3f51b5' }};

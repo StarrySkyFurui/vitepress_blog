@@ -8,7 +8,7 @@
 ## 路由守卫
 * 全局守卫：
     * 全局前置守卫（beforeEach） 【全局前置守卫在每次路由切换前触发】
-    ```
+    ```js
     const router = new VueRouter({ ... })
 
     router.beforeEach((to, from, next) => {
@@ -26,7 +26,7 @@
     })
     ```
     * 全局解析守卫（beforeResolve） 【在每次路由切换前触发，但是不会在初始化时触发】
-    ```
+    ```js
     router.beforeResolve((to, from, next) => {
         console.log('Global beforeResolve guard:', to.path, '->', from.path)
         // 这里可以进行一些数据预加载或其他准备操作
@@ -34,14 +34,14 @@
     })
     ```
     * 全局后置钩子（afterEach）【在每次路由切换后触发】
-    ```
+    ```js
     router.afterEach((to, from) => {
         console.log('Global afterEach guard:', to.path, '->', from.path)
         // 这里适合做一些分析、记录日志等操作
     })
     ```
 * 路由独享守卫 （beforeEnter） 【仅对特定路由生效】
-```
+```js
 const router = new VueRouter({
 routes: [{
         path: '/profile',
@@ -58,7 +58,7 @@ routes: [{
     * beforeRouteEnter 【在进入组件时触发 】
     * beforeRouteUpdate 【在更新当前路由组件时触发 】
     * beforeRouteLeave 【在离开当前路由组件时触发】
-```
+```js
 beforeRouteEnter(to, from, next) {
     console.log('beforeRouteEnter:', to.path)
     // 不能访问 `this`，因为守卫在导航确认前被调用
@@ -102,7 +102,7 @@ beforeRouteLeave(to, from, next) {
 
 ## 路由懒加载
 是一种优化技术，它允许你只在路由被访问时才加载对应的组件，而不是在应用程序启动时一次性加载所有组件。这可以显著减少初始加载时间和网络带宽消耗，特别是对于大型应用来说，提高了用户体验。以下是实现路由懒加载的方式：
-```
+```js
 // 在路由配置中，使用动态导入语法
 const routes = [
   {
@@ -125,7 +125,7 @@ export default router
 ## 路由页面缓存
 通过 `<keep-alive>` 组件来实现。`<keep-alive> `可以缓存不活动的组件实例，而不是销毁它们，使得组件在再次访问时能快速恢复状态，提高用户体验
 1、使用 `<keep-alive>` 包裹 `<router-view>`,在主应用模板，vue 项目在 App.vue 文件中
-```
+```js
 <template>
   <div id="app">
     <nav>
@@ -139,7 +139,7 @@ export default router
 </template>
 ```
 2、控制组件缓存 在路由配置中，为需要缓存的组件添加 `meta` 属性，并设置 `keepAlive` 为 `true`
-```
+```js
 const routes = [
   {
     path: '/home',
@@ -158,7 +158,7 @@ const routes = [
 ]
 ```
 3、动态控制缓存 有时可能需要根据条件动态决定是否缓存某个组件。可以在全局守卫中动态设置 meta.keepAlive
-```
+```js
 router.beforeEach((to, from, next) => {
   // 根据某些条件动态设置 keepAlive
   if (to.name === 'SomePage' && someCondition) {
@@ -169,6 +169,3 @@ router.beforeEach((to, from, next) => {
   next()
 })
 ```
-> 如果使用了路由页面缓存，但又想要刷新页面怎么办呢?
-
-## 路由导航

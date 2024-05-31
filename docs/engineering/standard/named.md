@@ -28,7 +28,7 @@
 ## CSS 类名采用 BEM 命名规范
 可以采用全部小写，横线分割；
 推荐：
-```
+```css
 .block__element {} 
 .block--modifier {}
 ```

@@ -4,7 +4,7 @@
 ## Vite 如何处理静态资源
 1. 自动导入与转换
 图片和字体：Vite 支持自动导入和转换图片、字体等静态资源。当你在 JavaScript 或 CSS 中使用 import 语句导入这些资源时，Vite 会自动处理它们，生成合适的 URL 或 Base64 编码。
-```javascript
+```js
 import imgUrl from './img.png';
 document.getElementById('img').src = imgUrl;
 ```
@@ -75,7 +75,7 @@ export default defineConfig({
 });
 ```
 3. 在 Vue 组件中直接使用 SCSS 或者在独立的 SCSS 文件中编写，在组件中导入
-```
+```vue
 <template>
   <!-- ... -->
 </template>

@@ -1,6 +1,6 @@
 ## PDF 文件预览
 - `iframe` 标签
-```
+```vue
 <template>
   <div>
     <iframe :src="pdfUrl" width="100%" height="500"></iframe>
@@ -23,11 +23,11 @@ export default {
 - `pdf.js`
   
 首先需要安装库 
-```
+```bash
 npm install pdfjs-dist
 ```
 然后在需要预览的组件中引入
-```
+```js
 import { getDocument } from 'pdfjs-dist';
 
 export default {
@@ -61,11 +61,11 @@ export default {
 - 使用 `docx-preview` 【不适用于 doc 格式的文件，且目前已不维护了】
 
 首先需要安装库 
-```
+```bash
 npm install docx-preview
 ```
 然后在需要预览的组件中引入
-```
+```vue
 <template>
     <docx-preview :file-url="wordUrl" />
 </template>
@@ -89,11 +89,11 @@ export default {
 ## Excel 表格预览
 - `vue-office`
 首先需要安装库 
-```
+```bash
 npm install vue-office
 ```
 然后在需要预览的组件中引入
-```
+```vue
 <template>
     <vue-office :file-url="excelUrl" type="xlsx" />
 </template>
@@ -115,11 +115,11 @@ export default {
 ```
 - `xlsx-style 或 sheetjs`
 首先需要安装库 
-```
+```bash
 npm install xlsx-style
 ```
 然后在需要预览的组件中引入
-```
+```js
 import XLSX from 'xlsx-style';
 
 export default {

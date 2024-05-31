@@ -9,7 +9,7 @@ export default [
       { text: "Vue 生态合集", link: "/technical/vue/vue" },
       // { text: '移动端 基础知识', link: '/technical/mobile' },
       // { text: 'Node 基础知识', link: '/technical/node' },
-      { text: "浏览器 / 网络", link: "/technical/browser" },
+      { text: "浏览器 / 网络", link: "/technical/browser/base" },
       { text: "Git 常规使用", link: "/technical/git" },
     ],
   },

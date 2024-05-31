@@ -60,7 +60,7 @@ function getTechnical() {
       collapsible: true,
       collapsed: true,
       items: [
-        { text: "浏览器 基础知识", link: "/technical/browser/basic" },
+        { text: "浏览器 基础知识", link: "/technical/browser/base" },
         { text: "HTTP & HTTPS", link: "/technical/browser/http" },
         { text: "Request 常用请求 ", link: "/technical/browser/request" },
         {

@@ -7,7 +7,7 @@
 * 拦截器函数接收两个参数：`config` 和 `next`。`config` 表示当前的请求配置，`next` 表示一个函数，调用该函数可以传递处理后的配置给下一个拦截器或发送请求。
 ## axios 如何取消请求
 * `axios.CancelToken` 用于创建一个 `CancelToken` 源，然后在请求配置中传递这个源，之后可以通过调用`source.cancel()` 来取消请求。
-```
+```js
 const CancelToken = axios.CancelToken;
 const source = CancelToken.source();
 
@@ -29,7 +29,7 @@ source.cancel('取消请求的原因');
 * `axios.CancelToken.source()` 用于创建一个取消令牌的源对象，该源对象包含一个 `cancel` 函数，调用该函数可以取消请求。
 ## axios 如何发送文件
 * `axios.post()` 方法可以用于发送文件，只需要将文件作为请求体的一部分传递给该方法即可。
-```
+```js
 const formData = new FormData();
 formData.append('file', file);
 
@@ -46,7 +46,7 @@ axios.post('/upload', formData, {
 * 需要注意的是，`axios.post()` 方法默认不会处理文件上传，需要手动设置请求头的 `Content-Type` 为 `multipart/form-data`。
 ## axios 如何发送JSON数据
 * `axios.post()` 方法可以用于发送JSON数据，只需要将JSON数据作为请求体的一部分传递给该方法即可。
-```
+```js
 const data = {
     name: 'John',
     age: 30
@@ -63,7 +63,7 @@ axios.post('https://example.com/api/users', data)
 * 需要注意的是，`axios.post()` 方法默认会自动将请求体序列化为JSON字符串，如果需要发送非JSON数据，需要手动设置请求头的 `Content-Type` 为 `application/json`。
 ## axios 如何发送FormData数据
 * `axios.post()` 方法可以用于发送FormData数据，只需要将FormData对象作为请求体的一部分传递给该方法即可。
-```
+```js
 const formData = new FormData();
 formData.append('name', 'John');
 formData.append('age', 30);
@@ -79,7 +79,7 @@ axios.post('https://example.com/api/users', formData)
 * 需要注意的是，`axios.post()` 方法默认会自动将请求体序列化为FormData对象，如果需要发送非FormData数据，需要手动设置请求头的 `Content-Type` 为 `application/x-www-form-urlencoded`。
 ## axios 如何发送PUT请求
 * `axios.put()` 方法可以用于发送PUT请求，只需要将请求体作为请求参数的一部分传递给该方法即可。
-```
+```js
 const data = {
     name: 'John',
     age: 30
@@ -96,7 +96,7 @@ axios.put('https://example.com/api/users/1', data)
 * 需要注意的是，`axios.put()` 方法默认会自动将请求体序列化为JSON字符串，如果需要发送非JSON数据，需要手动设置请求头的 `Content-Type` 为 `application/json`。
 ## axios 如何发送DELETE请求
 * `axios.delete()` 方法可以用于发送DELETE请求，只需要将请求体作为请求参数的一部分传递给该方法即可。
-```
+```js
 const data = {
     name: 'John',
     age: 30
@@ -116,7 +116,7 @@ axios.delete('https://example.com/api/users/1', {
 * 需要注意的是，`axios.delete()` 方法默认会自动将请求体序列化为JSON字符串，如果需要发送非JSON数据，需要手动设置请求头的 `Content-Type` 为 `application/json`。
 ## axios 如何发送文件上传请求
 * `axios.post()` 方法可以用于发送文件上传请求，只需要将文件作为请求体的一部分传递给该方法即可。
-```
+```js
 const formData = new FormData();
 formData.append('file', file);
 
@@ -134,7 +134,7 @@ axios.post('https://example.com/upload', formData, {
 ## axios 处理网络错误和超时
 * `axios.interceptors.response.use()` 方法可以用于处理网络错误和超时。
 * 设置超时可以通过timeout配置项完成：
-```
+```js
 axios.get('/some-url', { timeout: 1000 });
 ```
 * 当请求失败时，可以通过响应拦截器检查response.status来区分网络错误（通常是4xx或5xx）和超时（ETIMEDOUT）。
