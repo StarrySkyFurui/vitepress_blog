@@ -5,8 +5,8 @@
 git checkout -b 新分支名
 // 使用已存在分支
 git checkout 已存在分支名 
-// 删除指定分支
-git checkout -d 待删除分支名 
+// 删除本地分支
+git branch -D 待删除分支名 
 ```
 - 编辑代码,保存并将修改提交到本地分支
 ```bash
@@ -36,19 +36,34 @@ git rebase master
 // 将本地分支推送到同名的远程分支，若远程不存在则新建
 git push origin 所在分支名 
 ```
-- 合并远程分支到远程master
-    登陆gitlab网站，打开刚提交的远程分支
-    点击merge，确认提交到的目标
+- 合并远程分支到远程 master
+    登陆 `gitlab` 网站，打开刚提交的远程分支
+    点击 `merge`，确认提交到的目标
     等待管理员检查代码并确认合并
 ## 同步产品代码
 > 合并时一定要注意有没有修改配置文件
 
-- 添加上游仓库(只执行一次即可) git remote add 仓库名 仓库地址
-    * 例如 git remote add upstream https://www.github.com
-- 查看当前仓库信息 git remote -v
-- 获取代码 git fetch upstream
-- 切换至本地master git checkout master
-- 合并代码 git merge upstream/master
+- 添加上游仓库(只执行一次即可) 
+```bash
+// git remote add 仓库名 仓库地址 
+git remote add upstream https://www.github.com
+```
+- 查看当前仓库信息
+```bash
+git remote -v
+```
+- 获取代码
+```bash
+git fetch upstream
+```
+- 切换至本地master
+```bash
+git checkout master
+```
+- 合并代码 
+```bash
+git merge upstream/master
+```
 - 依次解决冲突，然后按照代码更新流程进行更新 (不要用rebase 直接merge即可)
 
 ## 常用查看

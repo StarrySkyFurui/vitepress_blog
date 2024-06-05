@@ -24,3 +24,76 @@ Action是Vuex中的异步操作，它可以通过commit提交Mutation来改变St
 ## 如何在Vuex中实现模块化管理？
 
 在Vuex中，我们可以通过模块（Module）来实现状态管理的模块化。每个模块拥有自己的State、Mutation、Action和Getter，甚至可以嵌套子模块。通过将状态分割到不同的模块中，我们可以使代码更加清晰和易于维护。在创建Vuex实例时，我们可以通过modules选项来注册多个模块，并通过namespaced属性来控制模块是否具有独立的命名空间。如果设置了namespaced: true，则模块内部的State、Mutation、Action和Getter都会具有独立的命名空间，从而避免命名冲突的问题。
+
+## 示例
+在项目中创建一个 store 目录，并在其中创建一个 index.js 文件来定义你的 store。
+```js
+// store/index.js
+import { createStore } from 'vuex'
+
+export default createStore({
+  state() {
+    return {
+      count: 0
+    }
+  },
+  mutations: {
+    increment(state) {
+      state.count++
+    }
+  },
+  actions: {
+    increment(context) {
+      context.commit('increment')
+    }
+  },
+  getters: {
+    getCount: state => state.count
+  }
+})
+```
+在 main.js 中注册 Vuex Store
+```js
+// main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+import store from './store'
+
+const app = createApp(App)
+app.use(store)
+app.mount('#app')
+```
+在组件中使用 Vuex 状态和改变状态
+```vue
+<template>
+  <div>
+    <p>Count: {{ count }}</p>
+    <button @click="increment">Increment</button>
+  </div>
+</template>
+
+<script>
+import { useStore } from 'vuex'
+import { computed, onMounted } from 'vue'
+
+export default {
+  setup() {
+    const store = useStore()
+    // 获取状态
+    const count = computed(() => store.getters.getCount)
+    // 调用 action 改变状态
+    const increment = () => {
+      store.dispatch('increment')
+    }
+    // 可选：如果你需要在组件挂载时执行某些操作，可以使用 onMounted 钩子
+    onMounted(() => {
+      console.log('Component mounted.')
+    })
+    return {
+      count,
+      increment
+    }
+  }
+}
+</script>
+```

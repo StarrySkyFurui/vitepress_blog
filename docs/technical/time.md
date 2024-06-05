@@ -1,5 +1,4 @@
-整体使用 vue + day.js 实现
-首先，需要安装 day.js
+整体使用 `vue + day.js` 实现, 首先，需要安装 `day.js`
 ```bash
 npm install dayjs --save
 ```

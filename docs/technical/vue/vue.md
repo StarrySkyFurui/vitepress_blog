@@ -140,6 +140,107 @@ export default {
 * Vue3 在内部实现上更加贴近 TypeScript，提供了更好的类型检查和代码提示功能。
 
 ## 自定义hooks
+在Vue3中，自定义hooks是一种组织代码和重用逻辑的方式，它利用了Composition API。自定义hook通常是一个函数，这个函数内部可以组合使用其他Vue的功能，如响应式数据、计算属性、生命周期钩子等，并返回一些可复用的状态和方法。函数名通常以use开头，以表明它是一个hook。
+
+以下是一个简单的例子，展示如何创建一个自定义hook来跟踪鼠标位置：
+```ts
+// src/hooks/userMousePosition.ts
+import { onMounted, onBeforeUnmount, ref } from 'vue';
+
+export default function useMousePosition() {
+  const mousePosition = ref({ x: 0, y: 0 });
+
+  const handleMouseMove = (event: MouseEvent) => {
+    mousePosition.value = { x: event.clientX, y: event.clientY };
+  };
+
+  onMounted(() => {
+    document.addEventListener('mousemove', handleMouseMove);
+  });
+
+  onBeforeUnmount(() => {
+    document.removeEventListener('mousemove', handleMouseMove);
+  });
+
+  return { mousePosition };
+}
+```
+在这个例子中，useMousePosition函数创建了一个响应式的mousePosition对象，并在组件挂载时添加了一个事件监听器来更新这个对象的x和y值。当组件卸载时，它移除事件监听器以避免内存泄漏。
+
+然后，在Vue组件中，你可以这样使用这个自定义hook：
+
+```ts
+<template>
+  <div>{{ mousePosition.x }}, {{ mousePosition.y }}</div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import useMousePosition from '../hooks/userMousePosition';
+
+export default defineComponent({
+  setup() {
+    const { mousePosition } = useMousePosition();
+    return { mousePosition };
+  },
+});
+</script>
+```
+
+在这个组件中，setup函数调用了useMousePosition，并返回了mousePosition，使得模板能够访问并显示实时的鼠标坐标。
 
 ## 自定义指令
+首先，在你的 Vue 3 项目中创建一个 directives 文件夹（如果尚未存在），并在其中创建一个名为 hasPermission.ts 的文件。然后，编写如下代码来定义你的自定义指令：
+```ts
+// src/directives/hasPermission.ts
+import { DirectiveBinding } from 'vue';
 
+export default {
+  mounted(el: HTMLElement, binding: DirectiveBinding<string>) {
+    const hasPermission = checkPermission(binding.value);
+
+    if (!hasPermission) {
+      el.style.display = 'none';
+      // 或者移除元素以避免占用DOM但不可见：el.parentNode?.removeChild(el);
+    }
+  },
+  updated(el: HTMLElement, binding: DirectiveBinding<string>) {
+    // 在权限改变时更新显示状态
+    const hasPermission = checkPermission(binding.value);
+
+    if (hasPermission) {
+      el.style.display = ''; // 显示元素
+    } else {
+      el.style.display = 'none'; // 隐藏元素
+    }
+  },
+};
+
+function checkPermission(permissionKey: string): boolean {
+  // 实现你的权限检查逻辑，比如从 Vuex store、全局变量或API获取用户权限信息
+  // 假设有一个全局函数或变量可以进行权限验证
+  // 示例：
+  // return userPermissions.includes(permissionKey);
+  return true; // 这里需要替换为实际的权限验证逻辑
+}
+```
+接下来，在 main.ts 中导入并注册你的自定义指令：
+```ts
+// src/main.ts
+import { createApp } from 'vue';
+import App from './App.vue';
+import hasPermissionDirective from './directives/hasPermission';
+
+const app = createApp(App);
+
+app.directive('has-permission', hasPermissionDirective);
+
+app.mount('#app');
+```
+然后，在需要使用自定义指令的组件中，使用 has-permission 指令即可：
+```vue
+<template>
+  <button v-hasPermission="'edit'">编辑</button>
+</template>
+```
+在这个例子中，checkPermission 函数需要根据你的应用程序实际情况实现，它应该能够访问到用户的权限信息并根据这些信息返回 true 或 false。这可能涉及到从 Vuex store 获取状态，或者使用其他方式来检查用户权限。
