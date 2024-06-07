@@ -259,10 +259,10 @@ Function.prototype.Bind = function(context, ...args) {
 闭包中引用的变量直到闭包被销毁时才会被垃圾回收
 
 ## promise 链式调用
-* promise 的回调只能被捕获一次
-* 在 then 函数加上 return，后面的 then 函数才能继续捕获到
-* `race`：返回 promises 列表中第一个执行完的结果
-* `all`：返回 promises 列表中全部执行完的结果
+* `promise` 的回调只能被捕获一次
+* 在 `then` 函数加上 `return`，后面的 `then` 函数才能继续捕获到
+* `race`：返回 `promises` 列表中第一个执行完的结果
+* `all`：返回 `promises` 列表中全部执行完的结果
 * `retry`： 当接口请求失败后，每间隔几秒，再重发几次
   
 ## async、await
@@ -286,4 +286,61 @@ Function.prototype.Bind = function(context, ...args) {
 
 > 总结：宏任务是一个个执行，执行一个宏任务，然后就把在任务队列中的所有微任务都执行完，再执行下一个宏任务，再执行所有微任务，依次类推
 
+## 常用排序算法
+* 冒泡排序
+  > 比较相邻的元素。如果第一个比第二个大，就交换它们两个；
+  > 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。这步做完后，最后的元素会是最大的数；
+  > 针对所有的元素重复以上的步骤，除了最后一个；
+  > 重复步骤1~3，直到排序完成。
 
+```js
+// 定义冒泡排序函数
+function bubbleSort(arr) {
+  // 外层循环遍历数组的每个元素
+  for (let i = 0; i < arr.length; i++) {
+    // 内层循环遍历数组中除当前元素外的其他元素
+    for (let j = 0; j < arr.length - i - 1; j++) {
+      // 如果当前元素大于它后面的元素，则交换它们的位置
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+  return arr;
+}
+let arr = [5, 3, 8, 4, 6];
+console.log(bubbleSort(arr)); // [3, 4, 5, 6, 8]
+```
+* 快速排序
+  > 选择一个基准元素，通常选择第一个元素或者最后一个元素；
+  > 遍历数组，将小于等于基准值的元素放在基准元素的左边，将大于基准值的元素放在基准元素的右边；
+  > 递归地对左右两个子数组进行排序；
+  > 返回已排序的数组。
+
+```js
+// 定义快速排序函数
+function quickSort(arr) {
+  // 如果数组长度小于等于1，直接返回数组
+  if (arr.length <= 1) {
+    return arr;
+  }
+  // 选择基准元素，这里我们选择数组中间的元素
+  let pivotIndex = Math.floor(arr.length / 2);
+  let pivot = arr.splice(pivotIndex, 1)[0];
+  // 定义左右两个数组
+  let left = [];
+  let right = [];
+  // 遍历数组，将小于基准元素的元素放入左数组，大于基准元素的元素放入右数组
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] < pivot) {
+      left.push(arr[i]);
+    } else {
+      right.push(arr[i]);
+    }
+  }
+  // 递归地对左右两个数组进行快速排序，并将结果合并返回
+  return [...quickSort(left), pivot, ...quickSort(right)];
+}
+let arr = [5, 3, 8, 4, 6];
+console.log(quickSort(arr)); // [3, 4, 5, 6, 8]
+```

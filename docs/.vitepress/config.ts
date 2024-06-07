@@ -9,7 +9,7 @@ import sidebar from "./configs/sidebar";
 export default defineConfig({
   base: "/",
   lang: "zh-CN",
-  title: "furuirui的博客网站",
+  title: "指尖微凉的博客网站",
   description: "博客",
   // cleanUrls: true,
   head: [
@@ -28,7 +28,7 @@ export default defineConfig({
     sidebar: sidebar,
     // 站点页脚配置
     footer: {
-      copyright: "Copyright © 2024-present Fu Rui Rui",
+      copyright: "Copyright © 2024-present FuRui",
     },
     // 社交和项目链接地址配置
     // socialLinks: [
