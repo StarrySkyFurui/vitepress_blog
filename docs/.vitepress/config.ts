@@ -1,8 +1,5 @@
 import { defineConfig } from "vitepress";
-import {
-  chineseSearchOptimize,
-  pagefindPlugin,
-} from "vitepress-plugin-pagefind";
+// import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
 import nav from "./configs/nav";
 import sidebar from "./configs/sidebar";
 
@@ -20,6 +17,26 @@ export default defineConfig({
   lastUpdated: true, // string | boolean
   // 主题配置
   themeConfig: {
+    // 设置搜索框的样式
+    search: {
+      provider: "local",
+      options: {
+        translations: {
+          button: {
+            buttonText: "搜索文档",
+            buttonAriaLabel: "搜索文档",
+          },
+          modal: {
+            noResultsText: "无法找到相关结果",
+            resetButtonTitle: "清除查询条件",
+            footer: {
+              selectText: "选择",
+              navigateText: "切换",
+            },
+          },
+        },
+      },
+    },
     // 导航上的logo
     logo: "/images/favicon.png",
     // 隐藏logo右边的标题
@@ -38,15 +55,15 @@ export default defineConfig({
     //   },
     // ],
   },
-  vite: {
-    plugins: [
-      pagefindPlugin({
-        customSearchQuery: chineseSearchOptimize,
-        btnPlaceholder: "搜索",
-        placeholder: "搜索文档",
-        emptyText: "暂无数据！",
-        heading: "共 {{searchResult}} 条结果",
-      }),
-    ],
-  },
+  // vite: {
+  //   plugins: [
+  //     pagefindPlugin({
+  //       customSearchQuery: chineseSearchOptimize,
+  //       btnPlaceholder: "搜索",
+  //       placeholder: "搜索文档",
+  //       emptyText: "暂无数据！",
+  //       heading: "共 {{searchResult}} 条结果",
+  //     }),
+  //   ],
+  // },
 });

@@ -24,8 +24,9 @@
 最新版本的五个主流浏览器都支持某些 HTML5 特性，IE9 以上浏览器支持 HTML5 新特性。但是 IE8 以下的浏览器不支持
 
 IE8 以下(包含 IE8)以下版本浏览器兼容 HTML5 的方法，我们必须使用 htmlshiv 垫片包，让其支持 HTML5 新特性
-
-`<script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>`
+```html
+<script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+```
 
 ## HTML5 新标签
 
