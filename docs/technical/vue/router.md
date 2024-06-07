@@ -157,7 +157,7 @@ const routes = [
   }
 ]
 ```
-3、动态控制缓存 有时可能需要根据条件动态决定是否缓存某个组件。可以在全局守卫中动态设置 meta.keepAlive
+3、动态控制缓存 有时可能需要根据条件动态决定是否缓存某个组件。可以在全局守卫中动态设置 `meta.keepAlive`
 ```js
 router.beforeEach((to, from, next) => {
   // 根据某些条件动态设置 keepAlive

@@ -85,21 +85,54 @@ git status
 ```bash
 // 回退到上个版本
 git reset --hard HEAD^  
+
 // 回退到前n次提交之前，若n=3，则可以回退到3次提交之前
 git reset --hard HEAD~n
+
 // 回滚到指定commit的sha码【推荐】
+// 查看commit sha码
+git log 
+// 回退到指定commit的sha码
 git reset --hard commit_sha 
 
 // hard 是强制执行的意思，执行上述某条命令后，再执行如下命令，强推到远程仓库：
 git push origin HEAD --force
 ```
-<!-- ## 合并 commit -->
+## 合并 commit
+```bash
+// 合并最近两次commit
+git rebase -i HEAD~2
+// 合并最近三次commit
+git rebase -i HEAD~3
+// 合并最近四次commit
+git rebase -i HEAD~4
+```
+
+## 撤销 commit
+```bash
+// 撤销最近一次commit
+git reset --soft HEAD~1
+// 撤销最近两次commit
+git reset --soft HEAD~2
+// 撤销最近三次commit
+git reset --soft HEAD~3
+```
+    
+## 撤销 push
+```bash
+// 撤销最近一次push
+git push origin HEAD --force
+// 撤销最近两次push
+git push origin HEAD~1 --force
+// 撤销最近三次push
+git push origin HEAD~2 --force
+```
 
 <!-- ## 版本管理 -->
 
 <!-- ## 分支管理 -->
 
-## 问题备忘
+<!-- ## 问题备忘
 - 为什么用rebase而不用merge?
     * 虽然merge更加的简单，但是merge会造成合并路线的混乱、不够简洁。rebase可以让线路保持单一，更方便查看。其实是项目要求所致
 - 为什么要将最新代码拉取到本地？
@@ -111,4 +144,4 @@ git push origin HEAD --force
 - 为什么不直接把本地分支推送到远程master?
     * 在gitlab中远程master默认受保护，拒绝进行跨分支提交。
 - 从远程分支合并到远程master的时候有必要检查目标么？
-    * 很有必要，不然合并到了其他master会有人骂你。(*^▽^*)
+    * 很有必要，不然合并到了其他master会有人骂你。(*^▽^*) -->
