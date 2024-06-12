@@ -27,8 +27,6 @@ export default [
     text: "网络安全",
     items: [
       { text: "安全基础", link: "/security/base" },
-      { text: "安全配置", link: "/security/config" },
-      { text: "安全运输", link: "/security/transport" },
       {
         text: "网络安全",
         link: "/security/browser/xss",

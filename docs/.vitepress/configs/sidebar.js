@@ -120,8 +120,6 @@ function getEngineering() {
 function getSecurity() {
   return [
     { text: "安全基础", link: "/security/base" },
-    { text: "安全配置", link: "/security/config" },
-    { text: "安全运输", link: "/security/transport" },
     {
       text: "网络安全",
       collapsible: true,
