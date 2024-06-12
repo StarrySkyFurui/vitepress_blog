@@ -5,7 +5,6 @@ export default [
       { text: "HTML / CSS 基础知识", link: "/technical/html/html" },
       { text: "JavaScript 基础知识", link: "/technical/js/base" },
       { text: "TypeScript 基础知识", link: "/technical/ts/base" },
-      // { text: "Webpack / Vite 构建", link: "/technical/build/base" },
       { text: "Vue 生态合集", link: "/technical/vue/vue" },
       // { text: '移动端 基础知识', link: '/technical/mobile' },
       // { text: 'Node 基础知识', link: '/technical/node' },
@@ -24,12 +23,12 @@ export default [
     ],
   },
   {
-    text: "网络安全",
+    text: "网站安全",
     items: [
       { text: "安全基础", link: "/security/base" },
       {
-        text: "网络安全",
-        link: "/security/browser/xss",
+        text: "网站攻击",
+        link: "/security/attack",
       },
     ],
   },

@@ -116,27 +116,13 @@ function getEngineering() {
     },
   ];
 }
-// 获取网络安全的侧边栏
+// 获取网站安全的侧边栏
 function getSecurity() {
   return [
     { text: "安全基础", link: "/security/base" },
     {
-      text: "网络安全",
-      collapsible: true,
-      collapsed: true,
-      items: [
-        {
-          text: "XSS（跨站脚本攻击）",
-          link: "/security/browser/xss",
-        },
-        {
-          text: "CSRF（跨站请求伪造）",
-          link: "/security/browser/csrf",
-        },
-        { text: "SQL注入攻击", link: "/security/browser/sql" },
-        { text: "HTTP挟持", link: "/security/browser/http" },
-        { text: "DNS挟持", link: "/security/browser/dns" },
-      ],
+      text: "网站攻击",
+      link: "/security/attack",
     },
   ];
 }

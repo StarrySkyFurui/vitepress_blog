@@ -6,8 +6,8 @@
       alt: logo
     name: 欢迎你的到来！
     # text: 关注web前端开发为主的博客网站
-    tagline: 关注web前端开发为主的博客网站，内容包括 前端工程化、基础技术栈、权限控制、文件预览、网络安全、前端部署、前端面试、前沿技术等，方便快速访问。
-    # tagline: 关注web前端开发为主的博客网站，内容包括 Vue生态合集、Uni-app、HTML、CSS、JavaScript、TypeScript、Vite、Webpack、HTTP、HTTPS、WebSocket、SSE、Git命令、权限控制、网络安全、前端部署、前端面试、前沿技术等的生态网站，方便快速访问。
+    tagline: 关注web前端开发为主的博客网站，内容包括 前端工程化、基础技术栈、权限控制、文件预览、网站安全、前端部署、前端面试、前沿技术等，方便快速访问。
+    # tagline: 关注web前端开发为主的博客网站，内容包括 Vue生态合集、Uni-app、HTML、CSS、JavaScript、TypeScript、Vite、Webpack、HTTP、HTTPS、WebSocket、SSE、Git命令、权限控制、网站安全、前端部署、前端面试、前沿技术等的生态网站，方便快速访问。
     actions:
     - theme: brand
       text: 欢迎访问
@@ -29,13 +29,13 @@
     link: /engineering/modules
     linkText: 了解更多
 
-  - title: 网络安全
-    details: 关于前端网络安全方面，包括 安全基础、安全配置、数据安全运输、XSS（跨站脚本攻击）、CSRF（跨站请求伪造）、SQL注入攻击、DNS挟持、HTTP挟持等
+  - title: 网站安全
+    details: 前端网站安全相关，包括 前端基础网站安全、数据安全运输、XSS（跨站脚本攻击）、CSRF（跨站请求伪造）、SQL注入攻击、HTTP挟持、DNS挟持等
     link: /security/
     linkText: 了解更多
 
   - title: 前端部署
-    details: 关于前端部署方式，包括 nginx 反向代理、Git的 CI+CD、Jenkins + Rancher、Docker镜像等
+    details: 前端部署方式相关，包括 nginx 反向代理、Git的 CI+CD、Jenkins + Rancher、Docker镜像等
     link: /deploy/nginx/
     linkText: 了解更多
 
