@@ -1,9 +1,8 @@
 export default {
   "/technical/": getTechnical(),
   "/engineering/": getEngineering(),
-  "/deploy/": getDeploy(),
   "/security/": getSecurity(),
-  
+  "/deploy/": getDeploy(),
 };
 // 获取技术方面的侧边栏
 function getTechnical() {
@@ -117,15 +116,6 @@ function getEngineering() {
     },
   ];
 }
-// 获取前端部署的侧边栏
-function getDeploy() {
-  return [
-    { text: "nginx 反向代理", link: "/deploy/nginx" },
-    { text: "Jenkins + Rancher", link: "/deploy/jenkins" },
-    { text: "Docker镜像", link: "/deploy/docker" },
-    { text: "Git的 CI+CD", link: "/deploy/git" },
-  ];
-}
 // 获取网络安全的侧边栏
 function getSecurity() {
   return [
@@ -150,5 +140,14 @@ function getSecurity() {
         { text: "DNS挟持", link: "/security/browser/dns" },
       ],
     },
+  ];
+}
+// 获取前端部署的侧边栏
+function getDeploy() {
+  return [
+    { text: "nginx 反向代理", link: "/deploy/nginx" },
+    { text: "Jenkins + Rancher", link: "/deploy/jenkins" },
+    { text: "Docker镜像", link: "/deploy/docker" },
+    { text: "Git的 CI+CD", link: "/deploy/git" },
   ];
 }
