@@ -1,6 +1,9 @@
 export default {
   "/technical/": getTechnical(),
   "/engineering/": getEngineering(),
+  "/deploy/": getDeploy(),
+  "/security/": getSecurity(),
+  
 };
 // 获取技术方面的侧边栏
 function getTechnical() {
@@ -34,16 +37,6 @@ function getTechnical() {
       ],
     },
     {
-      text: "Webpack / Vite 构建",
-      collapsible: true,
-      collapsed: true,
-      items: [
-        { text: "基础知识", link: "/technical/build/base" },
-        { text: "Webpack", link: "/technical/build/webpack" },
-        { text: "Vite", link: "/technical/build/vite" },
-      ],
-    },
-    {
       text: "Vue 生态合集",
       collapsible: true,
       collapsed: true,
@@ -51,7 +44,6 @@ function getTechnical() {
         { text: "Vue 基础知识", link: "/technical/vue/vue" },
         { text: "VueX 基础知识", link: "/technical/vue/vuex" },
         { text: "Axios 基础知识", link: "/technical/vue/axios" },
-        // { text: "Vue-Cli 脚手架", link: "/technical/vue/vuecli" },
         { text: "Vue-Router 基础知识", link: "/technical/vue/router" },
       ],
     },
@@ -63,24 +55,6 @@ function getTechnical() {
         { text: "浏览器 基础知识", link: "/technical/browser/base" },
         { text: "HTTP & HTTPS", link: "/technical/browser/http" },
         { text: "Request 常用请求 ", link: "/technical/browser/request" },
-        {
-          text: "网络安全 基础知识",
-          collapsible: true,
-          collapsed: true,
-          items: [
-            {
-              text: "XSS（跨站脚本攻击）",
-              link: "/technical/browser/security/xss",
-            },
-            {
-              text: "CSRF（跨站请求伪造）",
-              link: "/technical/browser/security/csrf",
-            },
-            { text: "SQL注入攻击", link: "/technical/browser/security/sql" },
-            { text: "DNS挟持", link: "/technical/browser/security/dns" },
-            { text: "HTTP挟持", link: "/technical/browser/security/http" },
-          ],
-        },
       ],
     },
     { text: "Git 常规使用", link: "/technical/git" },
@@ -96,12 +70,10 @@ function getTechnical() {
 // 获取前端工程化的侧边栏
 function getEngineering() {
   return [
-    // {
-    //   text: "模块化",
-    //   link: "/engineering/modules",
-    // },
+    { text: "项目管理", link: "/engineering/project" },
+    { text: "模块化 / 组件化", link: "/engineering/modules" },
     {
-      text: "规范化",
+      text: "标准规范化",
       collapsible: true,
       collapsed: true,
       items: [
@@ -112,18 +84,70 @@ function getEngineering() {
       ],
     },
     {
-      text: "性能优化",
-      link: "/engineering/performance",
-    },
-    {
-      text: "前端部署",
+      text: "自动化工具",
       collapsible: true,
       collapsed: true,
       items: [
-        { text: "Jenkins + Rancher", link: "/engineering/deploy/jenkins" },
-        { text: "Docker镜像", link: "/engineering/deploy/docker" },
-        { text: "nginx 反向代理", link: "/engineering/deploy/nginx" },
-        { text: "Git的 CI+CD", link: "/engineering/deploy/git" },
+        { text: "脚手架", link: "/engineering/automation/cli" },
+        { text: "代码检查", link: "/engineering/automation/lint" },
+        {
+          text: "构建工具",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            {
+              text: "前端构建",
+              link: "/engineering/automation/build/base",
+            },
+            {
+              text: "Vite 构建",
+              link: "/engineering/automation/build/vite",
+            },
+            {
+              text: "Webpack 构建",
+              link: "/engineering/automation/build/webpack",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: "性能优化",
+      link: "/engineering/performance",
+    },
+  ];
+}
+// 获取前端部署的侧边栏
+function getDeploy() {
+  return [
+    { text: "nginx 反向代理", link: "/deploy/nginx" },
+    { text: "Jenkins + Rancher", link: "/deploy/jenkins" },
+    { text: "Docker镜像", link: "/deploy/docker" },
+    { text: "Git的 CI+CD", link: "/deploy/git" },
+  ];
+}
+// 获取网络安全的侧边栏
+function getSecurity() {
+  return [
+    { text: "安全基础", link: "/security/base" },
+    { text: "安全配置", link: "/security/config" },
+    { text: "安全运输", link: "/security/transport" },
+    {
+      text: "网络安全",
+      collapsible: true,
+      collapsed: true,
+      items: [
+        {
+          text: "XSS（跨站脚本攻击）",
+          link: "/security/browser/xss",
+        },
+        {
+          text: "CSRF（跨站请求伪造）",
+          link: "/security/browser/csrf",
+        },
+        { text: "SQL注入攻击", link: "/security/browser/sql" },
+        { text: "HTTP挟持", link: "/security/browser/http" },
+        { text: "DNS挟持", link: "/security/browser/dns" },
       ],
     },
   ];

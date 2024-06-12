@@ -5,7 +5,7 @@ export default [
       { text: "HTML / CSS 基础知识", link: "/technical/html/html" },
       { text: "JavaScript 基础知识", link: "/technical/js/base" },
       { text: "TypeScript 基础知识", link: "/technical/ts/base" },
-      { text: "Webpack / Vite 构建", link: "/technical/build/base" },
+      // { text: "Webpack / Vite 构建", link: "/technical/build/base" },
       { text: "Vue 生态合集", link: "/technical/vue/vue" },
       // { text: '移动端 基础知识', link: '/technical/mobile' },
       // { text: 'Node 基础知识', link: '/technical/node' },
@@ -16,30 +16,41 @@ export default [
   {
     text: "前端工程化",
     items: [
-      // { text: "模块化", link: "/engineering/modules" },
-      // { text: '组件化', link: '/engineering/' },
-      { text: "规范化", link: "/engineering/standard/named" },
-      // { text: '基础建设', link: '/engineering/infrastructure' },
+      { text: "项目管理", link: "/engineering/project" },
+      { text: "模块化 / 组件化", link: "/engineering/modules" },
+      { text: "标准规范化", link: "/engineering/standard/named" },
+      { text: "自动化工具", link: "/engineering/automation/cli" },
       { text: "性能优化", link: "/engineering/performance" },
-      { text: "前端部署", link: "/engineering/deploy/nginx" },
     ],
   },
-  // {
-  //   text: '网络安全',
-  //   link: '/security/',
-  // },
-  // {
-  //   text: '前端部署',
-  //   link: '/deploy/',
-  // },
-
-  // {
-  //   text: '前端面试',
-  //   link: '/interview/',
-  // },
   {
-    text: "前沿技术",
-    link: "/latest/",
+    text: "网络安全",
+    items: [
+      { text: "安全基础", link: "/security/base" },
+      { text: "安全配置", link: "/security/config" },
+      { text: "安全运输", link: "/security/transport" },
+      {
+        text: "网络安全",
+        link: "/security/browser/xss",
+      },
+    ],
+  },
+  {
+    text: "前端部署",
+    items: [
+      { text: "Nginx 反向代理", link: "/deploy/nginx" },
+      { text: "Jenkins + Rancher", link: "/deploy/jenkins" },
+      {
+        text: "Docker镜像",
+        link: "/deploy/docker",
+      },
+      { text: "Git的 CI+CD", link: "/deploy/git" },
+    ],
+  },
+
+  {
+    text: "前端面试",
+    link: "/interview/",
   },
   {
     text: "其它",
