@@ -7,7 +7,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev docs --port 3333",
+    "dev": "vitepress dev docs --port 8888",
     "build": "vitepress build docs",
     "serve": "vitepress serve docs"
   },

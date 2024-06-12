@@ -1,6 +1,6 @@
 在前端开发中， nginx 常被用作反向代理服务器，来处理静态资源、负载均衡、HTTPS配置等。以下是一个简单的前端生成配置 nginx 的示例，以及一些常见的配置说明：
 
-```conf
+```
 server {
     listen 80;
     server_name example.com; # 修改为你的域名或IP地址

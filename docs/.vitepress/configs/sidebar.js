@@ -86,6 +86,7 @@ function getTechnical() {
     { text: "Git 常规使用", link: "/technical/git" },
     { text: "时间日期处理", link: "/technical/time" },
     { text: "Node 基础知识", link: "/technical/node" },
+    { text: "Uni-app 基础知识", link: "/technical/uniapp" },
     { text: "WebSocket", link: "/technical/websocket" },
     { text: "SSE 会话", link: "/technical/sse" },
     { text: "权限控制详解", link: "/technical/permission" },

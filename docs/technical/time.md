@@ -1,4 +1,6 @@
-整体使用 `vue + day.js` 实现, 首先，需要安装 `day.js`
+整体使用 `vue + Day.js` 实现，Day.js 是一个轻量级的 JavaScript 时间日期处理库，它与 Moment.js 的 API 设计保持完全一致。Day.js 的主要优点包括其微小的体积（仅 2kB 大小）、不可变数据设计、支持链式操作、国际化支持以及全球时区转换功能。
+
+首先，需要安装 `day.js`
 ```bash
 npm install dayjs --save
 ```
@@ -18,10 +20,10 @@ dayjs().format('YYYY-MM-DD HH:mm:ss')
 dayjs().valueOf()
 ```
 
-## 获取当前时间戳（秒）
+<!-- ## 获取当前时间戳（秒）
 ```js
 dayjs().unix()
-```
+``` -->
 
 ## 年月日格式
 ```js
@@ -107,5 +109,5 @@ dayjs('2022-01-01').isBefore(dayjs('2022-01-02'))
 
 ## 计算是否等于某个具体的日期
 ```js
-    dayjs('2022-01-01').isSame(dayjs('2022-01-02'))
+dayjs('2022-01-01').isSame(dayjs('2022-01-02'))
 ```
