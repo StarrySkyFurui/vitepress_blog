@@ -17,7 +17,7 @@
       link: https://github.com/StarrySkyFurui/vitepress_blog
   features:
 
-  - title: 技术方面
+  - title: 技术系列
     details: 技术栈相关，包括 Vue生态合集 / Uni-app / Js / Ts / Node / 浏览器 / 请求 / 会话 / Git命令 / 权限控制 / 文件预览 / 时间日期处理等
 
     # details: 技术栈相关，包括 Vue生态合集 / Uni-app / HTML / CSS / JavaScript / TypeScript / Node / HTTP / HTTPS / Vite / Webpack / WebSocket / SSE / Git命令 / 权限控制 / 文件预览 / 时间日期处理等
@@ -34,7 +34,7 @@
     link: /security/
     linkText: 了解更多
 
-  - title: 前端部署
+  - title: 部署系列
     details: 前端部署方式相关，包括 nginx 反向代理、Git的 CI+CD、Jenkins + Rancher、Docker镜像等
     link: /deploy/nginx/
     linkText: 了解更多

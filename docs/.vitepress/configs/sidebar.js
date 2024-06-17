@@ -4,7 +4,7 @@ export default {
   "/security/": getSecurity(),
   "/deploy/": getDeploy(),
 };
-// 获取技术方面的侧边栏
+// 获取技术系列的侧边栏
 function getTechnical() {
   return [
     {
@@ -57,6 +57,7 @@ function getTechnical() {
       ],
     },
     { text: "Git 常规使用", link: "/technical/git" },
+    { text: "微前端 qiankun", link: "/technical/micro" },
     { text: "时间日期处理", link: "/technical/time" },
     { text: "Node 基础知识", link: "/technical/node" },
     { text: "Uni-app 基础知识", link: "/technical/uniapp" },
@@ -126,12 +127,12 @@ function getSecurity() {
     },
   ];
 }
-// 获取前端部署的侧边栏
+// 获取部署系列的侧边栏
 function getDeploy() {
   return [
     { text: "nginx 反向代理", link: "/deploy/nginx" },
-    { text: "Jenkins + Rancher", link: "/deploy/jenkins" },
-    { text: "Docker镜像", link: "/deploy/docker" },
-    { text: "Git的 CI+CD", link: "/deploy/git" },
+    // { text: "Jenkins + Rancher", link: "/deploy/jenkins" },
+    // { text: "Docker镜像", link: "/deploy/docker" },
+    // { text: "Git的 CI+CD", link: "/deploy/git" },
   ];
 }

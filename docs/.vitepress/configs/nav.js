@@ -1,6 +1,6 @@
 export default [
   {
-    text: "技术方面",
+    text: "技术系列",
     items: [
       { text: "HTML / CSS 基础知识", link: "/technical/html/html" },
       { text: "JavaScript 基础知识", link: "/technical/js/base" },
@@ -10,6 +10,7 @@ export default [
       // { text: 'Node 基础知识', link: '/technical/node' },
       { text: "浏览器 / 网络", link: "/technical/browser/base" },
       { text: "Git 常规使用", link: "/technical/git" },
+      { text: "微前端 qiankun", link: "/technical/micro" },
     ],
   },
   {
@@ -33,15 +34,15 @@ export default [
     ],
   },
   {
-    text: "前端部署",
+    text: "部署系列",
     items: [
       { text: "Nginx 反向代理", link: "/deploy/nginx" },
-      { text: "Jenkins + Rancher", link: "/deploy/jenkins" },
-      {
-        text: "Docker镜像",
-        link: "/deploy/docker",
-      },
-      { text: "Git的 CI+CD", link: "/deploy/git" },
+      // { text: "Jenkins + Rancher", link: "/deploy/jenkins" },
+      // {
+      //   text: "Docker镜像",
+      //   link: "/deploy/docker",
+      // },
+      // { text: "Git的 CI+CD", link: "/deploy/git" },
     ],
   },
 

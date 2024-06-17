@@ -104,8 +104,6 @@ git push origin HEAD --force
 git rebase -i HEAD~2
 // 合并最近三次commit
 git rebase -i HEAD~3
-// 合并最近四次commit
-git rebase -i HEAD~4
 ```
 
 ## 撤销 commit
