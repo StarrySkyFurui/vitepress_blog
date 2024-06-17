@@ -52,6 +52,7 @@ Vue 组件的生命周期包括以下阶段：
 5. 在Vue项目中如何实现权限控制？请描述一种你认为合理的权限管理设计方案。
 
 ## vue2 与 vue3 的区别
+
 1. 双向数据绑定原理
 * Vue2 使用 Object.defineProperty 实现响应式，而 Vue3 采用了 ES6 的 Proxy 来替换原本的响应式实现，这带来了更精确的变更检测和更好的性能。
 * Proxy 可以直接监听对象和数组的变化，而无需像 Vue2 那样通过额外的工具函数来处理数组。
@@ -64,6 +65,17 @@ Vue 组件的生命周期包括以下阶段：
 * Vue2 包含created, mounted, updated, beforeDestroy等生命周期钩子。
 * Vue3 对生命周期进行了调整，移除了部分生命周期钩子，如beforeCreate和destroyed，并引入了新的onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted等。
   
+| Vue2 | Vue3 |
+| :----  | :---- |
+| beforeCreate | 使用 setup() |
+| created | 	使用 setup() |
+| beforeMount | onBeforeMount |
+| mounted | onMounted |
+| beforeUpdate | onBeforeUpdate |
+| updated | onUpdated |
+| beforeDestroy | onBeforeUnmount |
+| destroyed | onUnmounted |
+
 4. 模板语法
 * Vue2 的模板语法基本保持不变，但v-if和v-for的优先级有所不同。
 * Vue3 支持在模板中使用 `<script setup>` 标签，允许更简洁的模板语法。
@@ -139,56 +151,6 @@ export default {
 2. 更好的 TypeScript 支持
 * Vue3 在内部实现上更加贴近 TypeScript，提供了更好的类型检查和代码提示功能。
 
-## 自定义hooks
-在Vue3中，自定义hooks是一种组织代码和重用逻辑的方式，它利用了Composition API。自定义hook通常是一个函数，这个函数内部可以组合使用其他Vue的功能，如响应式数据、计算属性、生命周期钩子等，并返回一些可复用的状态和方法。函数名通常以use开头，以表明它是一个hook。
-
-以下是一个简单的例子，展示如何创建一个自定义hook来跟踪鼠标位置：
-```ts
-// src/hooks/userMousePosition.ts
-import { onMounted, onBeforeUnmount, ref } from 'vue';
-
-export default function useMousePosition() {
-  const mousePosition = ref({ x: 0, y: 0 });
-
-  const handleMouseMove = (event: MouseEvent) => {
-    mousePosition.value = { x: event.clientX, y: event.clientY };
-  };
-
-  onMounted(() => {
-    document.addEventListener('mousemove', handleMouseMove);
-  });
-
-  onBeforeUnmount(() => {
-    document.removeEventListener('mousemove', handleMouseMove);
-  });
-
-  return { mousePosition };
-}
-```
-在这个例子中，useMousePosition函数创建了一个响应式的mousePosition对象，并在组件挂载时添加了一个事件监听器来更新这个对象的x和y值。当组件卸载时，它移除事件监听器以避免内存泄漏。
-
-然后，在Vue组件中，你可以这样使用这个自定义hook：
-
-```ts
-<template>
-  <div>{{ mousePosition.x }}, {{ mousePosition.y }}</div>
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import useMousePosition from '../hooks/userMousePosition';
-
-export default defineComponent({
-  setup() {
-    const { mousePosition } = useMousePosition();
-    return { mousePosition };
-  },
-});
-</script>
-```
-
-在这个组件中，setup函数调用了useMousePosition，并返回了mousePosition，使得模板能够访问并显示实时的鼠标坐标。
-
 ## 自定义指令
 首先，在你的 Vue 3 项目中创建一个 directives 文件夹（如果尚未存在），并在其中创建一个名为 hasPermission.ts 的文件。然后，编写如下代码来定义你的自定义指令：
 ```ts
@@ -244,3 +206,89 @@ app.mount('#app');
 </template>
 ```
 在这个例子中，checkPermission 函数需要根据你的应用程序实际情况实现，它应该能够访问到用户的权限信息并根据这些信息返回 true 或 false。这可能涉及到从 Vuex store 获取状态，或者使用其他方式来检查用户权限。
+
+
+## 自定义hooks
+在Vue3中，自定义hooks是一种组织代码和重用逻辑的方式，它利用了Composition API。自定义hook通常是一个函数，这个函数内部可以组合使用其他Vue的功能，如响应式数据、计算属性、生命周期钩子等，并返回一些可复用的状态和方法。函数名通常以use开头，以表明它是一个hook。
+
+以下是一个简单的例子，展示如何创建一个自定义hook来跟踪鼠标位置：
+```ts
+// src/hooks/userMousePosition.ts
+import { onMounted, onBeforeUnmount, ref } from 'vue';
+
+export default function useMousePosition() {
+  const mousePosition = ref({ x: 0, y: 0 });
+
+  const handleMouseMove = (event: MouseEvent) => {
+    mousePosition.value = { x: event.clientX, y: event.clientY };
+  };
+
+  onMounted(() => {
+    document.addEventListener('mousemove', handleMouseMove);
+  });
+
+  onBeforeUnmount(() => {
+    document.removeEventListener('mousemove', handleMouseMove);
+  });
+
+  return { mousePosition };
+}
+```
+在这个例子中，useMousePosition函数创建了一个响应式的mousePosition对象，并在组件挂载时添加了一个事件监听器来更新这个对象的x和y值。当组件卸载时，它移除事件监听器以避免内存泄漏。
+
+然后，在Vue组件中，你可以这样使用这个自定义hook：
+
+```ts
+<template>
+  <div>{{ mousePosition.x }}, {{ mousePosition.y }}</div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import useMousePosition from '../hooks/userMousePosition';
+
+export default defineComponent({
+  setup() {
+    const { mousePosition } = useMousePosition();
+    return { mousePosition };
+  },
+});
+</script>
+```
+
+在这个组件中，setup函数调用了useMousePosition，并返回了mousePosition，使得模板能够访问并显示实时的鼠标坐标。
+
+## hooks(钩子) 和 mixins(混入)的区别
+hooks（钩子）和 Mixins（混入）在 Vue 中都是用于代码复用的机制，但它们之间存在显著的区别。以下是它们之间的一些主要差异：
+
+### 1. 语法和用法：
+
+hooks：在 Vue 3 的 Composition API 中引入，是一种函数式编程的方式。它们允许你以函数的形式定义和复用组件的逻辑。通过将相关的逻辑和状态封装为自定义的 Hook 函数，可以提高代码的可读性和可维护性。
+
+Mixins：在 Vue 2 中引入，是一种对象混入机制。Mixins 允许你将可复用的逻辑封装为对象，并将其混入到多个组件中。然而，这种方式可能导致命名冲突或不可预料的行为，因为混入的对象会与组件本身的属性和方法进行合并。
+
+### 2. 组合性和灵活性：
+
+hooks：通过允许开发者根据逻辑功能来组合和复用代码，提供了更高的组合性和灵活性。你可以根据需要创建自定义的 Hook 函数，并在多个组件中重复使用它们。
+
+Mixins：虽然也提供了一定的代码复用能力，但由于其基于对象的合并方式，可能导致命名冲突和难以追踪的依赖关系。
+
+### 3. 响应式系统：
+
+hooks：在 Vue 3 的 Composition API 中，hooks 与新的响应式系统紧密集成。通过使用 reactive 和 ref 等函数，可以精确地控制组件的更新和依赖追踪。
+
+Mixins：在 Vue 2 中，响应式系统是基于对象的，而 Mixins 并没有为响应式系统提供特别的优化或改进。
+
+### 4. 清晰性和可读性：
+
+hooks：通过将组件的逻辑拆分为独立的函数，hooks 使得组件的逻辑更加清晰和可读。你可以很容易地查看和理解每个 Hook 函数的功能。
+
+Mixins：由于 Mixins 是基于对象的合并，当多个 Mixins 被混入同一个组件时，可能会导致代码逻辑变得复杂和难以维护。
+
+### 5. Vue 版本支持：
+
+hooks：是 Vue 3 的主要特性之一，是 Composition API 的核心组成部分。
+
+Mixins：主要在 Vue 2 中使用，虽然 Vue 3 仍然支持它，但推荐使用 Composition API 和 hooks 来编写更清晰和可维护的代码。
+
+总结来说，hooks 和 Mixins 都是 Vue 中用于代码复用的机制，但 hooks 提供了更高级的函数式编程方式，具有更高的组合性、灵活性和可读性。在 Vue 3 中，推荐使用 Composition API 和 hooks 来编写组件逻辑。
