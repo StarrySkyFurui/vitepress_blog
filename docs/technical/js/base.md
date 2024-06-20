@@ -1,5 +1,3 @@
-<!-- # js 数据类型、数据类型检测的方式、常用的 string、array 方法、防抖、节流、日期时间戳转换、常用正则、数学函数【上取整、下取整、四舍五入之类的】、document、深浅拷贝、promise、call、apply、ES6常用的、ES10常用的、箭头函数、扩展运算符、位运算符、DOM与BOM、Ajax、原型与原型链、闭包、回调函数、回调地狱、作用域、执行上下文、异步编程、aync\await、面向对象、垃圾回收及内存泄漏、
-## 数据类型 -->
 ## 数据类型
 `Javascript` 数据类型分为 基本数据类型 和 引用数据类型:
 
@@ -71,6 +69,15 @@
 
 引用数据类型：引用类型存储在堆内存，存储的是地址，多个引用指向同一个地址，这里会涉及一个“共享”的概念；占据空间大、大小不固定。引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体。
 
+## null和undefined区别
+
+首先 Undefined 和 Null 都是基本数据类型，这两个基本数据类型分别都只有一个值，就是 undefined 和 null。
+
+undefined 代表的含义是未定义，null 代表的含义是空对象。一般变量声明了但还没有定义的时候会返回 undefined，null主要用于赋值给一些可能会返回对象的变量，作为初始化。
+
+undefined 在 JavaScript 中不是一个保留字，这意味着可以使用 undefined 来作为一个变量名，但是这样的做法是非常危险的，它会影响对 undefined 值的判断。我们可以通过一些方法获得安全的 undefined 值，比如说 void 0。
+
+当对这两种类型使用 typeof 进行判断时，Null 类型化会返回 “object”，这是一个历史遗留的问题。当使用双等号对两种类型的值进行比较时会返回 true，使用三个等号时会返回 false。
 
 ## 检测数据类型
 `Javascript` 检测数据类型有以下几种方式：
@@ -164,26 +171,150 @@ console.log(c) // Uncaught ReferenceError: c is not defined
 在全局作用域中，使用 `var` 声明变量时，会将变量存放进 `window` 对象，`let、const` 不会；
 `let、const`在 ES6 中出现，因此只能在支持ES6的环境中使用，而 `var` 没有这个限制。
 
-## 定义函数
-* 函数声明
-* 函数表达式
-* 构造函数
+## JSON
+JSON 是一种基于文本的轻量级的数据交换格式。它可以被任何的编程语言读取和作为数据格式来传递。
+
+因为 JSON 的语法是基于 js 的，因此很容易将 JSON 和 js 中的对象弄混，但是应该注意的是 JSON 和 js 中的对象不是一回事，JSON 中对象格式更加严格，比如说在 JSON 中属性值不能为函数，不能出现 NaN 这样的属性值等，因此大多数的 js 对象是不符合 JSON 对象的格式的。
+
+在 js 中提供了两个函数来实现 js 数据结构和 JSON 格式的转换处理，
+
+JSON.stringify 函数，通过传入一个符合 JSON 格式的数据结构，将其转换为一个 JSON 字符串。如果传入的数据结构不符合 JSON 格式，那么在序列化的时候会对这些值进行对应的特殊处理，使其符合规范。在前端向后端发送数据时，可以调用这个函数将数据对象转化为 JSON 格式的字符串。
+
+JSON.parse() 函数，这个函数用来将 JSON 格式的字符串转换为一个 js 数据结构，如果传入的字符串不是标准的 JSON 格式的字符串的话，将会抛出错误。当从后端接收到 JSON 格式的字符串时，可以通过这个方法来将其解析为一个 js 数据结构，以此来进行数据的访问。
+
+#### String和JSON.stringify的区别
+```js
+console.log(String("abc")); // abc
+console.log(JSON.stringify("abc")); // "abc"
+​
+console.log(String({ key: "value" })); // [object Object]
+console.log(JSON.stringify({ key: "value" })); // {"key":"value"}
+​
+console.log(String([1, 2, 3])); // 1,2,3
+console.log(JSON.stringify([1, 2, 3])); // [1,2,3]
+​
+const obj = {
+    title: "devpoint",
+    toString() {
+        return "obj";
+    },
+};
+console.log(String(obj)); // obj
+console.log(JSON.stringify(obj)); // {"title":"devpoint"}
+```
+
+当需要将一个数组和一个普通对象转换为字符串时，经常使用JSON.stringify。
+如果需要对象的toString方法被重写，则需要使用String()。
+在其他情况下，使用String()将变量转换为字符串。
 
 ## this
-`this` 的5种绑定方式
-1）默认绑定(非严格模式下 `this` 指向全局对象，严格模式下函数内的 this 指向 undefined)
-2）隐式绑定(当函数引用有上下文对象时, 如 obj.foo()的调用方式, foo内的this指向obj)
-3）显示绑定(通过call或者apply方法直接指定this的绑定对象, 如foo.call(obj))
-4）new构造函数绑定，this指向新生成的对象
-5）箭头函数，this指向的是定义该函数时，外层环境中的this，箭头函数的this在定义时就决定了，不能改变
+`this`是一个在运行时才进行绑定的引用，在不同的情况下它可能会被绑定不同的对象。
 
-## call apply bind
-* 三者的区别
-1）三者都可以显式绑定函数的this指向
-2）三者第一个参数都是this要指向的对象，若该参数为undefined或null，this则默认指向全局window
-3）传参不同：apply是数组、call是参数列表，而bind可以分为多次传入，实现参数的合并
-4）call、apply是立即执行，bind是返回绑定this之后的函数，如果这个新的函数作为构造函数被调用，那么this不再指向传入给bind的第一个参数，而是指向新生成的对象
-* 手写 call apply bind
+`this` 的5种绑定方式:
+* 默认绑定(非严格模式下 `this` 指向全局对象，严格模式下函数内的 `this` 指向 `undefined`)
+* 隐式绑定(当函数引用有上下文对象时, 如 `obj.foo()`的调用方式, `foo` 内的 `this`指向 `obj`)
+* 显示绑定(通过 `call` 或者 `apply` 方法直接指定 `this` 的绑定对象, 如 `foo.call(obj)`)
+* `new`构造函数绑定，`this`指向新生成的对象
+* 箭头函数，`this`指向的是定义该函数时，外层环境中的`this`，箭头函数的`this`在定义时就决定了，不能改变
+  
+#### this绑定的优先级
+new绑定优先级 > 显示绑定优先级 > 隐式绑定优先级 > 默认绑定优先级
+
+## 闭包
+指有权访问另一个函数作用域中的变量的函数。
+
+#### 常用用途
+* 在函数外部能够访问到函数内部的变量。通过使用闭包，可以通过在外部调用闭包函数，从而在外部访问到函数内部的变量，可以使用这种方法来创建私有变量。
+* 使已经运行结束的函数上下文中的变量对象继续留在内存中，因为闭包函数保留了这个变量对象的引用，所以这个变量对象不会被回收。
+
+
+#### 引用场景
+* 函数作为返回值
+* 函数作为参数传递
+* 循环赋值
+* 立即执行函数
+* 使用回调函数
+
+## 防抖 / 节流
+防抖（debounce）和节流（throttle）是两种常用的优化高频率触发事件的技术，常用于处理如窗口resize、滚动、键盘输入等事件，以减少不必要的计算或DOM操作，提升性能。
+#### 防抖
+如果一个函数持续被触发，那么在这个函数执行一次并且执行完毕之前，这个函数的调用会被忽略。也就是说，防抖函数会等待一定的时间，确保事件在这段时间内没有被重新触发，然后再执行。
+
+```js
+function debounce(func, wait) {
+  let timeout;
+  return function() {
+    const context = this;
+    const args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      func.apply(context, args);
+    }, wait);
+  };
+}
+
+// 使用示例
+const myEfficientFn = debounce(function() {
+  // 执行一些昂贵的操作，比如计算或者DOM操作
+}, 250);
+
+window.addEventListener('resize', myEfficientFn);
+```
+在这个例子中，myEfficientFn是一个防抖函数，它会在窗口大小调整（resize事件）停止后的250毫秒后执行。如果在这250毫秒内又发生了resize事件，那么之前的等待会被清除，并重新开始等待250毫秒。
+
+#### 节流
+如果一个函数持续被触发，那么每隔一段时间，该函数只会执行一次。也就是说，节流函数会确保函数在一个固定的时间间隔内只被执行一次。
+```js
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    const context = this;
+    const args = arguments;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+// 使用示例
+const myThrottledFn = throttle(function() {
+  // 执行一些昂贵的操作，比如计算或者DOM操作
+}, 250);
+
+window.addEventListener('scroll', myThrottledFn);
+```
+在这个例子中，myThrottledFn是一个节流函数，它会在滚动（scroll事件）发生时，确保每250毫秒最多执行一次函数。即使滚动事件发生的频率高于这个间隔，函数也只会在每个间隔结束时执行一次。
+
+#### 总结
+防抖和节流都是用来优化高频率触发事件的策略，但它们的工作方式略有不同。防抖侧重于确保事件处理函数在事件停止触发一段时间后执行，而节流则侧重于确保事件处理函数在固定的时间间隔内只执行一次。
+
+#### 闭包的优点
+* 数据封装和私有性：闭包可以实现数据的封装和隐藏，将变量和函数保护起来，使得它们只能被闭包内部的代码访问，而不能从外部直接访问。
+* 可以提供私有成员的存在，使得对象的状态和行为更加安全和可控。
+* 闭包可以记住并访问其外部的词法环境，即使在函数执行完毕后，闭包中的变量状态也可以被保持下来。这使得闭包可以在不同的函数调用之间共享数据，实现更加灵活和复杂的逻辑处理。
+* 闭包可以作为回调函数传递给其他函数，实现异步编程、事件处理等场景。同时，闭包还可以作为高阶函数，接受其他函数作为参数或返回函数作为结果，增强了代码的灵活性和可重用性。
+
+#### 闭包的缺点
+* 由于闭包可以保留变量的状态，这可能会导致内存使用量的增加，如果闭包被频繁创建且未及时释放，可能会导致内存泄漏。此外，由于闭包涉及更多的内存操作，可能会导致程序的执行效率降低。因此，在使用闭包时需要注意合理使用和管理内存。
+  
+
+## escape / encodeURI / encodeURIComponent
+#### 三者的区别
+* encodeURI 是对整个 URI 进行转义，将 URI 中的非法字符转换为合法字符，所以对于一些在 URI 中有特殊意义的字符不会进行转义。
+* encodeURIComponent 是对 URI 的组成部分进行转义，所以一些特殊字符也会得到转义。
+* escape 和 encodeURI 的作用相同，不过它们对于 unicode 编码为 0xff 之外字符的时候会有区别，escape 是直接在字符的 unicode 编码前加上 %u，而 encodeURI 首先会将字符转换为 UTF-8 的格式，再在每个字节前加上 %。
+
+
+## call / apply / bind
+#### 三者的区别
+* 三者都可以显式绑定函数的this指向
+* 三者第一个参数都是this要指向的对象，若该参数为undefined或null，this则默认指向全局window
+* 传参不同：apply是数组、call是参数列表，而bind可以分为多次传入，实现参数的合并
+* call、apply是立即执行，bind是返回绑定this之后的函数，如果这个新的函数作为构造函数被调用，那么this不再指向传入给bind的第一个参数，而是指向新生成的对象
+  
+#### 手写 call / apply / bind
   
 ```js
 // 手写call
@@ -244,47 +375,229 @@ Function.prototype.Bind = function(context, ...args) {
   return result;
 };
 ```
-## 闭包
-> 函数引用了外部作用域的变量, 副作用：不合理的使用闭包，会造成内存泄露(就是该内存空间使用完毕之后未被回收)
 
-* 闭包常见的两种情况：
-一是函数作为返回值； 另一个是函数作为参数传递
+## Promise 相关
+`Promise` 是异步编程的一种解决方案，它是一个对象，可以获取异步操作的消息；
 
-* 闭包的作用：
-可以让局部变量的值始终保持在内存中；对内部变量进行保护，使外部访问不到
+`Promise` 本身只是一个容器,真正异步的是它的两个回调 `resolve()`和`reject()`;
 
-* 最常见的案例：函数节流和防抖
+`Promise` 本质不是控制异步代码的执行顺序（无法控制） ，而是控制异步代码结果处理的顺序。
 
-* 闭包的垃圾回收：
-闭包中引用的变量直到闭包被销毁时才会被垃圾回收
+#### `Promise` 的三种状态：
+* pending（进行中）
+* resolved（已完成）
+* rejected（已拒绝）
 
-## promise 链式调用
-* `promise` 的回调只能被捕获一次
-* 在 `then` 函数加上 `return`，后面的 `then` 函数才能继续捕获到
-* `race`：返回 `promises` 列表中第一个执行完的结果
-* `all`：返回 `promises` 列表中全部执行完的结果
-* `retry`： 当接口请求失败后，每间隔几秒，再重发几次
+当把一件事情交给 `Promise`时，它的状态就是 `pending（进行中）`，任务完成了状态就变成了  、没有完成失败了就变成了`rejected（已拒绝）`。
+
+#### 如何改变 Promise 的状态
+
+* resolve(value): 如果当前是 `pending` 就会变为 `resolved`
+* reject(error): 如果当前是 `pending` 就会变为 `rejected`
+* 抛出异常: 如果当前是 `pending` 就会变为 `rejected`
+
+> `Promise` 状态一旦改变就不会再变，任何时候都可以得到这个结果。
+
+#### 创建 Promise 实例
+* new Promise()
+```js
+const promise = new Promise((resolve, reject) => {
+  // 异步操作
+  if (/* 异步操作成功 */){
+    resolve(value);
+  } else {
+    reject(error);
+  }
+});
+```
+一般情况下都会使用`new Promise()`来创建 `promise` 对象，但是也可以使用 `promise.resolve` 和 `promise.reject` 这两个方法。
+
+#### Promise 的实例方法
+* then
+接受两个回调函数作为参数。第一个回调函数是 `Promise` 对象的状态变为 `resolved` 时调用，第二个回调函数是 `Promise` 对象的状态变为 `rejected` 时调用。其中第二个参数可以省略。 
+
+then方法返回的是一个新的 `Promise` 实例（不是原来那个 `Promise` 实例）。因此可以采用链式写法，即 `then` 方法后面再调用另一个 `then` 方法。
+* catch
+该方法相当于 `then` 方法的第二个参数，指向 `reject` 的回调函数。不过 `catch` 方法还有一个作用，就是在执行 `resolve` 回调函数时，如果出现错误，抛出异常，不会停止运行，而是进入 `catch` 方法中。
+* finally
+`finally` 方法用于指定不管 `Promise` 对象最后状态如何，都会执行的操作。
+
+`finally`方法的回调函数不接受任何参数，这意味着没有办法知道，前面的 `Promise` resolved 还是 rejected。这表明，finally方法里面的操作，应该是与状态无关的，不依赖于 Promise 的执行结果。
+
+#### Promise 的静态方法
+* Promise.resolve / Promise.reject
+用来生成对应状态的Promise实例
+
+* Promise.all
+`Promise.all` 方法可以完成并发任务， 它接收一个数组，数组的每一项都是一个 `promise` 对象，返回一个 `Promise` 实例。当数组中所有的 `promise` 的状态都达到 `resolved` 的时候，`Promise.all` 方法的状态就会变成 `resolved` ，如果有一个状态变成了 `rejected`，那么`Promise.all` 方法的状态就会变成 `rejected`。
+> 成功的时候返回的是一个结果数组，而失败的时候则返回最先被 `reject` 失败状态的值。
+
+* Promise.race
+`Promise.race` 方法和 `Promise.all` 一样，接受的参数是一个每项都是 `promise` 的数组，但是与 `Promise.all` 不同的是，当最先执行完的事件执行完之后，就直接返回该 `promise` 对象的值。如果第一个 `promise` 对象状态变成 `resolved`，那自身的状态变成了 `resolved`；反之第一个 `promise` 变成 `rejected`，那自身状态就会变成 `rejected`。
+> 哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态。
+
+* Promise.any
+该方法返回一个 `promise`，只要参数实例有一个变成 `resolved` 状态，包装实例就会变成 `resolved` 状态；如果所有参数实例都变成 `rejected` 状态，包装实例就会变成 `rejected` 状态。
+> 返回最快的成功结果，如果全部失败就返回失败结果。
+
+#### 缺点
+* 无法取消 `Promise`，一旦新建它就会立即执行，无法中途取消。
+* 如果不设置回调函数，`Promise` 内部抛出的错误，不会反应到外部。
+* 当处于 `pending` 状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。
   
 ## async、await
-> 用同步方式，执行异步操作
+`async` 和 `await` 是 Js 中用于处理异步操作的关键字
 
-1）`async` 函数是  `generator（生成器函数）的语法糖`
-2）`async` 函数返回的是一个 `Promise` 对象，有无值看有无 `return` 值
-3）`await` 关键字只能放在 `async` 函数内部，`await` 关键字的作用 就是获取 `Promise` 中返回的 `resolve` 或者 `reject` 的值
-4）`async、await` 要结合 `try/catch` 使用，防止意外的错误
+#### async 
+`async` 关键字用于声明一个函数是异步的。当一个函数被标记为 `async`，它会隐式地返回一个 `Promise` 对象。这意味着，即使你没有在函数内部显式地使用 `return` 语句返回一个新的 `Promise`，该函数仍然会返回一个 `Promise`。
+
+#### await
+`await` 关键字只能在 `async` 函数内部使用。它用于等待一个 `Promise` 完成，并返回其解析的值。如果 `Promise`被拒绝，`await` 会抛出一个异常。
+
+#### 错误处理
+使用 `try-catch` 块来处理 `async` 函数中的错误。在 `try-catch` 块中，你可以使用 `await` 来等待 `Promise` 的完成，并在 `catch` 块中处理任何可能发生的错误。
+
+#### 注意事项
+* `async` 函数总是返回一个 `Promise`，即使你没有显式地使用 `return` 语句。
+* `await` 只能出现在 `async` 函数内部。
+* `await` 等待的是一个 `Promise` 对象，而不是任何其他类型的值。
+* 使用 `await` 会暂停当前 `async` 函数的执行，直到等待的 Promise 完成或拒绝。这并不意味着整个 Js 运行时会被暂停；只有当前的 `async` 函数会被暂停。
+* 虽然 `async/await` 使异步代码看起来更同步，但它们仍然是异步的，并且不会阻塞其他代码的执行。
+  
+## async/await 对比 Promise 的优势
+
+#### 1. 代码可读性更高
+`async/await` 使得异步代码看起来更像同步代码，逻辑更清晰，易于理解和维护。通过使用 `await` 关键字，可以将异步操作写成一系列顺序执行的语句，而不是嵌套的回调函数，从而提高了代码的可读性。
+
+#### 2. 错误处理更方便
+`Promise` 使用 `catch()` 方法来捕获错误，而 `async/await` 可以使用 `try-catch` 语句来捕获错误。`try-catch `语句的语法更加直观，能够更清晰地表示出代码中的错误处理逻辑。此外，`async/await` 的错误堆栈追踪会显示在出错的地方，方便调试和定位错误。
+
+#### 3. 避免回调地狱
+`Promise` 有效地解决了回调地狱问题，即多个异步操作嵌套调用导致的代码可读性差、难以维护的问题。然而，`async/await` 更进一步地简化了异步代码的书写，使得代码结构更加扁平化，避免了回调嵌套的问题。
+
+#### 4. 更好的并发控制
+虽然 `Promise` 可以通过 `Promise.all()` 方法实现并发操作，但 `async/await` 在某些情况下可能提供更直观的并发控制。例如，你可以使用 `Promise.all()` 与 `async/await` 结合，以顺序的方式处理一组异步操作，并在所有操作完成后进行下一步处理。
+
+## 深拷贝 / 浅拷贝
+#### 浅拷贝
+浅拷贝只复制对象的顶层属性和值。如果对象的属性值还是对象，那么复制的是内存中的地址，因此原对象和拷贝对象中的这个属性会指向同一个内存地址，修改其中一个对象的属性值，另一个对象的属性值也会跟着改变。
+
+在JavaScript中，Object.assign() 和展开运算符（...）都是浅拷贝的例子。
+```js
+let obj1 = {
+  a: 1,
+  b: { c: 2 }
+};
+
+let obj2 = Object.assign({}, obj1);
+// 或者
+// let obj2 = {...obj1};
+obj2.b.c = 3;
+console.log(obj1.b.c); // 输出：3，因为obj1和obj2的b属性指向同一个对象
+```
+#### 深拷贝
+深拷贝会复制对象及其所有的子对象，直到最底层的基本数据类型为止。这样，原对象和拷贝对象是完全独立的，修改其中一个对象的属性值，不会影响到另一个对象。
+
+`Js` 本身并没有提供深拷贝的内置方法，但可以通过递归或者使用`JSON.parse(JSON.stringify(obj))` 的方式来实现深拷贝。但需要注意的是，`JSON.parse(JSON.stringify(obj))`这种方法有局限性，比如它不能处理函数和循环引用的情况，而且如果对象的属性值包含 `undefined`、`Symbol`、或者函数等，也无法正确拷贝。
+```js
+let obj1 = {
+  a: 1,
+  b: { c: 2 }
+};
+
+let obj2 = JSON.parse(JSON.stringify(obj1));
+
+obj2.b.c = 3;
+console.log(obj1.b.c); // 输出：2，因为obj1和obj2是完全独立的对象
+```
+对于更复杂或者需要处理函数、循环引用等情况的深拷贝，你可能需要使用一些库，如`lodash`的`_.cloneDeep()`方法。
+
+首先，你需要确保你的项目中已经安装了`lodash`库。如果还没有安装，你可以通过npm或yarn来安装：
+```bash
+npm install lodash
+```
+安装好`lodash`之后，就可以在你的JavaScript代码中使用`_.cloneDeep()`函数来实现深拷贝了：
+```js
+const _ = require('lodash'); // 如果你使用CommonJS模块系统
+// 或者
+import _ from 'lodash'; // 如果你使用ES6模块系统
+
+let obj1 = {
+  a: 1,
+  b: { c: 2 },
+  d: [3, 4, { e: 5 }]
+};
+let obj2 = _.cloneDeep(obj1);
+obj2.b.c = 3;
+obj2.d.push(6);
+obj2.d[2].e = 7;
+
+console.log(obj1); // 输出：{ a: 1, b: { c: 2 }, d: [ 3, 4, { e: 5 } ] }
+console.log(obj2); // 输出：{ a: 1, b: { c: 3 }, d: [ 3, 4, { e: 7 }, 6 ] }
+```
 
 ## 宏任务/微任务
-> 宏任务（Macrotasks）script全部代码（注意同步代码也属于宏任务）、setTimeout、setInterval、setImmediate等
+#### 宏任务（MacroTask）
+宏任务通常包括：
 
-> 微任务（Microtasks） Promise、MutationObserver
+* script（整体代码）
+* setTimeout
+* setInterval
+* setImmediate（Node.js环境）
+* I/O 操作（Node.js环境）
+* UI渲染（浏览器环境）
+* postMessage（浏览器环境）
+* MessageChannel（浏览器和Node.js环境）
+* requestAnimationFrame（浏览器环境）
+* 监听某些Web API事件（如监听DOM事件）
 
-事件轮询机制执行过程
-1）代码执行过程中，宏任务和微任务放在不同的任务队列中
-2）当某个宏任务执行完后,会查看微任务队列是否有任务。如果有，执行微任务队列中的所有微任务(注意这里是执行所有的微任务)
-3）微任务执行完成后，会读取宏任务队列中排在最前的第一个宏任务（注意宏任务是一个个取），执行该宏任务，如果执行过程中，遇到微任务，依次加入微任务队列
-4）宏任务执行完成后，再次读取微任务队列里的任务，依次类推。
+宏任务会被添加到宏任务队列中，按照先进先出的顺序执行。
 
-> 总结：宏任务是一个个执行，执行一个宏任务，然后就把在任务队列中的所有微任务都执行完，再执行下一个宏任务，再执行所有微任务，依次类推
+#### 微任务（MicroTask）
+微任务通常包括：
+
+* Promise.then()
+* Promise.catch()
+* Promise.finally()
+* MutationObserver（浏览器环境）
+* process.nextTick（Node.js环境）
+
+微任务会被添加到微任务队列中。在每一次事件循环中，当宏任务执行完毕后，会查看微任务队列中是否有微任务，如果有，会一次性执行完所有微任务，然后再执行下一个宏任务。
+#### 执行顺序
+1. 代码执行过程中，宏任务和微任务放在不同的任务队列中，并按先进先出的顺序依次执行一个宏任务（例如，整体代码）。
+2. 当某个宏任务执行完后,会查看微任务队列是否有任务。如果有，执行微任务队列中的所有微任务(注意这里是执行所有的微任务)
+3. 微任务执行完成后，会读取宏任务队列中排在最前的第一个宏任务（注意宏任务是一个个取）。
+4. 执行该宏任务，如果执行过程中，遇到微任务，依次加入微任务队列
+5. 重复上述步骤，直到宏任务队列和微任务队列都为空。
+
+> 微任务总是会在下一个宏任务开始之前执行完毕。因此，如果你在一个宏任务中创建了一个`Promise`，并在其`Promise.then()`方法中注册了一个回调函数，那么这个回调函数会在当前宏任务执行完毕后立即执行，而不是等到下一个宏任务。
+
+#### 示例代码
+```js
+console.log('script start'); // 宏任务
+
+setTimeout(() => {
+  console.log('setTimeout'); // 宏任务
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log('promise1'); // 微任务
+}).then(() => {
+  console.log('promise2'); // 微任务
+});
+
+console.log('script end'); // 宏任务
+```
+输出顺序是:
+```
+script start
+script end
+promise1
+promise2
+setTimeout
+```
+
+在这个示例中，`setTimeout`是一个宏任务，而`Promise的.then()`方法注册的回调函数是微任务。因此，即使`setTimeout`的延迟时间设置为0，它的回调函数仍然会在所有微任务执行完毕之后才执行。
 
 ## 常用排序算法
 * 冒泡排序
