@@ -2,47 +2,215 @@
 - `Entry` 【工程的入口文件配置】
 - `Output` 【打包的输出的文件配置】
 - `Mode` 【区分开发环境和生成环境】
-- `Loaders` 【文件转换，用于将各种类型的文件转换为 webpack 能够处理的有效模块】
+- `Loader` 【文件转换，用于将各种类型的文件转换为 webpack 能够处理的有效模块】
     1. js或ts文件编译：`babel-loader`
     2. css样式处理：`css-loader`、`sass-loader`、`less-loader` 等
     3. `img` 或 `html` 文件：`file-loader`、`url-loader`、`html-loader`
-- `Plugins` 【扩展功能，用于解决 Loaders 无法实现的特殊需求】
+- `Plugin` 【扩展功能，用于解决 Loader 无法实现的特殊需求】
 - `Optimization` 【策略配置，根据需要自定义优化构建打包的策略配置】
 
-## Loaders 与 Plugins 的区别
-`webpack` 在整个编译周期中会触发很多不同的事件，`plugin` 可以监听这些事件，并且可以调用 `webpack` 的 API 对输出资源进行处理。
-`loader` 一般只能对源文件代码进行转换，而 `plugin` 可以做得更多。
-`plugin` 在整个编译周期中都可以被调用，只要监听事件。
-> 当链式调用多个 `loader` 的时候，会以相反的顺序执行。取决于数组写法格式，从右向左或者从下向上执行。
+## 工作流程
+#### 1. 解析入口文件
+Webpack会根据配置文件中指定的入口文件开始解析整个项目的依赖关系。它会递归地查找入口文件所依赖的其他文件，并将它们加入到依赖关系图中。
+#### 2. 加载模块
+Webpack会使用不同的loader来加载各种类型的文件，包括JavaScript、CSS、图片等。每当遇到一个文件时，Webpack会根据配置文件中的loader配置来选择相应的loader处理该文件。
+#### 3. 转换代码
+通过加载器，Webpack将每个文件转换成浏览器可识别的代码。例如，使用Babel可以将ES6或TypeScript的代码转换为ES5的代码。
+#### 4. 构建依赖关系图
+Webpack会根据所有文件的依赖关系，构建一个依赖关系图。
+#### 5. 应用插件
+在打包的不同阶段，Webpack会应用一系列插件。插件可以用于执行各种任务，例如代码压缩、资源优化、环境变量注入等。插件可以根据需要来定制Webpack的构建过程。
+#### 6. 生成输出文件
+最后，Webpack会根据配置文件中的输出配置（output）来生成最终的输出文件。
 
-## 打包流程
-1. 读取 `webpack` 的配置参数；
-2. 启动 `webpack`，创建 `Compiler` 对象并开始解析项目；
-3. 从入口文件（entry）开始解析，并找到其导入的依赖模块，递归遍历分析，形成依赖关系树；
-4. 对不同文件类型的依赖模块文件使用对应的 `Loader` 进行编译，最终转为Javascript文件；
-5. 整个过程中 `webpack` 会通过发布订阅模式，向外抛出一些hooks，而 webpack 的插件即可通过监听这些关键的事件节点，执行插件任务进而达到干预输出结果的目的。
-> 最终 `Webpack` 打包出来的 `bundle` 文件是一个执行函数。
+## 常用配置
+- `output.path` 【打包的输出目录】
+- `output.filename` 【打包的输出文件名】
+- `module.rules` 【配置 Loader】
+- `plugins` 【配置 Plugin】
+- `optimization` 【配置优化策略】
+- `devServer` 【配置开发服务器】
+- `resolve` 【配置模块解析】
+- `externals` 【配置外部扩展】
+- `devtool` 【配置 Source Map】
+- `mode` 【配置构建模式】
+- `target` 【配置构建目标】
+- `watch` 【配置文件监听】
 
-## 打包优化点
-- 减少模块体积
-  1. `Tree Shaking`: 确保你的ES6模块使用了静态导入，以便 `Webpack` 可以执行树摇操作，移除未使用的代码。
-  2. 代码分割: 使用 `import()` 或 `splitChunks` 插件进行动态导入和代码拆分，将代码分割成按需加载的 `chunks` 。
-  3. 压缩: 在生产环境中启用 `terser-webpack-plugin` 进行JavaScript压缩，减小文件大小。
-- 提升构建速度
-  1. 多核编译: 利用`thread-loader`与 `HappyPack` 或`webpack-parallel-uglify-plugin` 等插件，实现多进程并行编译。
-  2. 持久化缓存: 使用 `cache-loader` 和 `hard-source-webpack-plugin` 来缓存编译结果，加速二次构建。
-  3. 增量构建: 确保 `Webpack` 配置支持热更新(Hot Module Replacement, HMR)，减少全量构建需求。
-- 优化资源处理
-  1. 图片与字体: 使用 `url-loader` 和 `file-loader`，并设置适当的文件大小限制，将小资源转为 `Base64` 内联，减少 `HTTP` 请求。
-     1. CSS与样式: 利用 `mini-css-extract-plugin` 提取 `CSS` 到单独文件，启用`css-loader` 的模块化特性，并使用 postcss-loader 配合 `Autoprefixer`自动添加浏览器前缀。
-  2. 懒加载: 对非首屏依赖的资源采用懒加载策略，如图片和部分JS模块。
-- 性能监控
-  1. 分析工具: 使用 `webpack-bundle-analyzer` 可视化打包结果，识别体积大的模块。
-  2. `Source Map`: 生产环境下使用 `source-map` 或 `cheap-module-source-map` 保持调试信息，但注意这会增加构建产物的大小。
-- 配置优化
-  1. `externals`: 将不经常变动的大型库（如React, Vue）通过 `CDN` 引入，并在`Webpack` 配置中声明为 `external`，避免打入 `bundle`。
-  2. `resolve.alias`: 为常用模块设置别名，缩短解析路径，加快编译速度。
-  3. `Mode`: 确保在生产环境中使用 `mode: 'production'`，`Webpack` 会自动应用一系列优化。
-- 持续集成优化
-  1. CI/CD集成: 在持续集成流程中集成 `Webpack` 构建，确保每次提交都能得到优化的输出。
-  2. 构建报告: 生成详细的构建报告，监控每次构建的性能变化。
+## Loader 与 Plugin 的区别
+在 webpack 中，Loader 和 Plugin 都是扩展其功能的重要工具，但它们在功能和使用方式上有着显著的区别。
+
+#### Loader
+* 1. Loader 的功能
+Loader 用于对模块的源代码进行转换。webpack 本身只理解 JavaScript 和 JSON 文件，对于其他类型的文件，如 CSS、图片等，webpack 需要通过 Loader 来进行转换，以便能够识别和打包这些非 JavaScript 资源。
+* 2. Loader 的工作原理
+Loader 在 webpack 的模块打包流程中，对模块的源码进行转换。它会接收上一个 Loader 处理后的内容，并返回处理后的内容给下一个 Loader。最终，所有的 Loader 处理完毕后，webpack 将得到转换后的模块内容，并进行打包。
+* 3. 示例：
+例如，style-loader 和 css-loader 就是两个常用的 Loader。css-loader 会将 CSS 文件转换成 CommonJS 模块，而 style-loader 则会将 CSS 注入到 JavaScript 中，通过 DOM 操作将样式添加到页面中。
+
+#### Plugin
+* 1. Plugin 的功能
+Plugin 则是用于扩展 webpack 功能的钩子（Hook）。它们并不直接操作文件内容，而是在 webpack 运行的生命周期中的某些节点上触发，执行特定的任务。
+
+* 2. Plugin 的工作原理
+webpack 在运行过程中会广播事件，Plugin 可以监听这些事件，并在合适的时机通过 webpack 提供的 API 改变输出结果。
+
+* 3. 示例
+例如，HtmlWebpackPlugin 是一个常用的 Plugin，它会在 webpack 打包完成后，自动生成一个 HTML 文件，并将打包生成的 JS 文件自动引入到这个 HTML 文件中。
+
+#### Loader 与 Plugin 的区别总结
+* 1. 功能定位：Loader 主要用于转换文件内容，而 Plugin 用于扩展 webpack 功能。
+
+* 2. 工作原理：Loader 是在 webpack 打包流程的模块处理阶段工作，对模块的源码进行转换；Plugin 则是在 webpack 运行的生命周期中的特定节点上触发，执行特定的任务。
+
+* 3. 使用方式：Loader 通常在 webpack 的配置文件（如 webpack.config.js）的 module.rules 中配置；Plugin 则在 plugins 数组中配置。
+
+
+## 常用 loader
+* babel-loader：将ES6代码转换成ES5
+* ts-loader：将TS代码转换成JS
+* style-loader：将CSS代码注入到JavaScript中
+* less-loader：将LESS代码转换成CSS
+* sass-loader：将SCSS/SASS代码转换成CSS
+* postcss-loader：将CSS代码转换成兼容性更好的CSS
+* css-loader：加载 CSS，支持模块化、压缩、文件导入等特性
+* url-loader：将图片/字体等文件转换成 base64 URI
+* file-loader：将文件输出到文件夹中，在代码中通过相对 URL 去引用输出的文件
+* eslint-loader：通过 ESLint 检查 JavaScript 代码
+
+## 常用 plugin
+* html-webpack-plugin：简化HTML文件的创建，并自动引入打包输出的资源(依赖于 html-loader)
+* clean-webpack-plugin：清理构建目录
+* mini-css-extract-plugin：分离样式文件，CSS 提取为独立文件，支持按需加载 (替代extract-text-webpack-plugin)
+* optimize-css-assets-webpack-plugin：压缩CSS资源
+* copy-webpack-plugin：将文件或文件夹拷贝到构建的输出目录
+* speed-measure-webpack-plugin：分析出 Webpack 打包过程中 Loader 和 Plugin 的耗时，有助于找到构建过程中的性能瓶颈
+* webpack-bundle-analyzer：可视化 Webpack 输出文件的体积（业务组件、依赖的第三方模块等）
+
+## 热更新原理
+Webpack的热更新（Hot Module Replacement，简称HMR）原理可以概括为以下几个步骤：
+
+#### 1. 标记可替换模块
+Webpack首先会将需要热更新的模块标记为“可替换模块”（Hot Module）。这些模块在运行时可以被新的模块代码替换，而无需重新加载整个页面。
+
+#### 2. 建立WebSocket连接
+当应用程序运行时，Webpack会启动一个WebSocket服务，与客户端（通常是浏览器）建立连接。这个连接用于在模块代码发生变化时，实时地将更新信息发送给客户端。
+
+#### 3. 发送更新信息
+当项目中的某个模块代码发生改变时（例如，开发者保存了修改后的文件），Webpack会检测到这种变化，并通过WebSocket服务向客户端发送更新信息。这些信息通常包含了发生变化的模块的名称和新的模块代码。
+
+#### 4. 请求更新模块代码
+客户端接收到更新信息后，会通过WebpackDevMiddleware向Webpack发送请求，以获取最新的模块代码。
+
+#### 5. 注入新代码
+Webpack将最新的模块代码发送给客户端后，客户端会将这些新代码注入到当前页面的对应模块中。这个过程是局部的，只涉及发生变化的模块，不会影响到页面的其他部分，因此页面的状态（如复选框的选中状态、输入框的内容等）会被保留下来。
+
+#### 6. 实现热更新
+最后，客户端使用新的模块代码替换原有的模块代码，从而实现了热更新。由于这个过程是实时的，开发者可以在不刷新页面的情况下，立即看到代码修改后的效果，大大提高了开发效率和体验。
+
+> Webpack的热更新功能不仅支持JavaScript模块的更新，还支持CSS、图片等资源的更新。这使得开发者在开发过程中可以实时预览和调试页面的样式和布局变化。
+
+#### 总结
+Webpack的热更新功能通过建立WebSocket连接，实时向客户端发送更新信息，并在客户端接收到更新信息后，使用新的模块代码替换原有的模块代码，从而实现热更新。整个过程是实时的、局部性的，不会影响到页面的其他部分，因此页面的状态（如复选框的选中状态、输入框的内容等）会被保留下来。
+
+## Webpack 优化
+
+#### 1. 设置合适的 mode
+Webpack 提供了不同的 mode 模式，包括 development、production 和 none。在生产环境下，将 mode 设置为 production 可以自动开启一系列的优化策略，如代码压缩、去除无用代码等。而在开发环境下，将 mode 设置为 development 可以更方便地调试和定位问题。
+
+#### 2. 代码分割
+通过代码分割，可以将项目代码分割成多个块（chunks），按需加载。这有助于减小初始加载的文件大小，提高页面加载速度。
+
+#### 3. Tree Shaking
+利用 Tree Shaking 技术，可以剔除项目中未使用的代码，减少打包后的文件大小。这需要在 Webpack 的配置中启用 optimization.usedExports 选项。
+
+#### 4. 优化加载速度
+
+使用 Webpack 的插件和加载器（loader）的缓存机制，如 MiniCssExtractPlugin 和 babel-loader 的缓存，以减少构建时间和加载时间。
+
+#### 5. 并行构建
+使用 thread-loader 或 happypack 插件将任务分发给多个子进程并行处理，可以显著提高构建速度。
+
+#### 6. 压缩代码
+使用 TerserPlugin 插件对 JavaScript 代码进行压缩和混淆，减小文件体积。同时，对于 CSS 代码，可以使用 cssnano 等工具进行压缩。
+
+#### 7. 优化图片
+利用 url-loader 和 image-webpack-loader 插件，可以对图片进行优化和压缩，减小图片的体积，从而加快页面加载速度。
+
+#### 8. 使用缓存
+通过配置 cache-loader 或 hard-source-webpack-plugin 插件，Webpack 可以缓存处理过的文件，避免重复的文件处理操作，进一步提高构建速度。
+
+#### 9. 优化 resolve 配置
+合理设置 resolve.extensions 和 resolve.alias 等配置项，可以减少 Webpack 在解析模块时的查找次数，提高构建性能。
+
+#### 10. 分析打包结果
+使用 webpack-bundle-analyzer 工具对打包结果进行可视化分析，找出可能的优化点，如哪些模块过大、哪些依赖被重复打包等。
+
+请注意，在进行 Webpack 优化时，需要根据项目的实际情况和需求进行选择和调整。同时，也要关注代码的可读性和可维护性，避免过度优化导致代码难以理解和维护。
+
+下面是一个 Webpack 优化的具体的配置示例，以帮助你更好地理解如何在实际项目中应用这些优化策略。
+```js
+// webpack.config.js
+const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+module.exports = {
+  mode: 'production', // 设置模式为生产环境
+  entry: './src/index.js', // 入口文件
+  output: {
+    filename: '[name].[contenthash].js', // 输出文件名，使用contenthash确保文件内容改变时文件名也会改变
+    path: path.resolve(__dirname, 'dist'), // 输出目录
+  },
+  optimization: {
+    minimize: true, // 开启代码压缩
+    minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})], // 使用TerserPlugin压缩JS代码，使用OptimizeCSSAssetsPlugin压缩CSS代码
+    splitChunks: {
+      chunks: 'all', // 将所有类型的模块进行代码分割
+    },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/, // 匹配JS文件
+        exclude: /node_modules/, // 排除node_modules目录下的文件
+        use: {
+          loader: 'babel-loader', // 使用babel-loader转换ES6+语法
+          options: {
+            cacheDirectory: true, // 开启babel缓存，提高构建速度
+          },
+        },
+      },
+      {
+        test: /\.css$/, // 匹配CSS文件
+        use: [MiniCssExtractPlugin.loader, 'css-loader'], // 使用MiniCssExtractPlugin提取CSS到单独的文件中，并使用css-loader加载CSS文件
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i, // 匹配图片文件
+        type: 'asset/resource', // 使用asset模块类型处理图片文件
+        generator: {
+          filename: 'images/[name].[hash:7][ext]', // 设置图片的输出文件名和路径，使用hash确保图片内容改变时文件名也会改变
+        },
+      },
+    ],
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css', // 设置提取出的CSS文件的输出文件名和路径
+    }),
+  ],
+  resolve: {
+    extensions: ['.js', '.jsx', '.css'], // 配置自动解析的扩展名，减少导入模块时的后缀名书写
+  },
+};
+```
+在这个配置示例中，使用了mode: 'production'来设置Webpack的模式为生产环境，这会自动启用一些生产环境的优化策略。我们还配置了entry和output来指定入口文件和输出目录。
+
+在optimization配置中，我们开启了代码压缩，并使用了TerserPlugin和OptimizeCSSAssetsPlugin来分别压缩JS和CSS代码。我们还使用了splitChunks来进行代码分割，将代码拆分成多个块以按需加载。
+
+在module.rules中，我们配置了不同的加载器来处理不同类型的文件。对于JS文件，我们使用了babel-loader来转换ES6+语法，并开启了babel缓存来提高构建速度。对于CSS文件，我们使用了MiniCssExtractPlugin.loader和css-loader来提取CSS到单独的文件中。对于图片文件，我们使用了asset/resource模块类型来处理，并设置了图片的输出文件名和路径。
+
+最后，在plugins中，我们使用了MiniCssExtractPlugin来提取CSS到单独的文件中，并设置了输出文件名和路径。
+
+请注意，这只是一个基本的配置示例，你可以根据你的项目需求进一步调整和优化这些配置。同时，记得在配置过程中查阅相关文档和资料，以确保你正确地使用了Webpack的各个功能和插件。

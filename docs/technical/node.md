@@ -1,3 +1,5 @@
+Node 是一个开源的、跨平台的、基于事件驱动的、轻量级的服务器端 JavaScript 运行环境，提供了一种简单的方式来运行 JavaScript 代码。
+
 ## 版本管理（nvm）
 如果需要安装多个版本的 `Node.js`，可以使用版本管理工具 `nvm（Node Version Manager）`。以下是安装和使用 `nvm` 的基本步骤：
 1. 安装 `nvm`

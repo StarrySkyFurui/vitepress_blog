@@ -27,13 +27,15 @@ function getTechnical() {
       ],
     },
     {
+      // text: "TypeScript 基础知识",
+      // collapsible: true,
+      // collapsed: true,
+      // items: [
+      //   { text: "基础知识", link: "/technical/ts/base" },
+      //   { text: "内置工具", link: "/technical/ts/tool" },
+      // ],
       text: "TypeScript 基础知识",
-      collapsible: true,
-      collapsed: true,
-      items: [
-        { text: "基础知识", link: "/technical/ts/base" },
-        { text: "内置工具", link: "/technical/ts/tool" },
-      ],
+      link: "/technical/ts/base",
     },
     {
       text: "Vue 生态合集",
