@@ -235,6 +235,107 @@ new绑定优先级 > 显示绑定优先级 > 隐式绑定优先级 > 默认绑�
 * 立即执行函数
 * 使用回调函数
 
+## 重绘 / 回流
+#### 重绘
+重绘是浏览器重新绘制受到影响的部分到屏幕上的过程。当元素的外观属性（如颜色、背景色、边框色等）发生变化，而不影响元素的位置和尺寸时，会触发重绘。
+
+##### 1. 触发条件：
+  * 单独改变DOM的样式而不改变尺寸的大小。
+  * 修改了可见性（如使用display: none）等不会影响页面布局的属性。
+  
+##### 2. 性能影响：
+重绘通常比回流更快，因为它只是关于元素的外观属性，不涉及布局和几何信息的计算。
+
+##### 3. 优化策略：
+  * 使用缓存来减少对引起flush队列的属性的访问。
+  * 使用cssText来一次性修改多个样式属性。
+
+#### 回流
+回流发生在当页面的布局和几何信息发生改变时，浏览器需要重新计算页面的布局和渲染树。这个过程也称为重排或重布局。
+
+##### 1. 触发条件：
+  * 添加或删除可见的DOM元素。
+  * DOM元素位置发生变化。
+  * DOM元素尺寸大小发生变化（如边距、填充、边框、宽度和高度变化）。
+  * 内容变化（例如文本大小改变）。
+  * 浏览器窗口尺寸改变。
+  
+##### 2. 性能影响：
+回流通常需要更多的计算资源，因为它涉及到重新计算页面的布局和渲染树，这可能导致页面渲染的延迟。
+
+##### 3. 优化策略：
+  * 避免频繁地修改样式，尽量一次性修改多个样式属性。
+  * 使用transform代替top/left等位移属性，因为transform不会触发回流。
+  * 使用requestAnimationFrame来安排DOM更新，以将多个DOM操作合并为一个操作。
+  * 将需要多次重排的元素设置为position: fixed或position: absolute，因为它们脱离了正常的文档流，其变化不会影响到其他元素。
+
+#### 示例
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: red;
+  position: relative;
+}
+</style>
+</head>
+<body>
+<div class="box" id="myBox"></div>
+<button onclick="moveBox()">移动盒子</button>
+<script>
+function moveBox() {
+  var box = document.getElementById('myBox');
+  // 直接修改left属性会触发回流
+  box.style.left = '200px';
+}
+</script>
+</body>
+</html>
+```
+在这个例子中，点击按钮后，直接修改了元素的left属性，这会导致浏览器进行回流操作。为了优化性能，我们可以使用CSS的transition属性来实现平滑的动画效果，而不是直接修改left属性：
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: red;
+  position: relative;
+  transition: left 0.3s ease-out; /* 添加过渡效果 */
+}
+.move {
+  left: 200px;
+}
+</style>
+</head>
+<body>
+<div class="box" id="myBox"></div>
+<button onclick="moveBox()">移动盒子</button>
+<script>
+function moveBox() {
+  var box = document.getElementById('myBox');
+  // 使用CSS类名添加过渡效果，避免直接修改left属性
+  box.classList.add('move');
+}
+</script>
+</body>
+</html>
+```
+在这个优化后的例子中，我们使用CSS的过渡效果来实现盒子的平滑移动，而不是直接修改left属性。这样，当点击按钮时，只会触发重绘而不会触发回流，从而提高了页面性能。
+
+
+#### 总结
+* 区别：重绘只涉及元素的外观属性，而回流涉及页面布局和几何信息的计算。
+* 联系：重绘不一定会触发回流，但回流一定会触发重绘。
+* 优化：为了优化网页性能，应尽量减少回流和重绘的次数。可以通过上述优化策略来减少不必要的计算和渲染工作。
+
+
 ## 防抖 / 节流
 防抖（debounce）和节流（throttle）是两种常用的优化高频率触发事件的技术，常用于处理如窗口resize、滚动、键盘输入等事件，以减少不必要的计算或DOM操作，提升性能。
 #### 防抖

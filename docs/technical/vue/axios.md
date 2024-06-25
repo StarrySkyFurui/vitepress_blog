@@ -37,23 +37,6 @@ source.cancel('取消请求的原因');
 * `axios.Cancel` 用于创建一个取消请求的错误对象。
 * `axios.CancelToken.source()` 用于创建一个取消令牌的源对象，该源对象包含一个 `cancel` 函数，调用该函数可以取消请求。
   
-## 发送文件
-* `axios.post()` 方法可以用于发送文件，只需要将文件作为请求体的一部分传递给该方法即可。
-```js
-const formData = new FormData();
-formData.append('file', file);
-
-axios.post('/upload', formData, {
-    headers: {
-        'Content-Type': 'multipart/form-data'
-    }
-}).then(function(response) {
-    // 处理响应
-}).catch(function(error) {
-    // 处理错误
-});
-```
-* 需要注意的是，`axios.post()` 方法默认不会处理文件上传，需要手动设置请求头的 `Content-Type` 为 `multipart/form-data`。
 
 ## 发送 JSON 数据
 * `axios.post()` 方法可以用于发送JSON数据，只需要将JSON数据作为请求体的一部分传递给该方法即可。
@@ -128,7 +111,7 @@ axios.get('https://example.com/api/users', {
 * 需要注意的是，`axios.get()` 方法默认不会处理请求参数，需要手动设置请求头的 `Content-Type` 为 `application/x-www-form-urlencoded`。
 
 
-## 发送DELETE请求
+## 发送 DELETE 请求
 * `axios.delete()` 方法可以用于发送DELETE请求，只需要将请求体作为请求参数的一部分传递给该方法即可。
 ```js
 const data = {

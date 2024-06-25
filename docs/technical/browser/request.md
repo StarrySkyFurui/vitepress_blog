@@ -80,3 +80,20 @@ export default {
 };
 </script>
 ```
+
+## 常见的HTTP请求头和响应头
+- `Accept`：指定客户端能够接收的内容类型
+- `Accept-Charset`：指定客户端能够接受的字符编码集
+- `Accept-Encoding`：指定客户端能够接受的内容编码
+- `Accept-Language`：指定客户端能够接受的自然语言集
+- `Authorization`：指定客户端提供给服务器的认证信息
+- `Cache-Control`：指定请求和响应遵循的缓存机制
+- `Connection`：指定与目标资源之间的连接类型
+- `Content-Length`：指定请求消息正文的长度
+- `Content-Type`：指定请求消息正文的媒体类型
+- `Cookie`：包含请求消息的 Cookie 信息
+- `Date`：指定请求消息的发送日期和时间
+- `Host`：指定请求消息发送的互联网主机和端口号
+- `Referer`：包含一个 URL，用户从该 URL 代表的页面出发访问当前请求的页面
+- `User-Agent`：包含一个用户代理字符串，该字符串用来标识发起请求的用户代理软件信息
+  

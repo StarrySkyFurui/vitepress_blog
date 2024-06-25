@@ -44,6 +44,7 @@ function getTechnical() {
       items: [
         { text: "Vue 基础知识", link: "/technical/vue/vue" },
         { text: "VueX 基础知识", link: "/technical/vue/vuex" },
+        { text: "Pinia 基础知识", link: "/technical/vue/pinia" },
         { text: "Axios 基础知识", link: "/technical/vue/axios" },
         { text: "Vue-Router 基础知识", link: "/technical/vue/router" },
       ],
