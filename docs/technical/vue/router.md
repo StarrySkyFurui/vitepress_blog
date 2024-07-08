@@ -24,17 +24,17 @@ npm install vue-router
 总的来说，`Vue Router`通过监听URL变化、匹配路由规则和渲染组件的方式，实现了单页应用（SPA）中的页面切换和局部更新。这使得我们可以构建出更加流畅和响应式的Web应用体验。
 
 ## 路由模式
-#### 哈希模式（mode: hash）
+### 哈希模式（mode: hash）
   * 原理：在 `URL` 中使用带有 `#` 符号的哈希值来管理路由。例如，`http://xxxx.com/#/path`。
   * 特点：当 `URL` 的哈希值发生变化时，浏览器不会向服务器发送请求，而是通过监听 `hashchange` 事件来进行路由导航。
   * 优点：支持在所有现代浏览器中运行，包括旧版本的浏览器，且不需要后端服务器的特殊配置。
   * 缺点：`URL` 中包含 `#` 符号，可能不太美观，同时在搜索引擎优化`（SEO）`方面不如 `History` 模式。
-#### History 模式（mode: history）
+### History 模式（mode: history）
   * 原理：使用 `HTML5 History API`（`pushState`、`replaceState` 和 `popstate` 事件）来管理路由。
   * 特点：使用 `URL` 中的路径来管理路由，例如 `http://xxxx.com/path`。当 `URL` 发生变化时，浏览器会向服务器发送请求。因此，在使用此模式时，服务器需要配置相应的路由规则，以确保在刷新页面或直接访问 `URL` 时能正确响应路由。
   * 优点：`URL` 看起来更干净，没有 `#` 符号更加美观，在 `SEO` 方面表现更好。
   * 缺点：需要后端服务器支持，否则直接访问子路由可能会返回 404 错误。
-#### Abstract 模式（mode: abstract）
+### Abstract 模式（mode: abstract）
   * 原理：使用一个虚拟的 `URL` 管理路由。
   * 特点：不依赖于 `URL`，可以用于非浏览器环境，例如 `Node.js` 服务器端渲染。
   * 优点：可以用于非浏览器环境，例如 `Node.js` 服务器端渲染。
@@ -42,7 +42,7 @@ npm install vue-router
 
 ## 路由跳转
 在 `vue-router` 中，你可以定义路由规则，并通过编程式或声明式的方式实现路由跳转。
-#### 声明式导航
+### 声明式导航
 声明式导航主要使用 `<router-link>` 组件来实现。`<router-link>` 会被渲染成一个 `<a>` 标签，点击该标签会触发路由跳转。
 ```vue
 <router-link to="/home">Home</router-link>
@@ -50,7 +50,7 @@ npm install vue-router
 ```
 在上面的例子中，`to` 属性指定了目标路由的地址。点击链接时，浏览器会导航到相应的路由。
 
-#### 编程式导航
+### 编程式导航
 编程式导航使用 `router` 实例的 `push` 或 `replace` 方法来实现路由跳转。
 ```js
 // 使用 push
@@ -81,7 +81,7 @@ this.$router.forward() // 前进到下一页
 ## 路由传参
 vue-router 提供了几种不同的路由传参方式，这些方式允许你在组件之间传递数据。以下是主要的传参方式及其示例：
 
-#### 1. URL 参数（路由参数）
+### 1. URL 参数（路由参数）
 * 定义路由： 在定义时可以在路径中使用动态段（以冒号开头）来接收参数。
 
 ```js
@@ -108,7 +108,7 @@ export default {
   }
 };
 ```
-#### 2. 查询参数
+### 2. 查询参数
 * 导航到路由：查询参数是附加在 URL 末尾的键值对。
 
 ```js
@@ -134,7 +134,7 @@ export default {
   }
 };
 ```
-#### 3. 通过 props 传递参数
+### 3. 通过 props 传递参数
 * 定义路由：你可以在路由配置中设置 props 选项，以将路由参数或查询参数作为 props 传递给组件。
 
 ```js
@@ -166,13 +166,13 @@ export default {
   }
 };
 ```
-#### 注意事项
+### 注意事项
 * 当使用 URL 参数时，如果路由参数是可选的，确保你的组件能够处理参数不存在的情况。
 * 查询参数可以添加任意数量的键值对，并且它们的顺序并不重要。
 * 使用 props 传递参数可以使组件更加解耦和可重用，因为它遵循了 Vue 的 props 传递机制。
 
 ## 路由守卫
-#### 全局守卫：
+### 全局守卫：
   * 全局前置守卫（beforeEach） 【全局前置守卫在每次路由切换前触发】
   ```js
   const router = new VueRouter({ ... })
@@ -206,7 +206,7 @@ export default {
       // 这里适合做一些分析、记录日志等操作
   })
 ```
-#### 路由独享守卫 （beforeEnter） 【仅对特定路由生效】
+### 路由独享守卫 （beforeEnter） 【仅对特定路由生效】
 ```js
 const router = new VueRouter({
 routes: [{
@@ -220,7 +220,7 @@ routes: [{
   }]
 })
 ```
-#### 组件内守卫：
+### 组件内守卫：
   * beforeRouteEnter 【在进入组件时触发 】
   * beforeRouteUpdate 【在更新当前路由组件时触发 】
   * beforeRouteLeave 【在离开当前路由组件时触发】
@@ -247,25 +247,78 @@ beforeRouteLeave(to, from, next) {
 ```
 
 ## 路由配置
-#### 路由路径：
+### 路由路径：
   * 静态路径：/home
   * 动态路径：/user/:id
-#### 路由参数：
+### 路由参数：
   * 动态路径参数：/user/:id
   * 查询参数：/user?id=1
   * 路由路径和参数的组合：/user/:id/profile
-#### 路由名称：
+### 路由名称：
   * 给路由配置一个名称，可以通过 this.$route.name 访问
 
 ## 动态路由
-#### 定义动态路由：
+### 定义动态路由：
   * 动态路径参数：/user/:id
   * 查询参数：/user?id=1
   * 路由路径和参数的组合：/user/:id/profile
-#### 访问动态路由：
+### 访问动态路由：
   * 通过 this.$route.params.id 访问动态路径参数
   * 通过 this.$route.query.id 访问查询参数
   * 通过 this.$route.params.id 和 this.$route.query.id 访问动态路径参数和查询参数
+
+## query 和 params 的区别
+query 和 params 都是用于在路由之间传递数据的
+
+### query
+* 定义：query是URL中的一个可选部分，位于问号?后面，以键值对的形式存在，多个键值对之间用&分隔。例如：/path?name=value&age=25。
+* 特点：
+  - 不是路由路径的一部分，因此不会影响路由的匹配。
+  - 可以用来传递非必需的、辅助性质的数据，如筛选条件、分页参数等。
+  - 用户可以在浏览器地址栏直接修改query参数，这可能导致无意间改变应用状态，但同时也支持了分享和书签功能。
+  - 在Vue Router中，可以通过this.$route.query访问。
+### params
+* 定义：params是路由的动态部分，通常用于定义动态路由，如/user/:id中的id。这些值被编码为URL路径的一部分。
+* 特点：
+  - 是路由路径的一部分，会影响路由的匹配，每个路由可以有预定义的一组params。
+  - 更适用于必须的、与当前页面内容紧密相关的数据，如用户ID、文章ID等。
+  - 用户不能直接修改URL中的params（除非通过导航或后退/前进操作），这使得它更适合控制应用状态。
+  - 在Vue Router中，需要在路由配置中声明动态段，并通过this.$route.params访问。
+### 总结
+* 用途差异：如果你需要传递的数据是路由逻辑的一部分或者数据对于URL具有语义性，应该使用params。如果数据更多的是作为额外筛选条件或非核心信息，使用query更合适。
+* 修改与共享：query便于用户直接修改和分享链接，而params则更多依赖于程序内部的导航来改变。
+* 声明与访问：params需要在路由配置中声明，而query不需要。两者都可以在组件内通过this.$route对象访问，但访问的属性不同。
+
+## 路由钩子在生命周期中的使用
+### 完整的路由导航解析流程
+* 触发进入其他路由。
+* 调用要离开路由的组件守卫beforeRouteLeave
+* 调用局前置守卫∶ beforeEach
+* 在重用的组件里调用 beforeRouteUpdate
+* 调用路由独享守卫 beforeEnter。
+* 解析异步路由组件。
+* 在将要进入的路由组件中调用 beforeRouteEnter
+* 调用全局解析守卫 beforeResolve
+* 导航被确认。
+* 调用全局后置钩子的 afterEach 钩子。
+* 触发DOM更新（mounted）。
+* 执行beforeRouteEnter 守卫中传给 next 的回调函数
+### 触发钩子的完整顺序
+路由导航、keep-alive、和组件生命周期钩子结合起来的，触发顺序，假设是从a组件离开，第一次进入b组件∶
+* beforeRouteLeave：路由组件的组件离开路由前钩子，可取消路由离开。
+* beforeEach：路由全局前置守卫，可用于登录验证、全局路由loading等。
+* beforeEnter：路由独享守卫
+* beforeRouteEnter：路由组件的组件进入路由前钩子。
+* beforeResolve：路由全局解析守卫
+* afterEach：路由全局后置钩子
+* beforeCreate：组件生命周期，不能访问tAis。
+* created;组件生命周期，可以访问tAis，不能访问dom。
+* beforeMount：组件生命周期
+* deactivated：离开缓存组件a，或者触发a的beforeDestroy和destroyed组件销毁钩子。
+* mounted：访问/操作dom。
+* activated：进入缓存组件，进入a的嵌套子组件（如果有的话）。
+* 执行beforeRouteEnter回调函数next。
+
 
 ## 路由懒加载
 是一种优化技术，它允许你只在路由被访问时才加载对应的组件，而不是在应用程序启动时一次性加载所有组件。这可以显著减少初始加载时间和网络带宽消耗，特别是对于大型应用来说，提高了用户体验。以下是实现路由懒加载的方式：

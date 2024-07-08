@@ -51,13 +51,13 @@ server {
 
 ## 部署步骤
 使用 `Nginx` 部署前端项目的 `dist` 目录并配置反向代理到后端服务，可以遵循以下步骤进行：
-#### 1. 准备前端 dist 包
+### 1. 准备前端 dist 包
 确保你的前端项目已经打包生成了 `dist` 目录，其中包含了所有静态资源（HTML、CSS、JavaScript、图片等）。
 
-#### 2. 上传 dist 包至服务器
+### 2. 上传 dist 包至服务器
 使用 `FTP` 工具（如 FileZilla）或命令行工具（如 scp）将 `dist` 目录上传到服务器的 `Nginx` 默认静态资源目录，通常是 `/usr/share/nginx/html`。
 
-#### 3. 配置 Nginx 配置文件
+### 3. 配置 Nginx 配置文件
 编辑 Nginx 的配置文件，通常位于 `/etc/nginx/nginx.conf`，具体路径可能因系统或安装方式而异。
 * 在 http 或 server 块中，配置服务前端静态资源：
 
@@ -115,7 +115,7 @@ server {
     }
 }
 ```
-#### 4. 启动 Nginx
+### 4. 启动 Nginx
 保存配置文件后，重启 Nginx 使配置生效：
 ```bash
 sudo systemctl restart nginx
@@ -125,7 +125,7 @@ sudo systemctl restart nginx
     
 sudo nginx -s reload
 ```       
-#### 5. 测试部署
+### 5. 测试部署
 在浏览器中访问你的域名或 IP地址，检查前端应用是否正常加载。同时测试 API请求是否能正确通过 Nginx代理到后端服务，确保前端项目能够正常运行。
 
 以上步骤概括了使用 `Nginx` 部署前端 `dist` 包并配置反向代理的基本流程。根据实际情况，可能还需要调整权限、防火墙规则等其他配置。

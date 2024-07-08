@@ -31,6 +31,30 @@ npm install vuex --save
 
 在 `Vuex` 中，我们可以通过模块（Module）来实现状态管理的模块化。每个模块拥有自己的 `State、Mutation、Action和Getter`，甚至可以嵌套子模块。通过将状态分割到不同的模块中，我们可以使代码更加清晰和易于维护。在创建 `Vuex` 实例时，我们可以通过 `modules` 选项来注册多个模块，并通过 `namespaced` 属性来控制模块是否具有独立的命名空间。如果设置了 `namespaced: true`，则模块内部的 `State、Mutation、Action 和Getter` 都会具有独立的命名空间，从而避免命名冲突的问题。
 
+## 批量使用Vuex的getter属性
+可以使用 `Vuex` 的 `mapGetters` 辅助函数结合 `methods` 或 `created` 钩子
+```js
+import { mapGetters } from 'vuex';
+
+export default {
+  computed: {
+    // ... 你可以在这里定义其他computed属性
+  },
+  methods: {
+    ...mapGetters(['user', 'posts']), // 在methods中使用mapGetters
+    someMethod() {
+      // 在这里你可以通过this.user和this.posts访问getters
+      console.log(this.user, this.posts);
+    }
+  },
+  created() {
+    // 在created钩子中你也可以通过this.user和this.posts访问getters
+    console.log(this.user, this.posts);
+  }
+  // ... 其他组件选项
+}
+```
+
 ## 示例代码
 在项目中创建一个 `store` 目录，并在其中创建一个 `index.js `文件来定义你的 `store。`
 ```js

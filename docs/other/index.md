@@ -1,5 +1,6 @@
 ## 前沿技术
 
+
 ## VScode 外观配置
 ### 1. 主题推荐
 *  ONE DARK PRO
@@ -77,8 +78,8 @@ VSCode Icons 的受欢迎程度仅次于最开始介绍的 Material Icon Theme�
 ESLint是一种广泛使用的扩展，可以发现代码中的错误和错误，从而使编码变得更好。它通过显示可能出现错误或警告的位置来帮助您避免错误。
 ### Code Spell Checker
 拼写错误检查，当我们编写代码时，偶尔会出现单词拼错的情况，这个插件可以检查到可能拼写错误的单词，并有波浪线提醒。
-### Regex Previewer
-可以实时测试和调试正则表达式模式，确保准确匹配。此扩展允许在编辑器中快速迭代和优化正则表达式，从而节省时间。
+### any-rule
+是一款正则大全的插件，提供常用的正则表达式，使用便捷。
 ### Markdown All in One
 是 Markdown 文件的完整 VS Code 扩展。它通过快捷方式、格式设置等各种功能使创建和编辑 Markdown 变得容易。
 ### Markdown PDF
@@ -91,15 +92,15 @@ ESLint是一种广泛使用的扩展，可以发现代码中的错误和错误�
 将代码中的颜色添加到 VS Code 中，以帮助您更好地理解代码，支持 CSS、Javascript。
 
 ## 好用网站
-#### utools
+### utools
 地址：https://u.tools/
 是一款极简、插件化、跨平台的插件合集软件，同时也是一款应用搜索工具，软件界面风格简约、软件功能实用，通过自由选配丰富的插件，打造你得心应手的工具集合。
-#### processon
+### processon
 地址：https://www.processon.com/
 是一个方便易用、免费高效的在线作图工具，运用它可以免费制作多种图。
-#### CSS Grid Generator
+### CSS Grid Generator
 地址：https://cssgrid-generator.netlify.app/
 能够一键生成网格布局，当遇到网格布局不好划分的时候我们可以使用这个网址。
-#### xclient
+### xclient
 地址：https://xclient.info/
 是一个 Mac软件下载网站，里面有各种软件，并且可以进行软件搜索。
