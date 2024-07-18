@@ -59,6 +59,7 @@ function getTechnical() {
         { text: "Request 常用请求 ", link: "/technical/browser/request" },
       ],
     },
+    { text: "Flex 布局详解", link: "/technical/flex" },
     { text: "Git 常规使用", link: "/technical/git" },
     { text: "微前端 qiankun", link: "/technical/micro" },
     { text: "时间日期处理", link: "/technical/time" },

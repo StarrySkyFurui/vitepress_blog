@@ -6,6 +6,7 @@ export default [
       { text: "JavaScript 基础知识", link: "/technical/js/base" },
       { text: "TypeScript 基础知识", link: "/technical/ts/base" },
       { text: "Vue 生态合集", link: "/technical/vue/vue" },
+      // { text: "Flex 布局详解", link: "/technical/flex" },
       // { text: '移动端 基础知识', link: '/technical/mobile' },
       // { text: 'Node 基础知识', link: '/technical/node' },
       { text: "浏览器 / 网络", link: "/technical/browser/base" },
