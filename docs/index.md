@@ -41,7 +41,7 @@
 
   - title: 前端面试
     details: 关于前端面试题合集，包括基础知识、源码解析等
-    link: /interview/
+    link: /interview/html
     linkText: 了解更多
 
   - title: 其它

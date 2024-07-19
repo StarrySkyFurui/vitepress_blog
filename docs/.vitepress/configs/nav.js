@@ -49,7 +49,7 @@ export default [
 
   {
     text: "前端面试",
-    link: "/interview/",
+    link: "/interview/html",
   },
   {
     text: "其它",

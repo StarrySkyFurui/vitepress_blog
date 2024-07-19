@@ -3,6 +3,7 @@ export default {
   "/engineering/": getEngineering(),
   "/security/": getSecurity(),
   "/deploy/": getDeploy(),
+  "/interview/": getInterview(),
 };
 // 获取技术系列的侧边栏
 function getTechnical() {
@@ -138,5 +139,25 @@ function getDeploy() {
     // { text: "Jenkins + Rancher", link: "/deploy/jenkins" },
     // { text: "Docker镜像", link: "/deploy/docker" },
     // { text: "Git的 CI+CD", link: "/deploy/git" },
+  ];
+}
+
+// 获取前端面试的侧边栏
+function getInterview() {
+  return [
+    { text: "HTML 相关", link: "/interview/html" },
+    { text: "CSS 相关", link: "/interview/css" },
+    { text: "JavaScript 相关", link: "/interview/js" },
+    { text: "TypeScript 相关", link: "/interview/ts" },
+    { text: "Vue 全家桶相关", link: "/interview/vue" },
+    { text: "Webpack 相关", link: "/interview/webpack" },
+    { text: "Vite 相关", link: "/interview/vite" },
+    { text: "浏览器相关", link: "/interview/browser" },
+    { text: "Node 相关", link: "/interview/node" },
+    { text: "性能优化相关", link: "/interview/performance" },
+    { text: "网络安全相关", link: "/interview/security" },
+    { text: "Git 相关", link: "/interview/git" },
+    { text: "部署相关", link: "/interview/deploy" },
+    { text: "其他", link: "/interview/other" },
   ];
 }
