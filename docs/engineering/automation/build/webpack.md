@@ -213,4 +213,28 @@ module.exports = {
 
 最后，在plugins中，我们使用了MiniCssExtractPlugin来提取CSS到单独的文件中，并设置了输出文件名和路径。
 
-请注意，这只是一个基本的配置示例，你可以根据你的项目需求进一步调整和优化这些配置。同时，记得在配置过程中查阅相关文档和资料，以确保你正确地使用了Webpack的各个功能和插件。
+## Tree Shaking 原理
+Tree Shaking 是一种通过静态分析代码，删除未使用的代码（Dead Code）的技术。Webpack 4+ 默认支持 Tree Shaking，只需要在 mode 设置为 production 时，Webpack 就会自动进行 Tree Shaking。
+
+Tree Shaking 的原理是利用 ES6 的模块特性，即 ES6 模块是静态的，编译时就能确定模块的依赖关系，从而分析出哪些模块和变量未被使用，进而删除这些未使用的代码。
+
+在 Webpack 中，Tree Shaking 的实现依赖于 ES6 的模块语法，即 import 和 export。Webpack 会解析代码中的 import 和 export 语句，构建出模块之间的依赖关系图。然后，Webpack 会分析这些依赖关系图，找出未被使用的模块和变量，并将它们从最终的输出代码中删除。
+需要注意的是，Tree Shaking 只能删除未使用的代码，对于一些副作用（Side Effects）的代码，Webpack 无法判断它们是否被使用，因此无法删除这些代码。因此，在使用 Tree Shaking 时，需要确保代码没有副作用，或者明确标记哪些模块有副作用。
+
+## 副作用的代码
+副作用代码是指在执行过程中会对外部产生影响，例如修改全局变量、修改 DOM、发送 HTTP 请求等。这些代码在编译时无法确定是否被使用，因此 Webpack 无法对其进行 Tree Shaking。
+
+在 Webpack 中，可以通过在 package.json 文件中添加 "sideEffects" 字段来标记哪些模块有副作用。例如：
+
+```json
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "sideEffects": [
+    "./src/sideEffects.js"
+  ]
+}
+```
+在这个示例中，Webpack 会认为 "./src/sideEffects.js" 模块有副作用，不会对其进行 Tree Shaking。
+如果某个模块有副作用，但是 Webpack 仍然将其删除了，可能会导致运行时错误。因此，在使用 Tree Shaking 时，需要仔细检查代码，确保没有副作用，或者明确标记哪些模块有副作用。
+## 

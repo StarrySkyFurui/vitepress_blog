@@ -26,7 +26,7 @@ CSS盒模型（Box Model）是CSS布局的基本概念，它决定了元素如�
 ### 盒模型的组成部分
 * 内容（Content）：这是元素的实际内容，如文本、图片等。你可以通过 `width` 和 `height` 属性来设置内容的尺寸。
 
-  * 内边距（Padding）：内容区域与边框之间的空间。内边距是透明的，不会占据文档流中的空间，但会增加元素的总尺寸。你可以使用 `padding-top`、`padding-right`、`padding-bottom`和 padding-left（或简写形式padding）来设置内边距。
+* 内边距（Padding）：内容区域与边框之间的空间。内边距是透明的，不会占据文档流中的空间，但会增加元素的总尺寸。你可以使用 `padding-top`、`padding-right`、`padding-bottom`和 padding-left（或简写形式padding）来设置内边距。
 
 * 边框（Border）：围绕在内边距和内容周围的线。边框可以是实线、虚线或点线，并可以有不同的颜色和宽度。你可以使用 `border-style`、`border-width`和 `border-color`（或简写形式border）来设置边框。
 
@@ -338,6 +338,7 @@ Flexbox 是一种现代的 CSS 布局模式，它可以更轻松地设计复杂�
    
 5. 定位属性：float、clear、position、top、right、bottom、left、min-width、min-height、max-width、max-height、overflow、clip、z-index
 
+
 ### 可以继承的属性：
 1. 字体系列属性
 * font-family：字体系列
@@ -380,6 +381,10 @@ cursor：光标显示为何种形态
 * 渐变：`CSS3` 允许创建线性渐变和径向渐变。
 * 转换：`CSS3` 允许使用2D或3D转换元素，如旋转、缩放、移动和倾斜。
 * 过渡：`CSS3` 允许添加元素在改变样式时的过渡效果，如改变颜色或大小。
+
+## transform 和 translate 具体定义和用法
+* transform：用于对元素进行2D或3D转换，如旋转、缩放、移动和倾斜。
+* translate：是 transform 属性中的一个函数，用于在二维空间内移动元素。它接受两个参数，分别表示在 X 轴和 Y 轴上的移动距离。
 
 ## line-height 行高
 line-height 指一行文本的高度，包含了字间距，实际上是下一行基线到上一行基线距离；
@@ -636,3 +641,117 @@ background-attachment: fixed;
 background-size: cover;
 background-color: #464646;
 ```
+
+## z-index 
+> z-index 属性设置元素的堆叠顺序。拥有更高堆叠顺序的元素总是会处于堆叠顺序较低的元素的前面。
+### 失效的场景
+1. 父元素 position 为 relative 时
+    * 当父元素的position属性设置为relative时，子元素的z-index可能会失效。
+    * 解决方法：将父元素的position属性改为absolute、fixed或static。
+2. 元素没有设置 position 属性为非 static 属性
+    * z-index只对position属性为relative、absolute或fixed的元素有效。如果元素没有设置这些position值，z-index将不会起作用。
+    * 解决方法：为该元素设置position属性为relative、absolute或fixed中的一种。
+3. 元素在设置z-index的同时还设置了float浮动：
+    * 如果一个元素同时设置了z-index和float浮动，那么它的z-index可能会失效。
+    * 解决方法：去除float属性，可以考虑使用display: inline-block来替代。
+
+## 常见的CSS布局单位
+### 1. 像素 (px)
+* 绝对长度单位。
+* 一个像素表示终端（电脑、手机、平板等）屏幕所能显示的最小的区域。
+* 不会随浏览器页面大小的变化而变化。
+* CSS像素与物理像素有所区别，CSS像素是web开发者在CSS中使用的抽象单位，而物理像素与设备的硬件密度有关。
+
+### 2. 百分比 (%)
+* 相对长度单位。
+* 子元素占直接父元素的百分比。
+* 随着父元素的宽度或者高度发生变化而变化，常用于实现响应式布局。
+
+### 3. em
+* 相对长度单位。
+* 相对于当前对象内文本的字体尺寸。
+* 如果当前行内文本的字体尺寸未被人为设置，则相对于浏览器的默认字体尺寸（默认16px）。
+* 适用于需要相对于父元素字体大小进行缩放的场景。
+
+### 4. rem
+* CSS3新增的相对单位。
+* 相对于根元素（html元素）的font-size的倍数。
+* 适用于需要相对于根元素字体大小进行缩放的场景，常用于实现简单的响应式布局。
+
+### 5. vw/vh
+* 相对长度单位。
+* vw表示视口的宽度，1vw表示当前视口宽度的百分之一。
+* vh表示视口的高度，1vh表示当前视口高度的百分之一。
+* 主要用于页面视口大小布局，使页面布局更加灵活和响应式。
+
+## margin 重叠
+margin 重叠是指两个或多个垂直排列的块级元素在垂直方向上的外边距（margin）会发生重叠。
+> 浮动元素 和 绝对定位 这种脱离文档流的元素的外边距不会折叠，重叠只会出现在 垂直方向。
+### 计算原则
+1. **正正取大值**：当两个相邻元素的上下外边距都是正值时，取两个外边距中较大的值作为最终的外边距。
+2. **正负相加**：当两个相邻元素的上下外边距一个是正数，另一个是负数时，取两个外边距相加的值作为最终的外边距。
+3. **负负最负值**：当两个相邻元素的上下外边距都是负数时，取两个外边距中绝对值较大的值作为最终的外边距，并且这个值是负数。
+  
+### 产生原因
+1. **相邻兄弟元素**：当两个兄弟元素垂直排列时，它们的上下外边距会发生重叠。
+2. **父子元素**：当父元素没有边框、内边距、内联内容、高度或最小高度时，子元素的上下外边距会与父元素的上下外边距发生重叠。
+
+### 解决方法
+1. **相邻兄弟元素直接重叠**
+  * 底部元素变为行内盒子: display: inline-block;
+  * 底部元素设置浮动: float: left;
+  * 底部元素设置绝对定位: position: absolute / fixed;
+  * 底部元素设置内边距: padding: 1px;
+  * 底部元素设置透明边框: border: 1px solid transparent;
+2. **父子元素重叠**
+  * 父元素设置透明边框: border: 1px solid transparent;
+  * 父元素设置overflow: hidden;
+  * 子元素变为行内盒子: display: inline-block;
+  * 子元素设置浮动huo: float: left;
+  * 子元素设置绝对定位: position: absolute / fixed;
+
+## display、float、position 的优先级
+
+### display的优先级
+* 如果display的值是none，则position和float将不会起作用，因为元素不会生成框，因此浮动和定位都无效。
+* 否则，display的设定值会根据其他属性（如position和float）的值进行可能的转换或保留。
+
+### position的优先级
+* 当position的值为absolute或fixed时，元素的定位将脱离正常的文档流，并且float的计算值会被设置为none。此时，元素的位置由top、right、bottom和left属性确定，且display的值可能会根据一定的规则进行重置。
+* 如果position的值不是absolute或fixed，并且float的值也不是none，则元素会浮动，并且display的值也会根据规则进行可能的转换。
+* 如果position的值是relative，则元素会相对于其正常位置进行定位，但元素仍在文档流中占据空间。此时，float和display的行为取决于它们的具体值。
+  
+### float的优先级
+* 当float的值不是none时，元素会浮动，并且display的值会根据规则进行可能的转换。浮动元素会脱离文档流的正常位置，向左或向右移动，直到其外边缘碰到包含块或另一个浮动框的边框为止。
+* 如果float的值为none，则元素不会浮动，其display值按照正常的规则显示。
+
+### 总结与归纳：
+1. display的优先级最低，但如果其值为none，则position和float将无效。
+2. position的优先级最高，特别是当值为absolute或fixed时，它会改变元素的定位方式，并使浮动失效。
+3. float的优先级介于display和position之间，它使元素浮动并可能影响display的设定值。
+
+## CSS 动画及适用场景
+
+### 1. transition
+* transition属性用于在元素从一种状态变为另一种状态时添加过渡效果。
+* 适用于简单的动画效果，如元素的背景色、边框颜色、大小等属性的变化。
+* 适用于需要平滑过渡的场景，如按钮的悬停效果、下拉菜单的展开和收起等。
+
+### 2. animation
+* animation属性用于在元素上添加动画效果。
+* 适用于复杂的动画效果，如元素的移动、旋转、缩放等。
+* 适用于需要重复播放的动画效果，如轮播图、加载动画等。
+
+### 3. keyframes
+* 适用于定义动画的关键帧，包括动画的起始状态和结束状态。
+* 适用于需要精确控制动画过程的场景，如动画的加速、减速、暂停等。
+
+### 4. 动画性能优化
+* 尽量减少动画的帧数，避免使用过多的关键帧。
+* 使用硬件加速，如transform和opacity属性，可以提升动画的性能。
+* 避免在动画中使用复杂的CSS属性，如box-shadow、border-radius等，这些属性会消耗更多的计算资源。
+
+### 5. 动画库
+* 使用动画库可以简化动画的实现，提高开发效率。如 Animate.css。
+
+

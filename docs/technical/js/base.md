@@ -59,9 +59,7 @@
     console.log(obj1)
     //obj1 = {name: 'xiaosi',age: 19 }
     //obj2 = {name: 'qiqi',abe: 17}
-
 ```
-
 
 > 各种 `JavaScript` 的数据类型最后都会在初始化之后放在不同的内存中，因此上面的数据类型大致可以分成两类来进行存储：
 
@@ -69,7 +67,7 @@
 
 引用数据类型：引用类型存储在堆内存，存储的是地址，多个引用指向同一个地址，这里会涉及一个“共享”的概念；占据空间大、大小不固定。引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体。
 
-## null和undefined区别
+## null 和 undefined 区别
 
 首先 Undefined 和 Null 都是基本数据类型，这两个基本数据类型分别都只有一个值，就是 undefined 和 null。
 
@@ -113,7 +111,7 @@ new Person() instanceof Object;//true
 ```
 > instanceof 运算符只能用于对象，不适用原始类型的值。
 
-3、`constructor` 属性可以得知某个实例对象，到底是哪一个构造函数产生的
+3、`constructor` 有两个作用，一是判断数据的类型，二是对象实例通过 `constructor` 对象访问它的构造函数
 4、`Object.prototype.toString` 是 `Object` 原型对象上的一个方法，该方法默认返回其调用者的具体类型
 
 ## 数据类型转换
