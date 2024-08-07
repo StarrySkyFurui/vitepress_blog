@@ -36,6 +36,44 @@ vue-cli 是一个基于 Vue.js 的命令行工具，用于快速搭建、开发�
 
 
 # Vuex 相关
+## Vuex 有哪几种属性？
+有五种，分别是 state、getters、mutations、actions、modules。
+1. state：数据源存放地，用于存储全局状态，通过 getter 和 setter 访问和修改。
+2. getters：用于计算属性，通过 getter 访问和修改 state 中的数据。
+3. mutations：用于修改 state 中的数据，通过 mutation 提交一个 mutation，并传入新的数据。
+4. actions：用于异步操作，通过 action 提交一个 mutation，并传入新的数据。
+5. modules：用于模块化管理 state、getters、mutations 和 actions，每个模块可以有自己的命名空间，方便管理。
+
+## Vuex 的状态管理有什么问题？
+
+## Vuex 和单纯的全局对象有什么区别？
+Vuex 和单纯的全局对象主要有以下区别：
+1. Vuex 的状态存储是响应式的，当 store 中的状态发生变化时，依赖该状态的组件会自动更新。
+2. Vuex 的状态存储是集中管理的，所有的状态都存储在 store 中，方便管理和维护。
+3. Vuex 的状态存储是可追踪的，可以通过 mutation 和 action 来追踪状态的变更，方便调试和追踪状态的变化。
+4. Vuex 的状态存储是可持久化的，可以通过插件将状态存储在本地，方便在页面刷新后恢复状态。
+5. Vuex 不能直接改变 store 中的状态，只能通过显示地提交 mutation 来修改 store 中的状态，避免直接修改状态，这样可以方便跟踪每一个状态的变化。
+
+## 为什么 Vuex 的 mutation 中必须是同步函数？
+Vuex 的 mutation 必须是同步函数，因为 Vuex 的状态是响应式的，当状态发生变化时，依赖该状态的组件会自动更新。如果 mutation 中是异步操作，那么状态的变化会延迟到下一个事件循环中，导致组件无法及时更新，并且无法知道状态是何时更新的，无法很好的进行状态的追踪。
+
+## Vuex 和 localStorage 的区别
+### 存储位置
+Vuex 存储在内存中，localStorage 是以文件的方式存储在本地，且只能存储字符串类型的数据，存储对象需要 JSON 的 stringify 和 parse 方法来处理。
+### 应用场景
+Vuex 适合用于全局状态管理，采用集中式存储管理应用的所有的状态，而 localStorage 则适合用于本地存储，一般是在跨页面传递数据时使用，如用户偏好设置、认证令牌等。
+
+### 响应性
+Vuex 能做到数据的响应式，localStorage 需要手动处理。
+
+### 存储容量和持久性
+localStorage 存储容量有限，localStorage 的存储容量为 5MB，但是可以持久化存储。Vuex 无存储容量限制，但数据存储不持久。
+
+### 集成性
+Vuex 深度集成 Vue.js，提供丰富的API，而 localStorage 是浏览器的本地存储，API  简单但功能有限，可以在任何地方使用。
+
+### 生命周期
+Vuex 的数据在页面刷新后会丢失，而 localStorage 的数据会持久化存储，除非手动清除。
 
 # Axios 相关
 ## 二次封装做了什么？作用是什么？
@@ -56,7 +94,6 @@ vue-cli 是一个基于 Vue.js 的命令行工具，用于快速搭建、开发�
 
 5. 结合 Typescript 使用
 * 添加类型定义，方便使用 Typescript 进行开发时，进行类型检查和自动提示。
-
 
 # Vue3 相关
 

@@ -1,3 +1,97 @@
+## 常用命令
+- 初始化仓库
+初始化一个 Git 仓库，将创建一个 .git 目录，后续的操作记录都会记录在这个文件夹里，相当于 Git 的数据库，这个文件夹是隐藏的。
+```bash
+git init
+```
+- 添加远程仓库
+将本地仓库与远程仓库关联起来，关联之后，就可以将本地的提交历史推送到远程仓库，也可以将远程仓库的提交历史拉取到本地仓库，完成与他人的协同工作。
+```bash
+git remote add origin https://www.github.com
+```
+- 查看远程仓库
+查看当前关联的远程仓库，返回的 URL 就是远程仓库的地址。
+```bash
+git remote -v
+```
+- 删除远程仓库
+删除关联的远程仓库，如果需要重新关联远程仓库，可以再次执行 git remote add origin 命令。
+```bash
+git remote remove origin
+```
+- 添加文件到暂存区
+将已修改或未跟踪的文件添加到暂存区，暂存区是 Git 仓库中的一个临时区域，用来存放需要提交的文件。
+```bash
+//  添加当前所有修改文件
+git add . 
+// 添加指定文件
+git add 文件名 
+```
+- 提交暂存区文件到本地仓库
+```bash
+git commit -m "本次提交的类型: 说明"
+```
+- 查看提交日志
+```bash
+git log
+```
+- 查看文件状态
+显示当前工作目录和暂存区的状态，即当前工作目录中哪些文件被修改了，哪些文件没有被跟踪。
+```bash
+git status
+```
+- 查看工作区和暂存区的不同之处
+```bash
+git diff
+```
+- 撤销文件修改
+```bash
+git reset HEAD 文件名
+```
+- 将远程仓库的代码拉取到本地仓库
+```bash
+git pull 
+```
+- 推送本地仓库到远程仓库
+```bash
+git push origin 本地分支名:远程分支名
+// 如果本地分支名与远程分支名相同，可简写为
+git push origin
+```
+- 合并分支，将其它分支的内容合并到当前分支
+```bash
+git merge 待合并分支名
+```
+- 创建新的分支
+```bash
+git checkout -b 新分支名
+```
+- 切换分支
+```bash
+git checkout 分支名
+```
+- 删除分支
+```bash
+git branch -d 分支名
+```
+- 查看分支
+```bash
+git branch
+```
+- 查看远程分支
+```bash
+git branch -r
+```
+- 查看所有分支
+```bash
+git branch -a
+```
+- 删除远程分支
+```bash
+git push origin --delete 远程分支名
+```
+
+
 ## 代码更新流程
 - 新建分支/使用自己的分支
 ```bash

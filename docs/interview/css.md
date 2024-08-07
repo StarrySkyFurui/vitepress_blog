@@ -353,3 +353,101 @@ Less: 也支持自定义函数，例如：
 !important > 内联样式(1000) > id选择器(100) > 类选择器、伪类选择器、属性选择器(10) > 标签选择器、伪元素选择器(1) > 通配符选择器(0)
 
 > !important的优先级最高，无视权重，当选择器一样时，就要根据权重来计算优先级，权重一样时，哪个属性在后面，就会覆盖前面的属性。只有同级别的选择器才会去比较权重，不能跨选择器去比较权重。
+
+## 实现一个 0.5px 的边框
+### 使用 伪元素 + transform: scaleY(0.5)
+利用transform: scale()属性来将1px的边框缩小到0.5px的视觉效果。但需要注意的是，这种方法在标准DPI屏幕上可能不会完美工作，因为缩放操作会基于像素进行四舍五入。
+```html
+<div class="half-border"></div>
+
+<style>
+.half-border {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  background-color: white;
+}
+
+.half-border::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 200%;
+  height: 200%;
+  border: 1px solid black;
+  border-radius: inherit; /* 如果需要的话 */
+  transform: scale(0.5);
+  transform-origin: top left;
+  pointer-events: none; /* 防止伪元素影响鼠标事件 */
+}
+</style>
+```
+
+### 使用 svg
+SVG（可缩放矢量图形）可以精确地控制线条的宽度，包括非整数宽度。
+```html
+<div class="svg-border">
+  <svg width="100%" height="100%" preserveAspectRatio="none">
+    <rect width="100%" height="100%" fill="white" />
+    <rect x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" fill="transparent" stroke="black" stroke-width="0.5" />
+  </svg>
+</div>
+
+<style>
+.svg-border {
+  width: 200px;
+  height: 100px;
+  display: inline-block;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+</style>
+```
+
+### 使用 box-shadow
+box-shadow属性可以创建一个或多个阴影，其中阴影的宽度可以设置为0.5px。
+```html
+<div class="box-shadow-border"></div>
+
+<style>
+.box-shadow-border {
+  width: 200px;
+  height: 100px;
+  background-color: white;
+  box-shadow: 0 0 0 0.5px black;
+}
+</style>
+```
+
+### 单边框使用 border-image + 线性渐变linear-gradient
+border-image属性可以用来创建边框，并且可以使用linear-gradient()函数来创建渐变。
+```html
+<div class="border-image-border"></div>
+
+<style>
+.border-image-border {
+    position: relative;
+    box-sizing: border-box;
+    width: 200px;
+    height: 200px;
+}
+.border-image-border::after {
+    display: block;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 1px;
+    bottom: 0px;
+    background-color: red;
+    background: linear-gradient(to bottom, transparent 50%, red 50%); 
+}
+```
+### 总结
+如果你需要高度可缩放且精确的边框，SVG可能是最佳选择。如果只是为了视觉上的0.5px效果，并且考虑到兼容性和实现的简单性，使用transform: scale()可能更合适。
+
