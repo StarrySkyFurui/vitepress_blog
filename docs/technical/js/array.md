@@ -93,7 +93,7 @@ function unique(arr) {
       }
     return arr1;
 }
-console.log(unique(arr)); // 1, 0, 8, 3, -9, 7
+console.log(unique(arr)); // [1, 0, 2, 3, 4]
 ```
 
 * 利用 `reduce` 去重

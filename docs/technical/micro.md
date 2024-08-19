@@ -18,7 +18,7 @@
 
 __具体步骤如下：__
 
-## 1. 初始化项目
+### 1. 初始化项目
 
 使用 `Vite` 创建两个新的 Vue 3 + TypeScript 项目分别作为主应用和子应用：
 
@@ -56,7 +56,7 @@ export default defineConfig({
 });
 ```
 
-## 2. 安装 qiankun
+### 2. 安装 qiankun
 
 主应用安装 `qiankun` 作为微前端框架：
 
@@ -64,7 +64,7 @@ export default defineConfig({
 npm i qiankun -S
 ```
 
-## 3.设置主应用 main
+### 3.设置主应用 main
 
 在主应用中，需要配置 `qiankun` 的注册和启动逻辑。通常，你可以在主应用的 `main.ts` 或一个单独的模块中处理这些逻辑。
 > 本文在 src 下新建 config 文件夹，并新建 subApps.ts 文件，用于存放子应用信息。
@@ -257,7 +257,7 @@ export default routes;
 
 ```
 
-## 4. 配置子应用 basic
+### 4. 配置子应用 basic
 
 安装 `vite-plugin-qiankun`
 
@@ -400,7 +400,7 @@ qiankunWindow.__POWERED_BY_QIANKUN__ ? initQianKun() : render();
 ```
 单独运行，指定7001端口
 
-## 5. 完善主应用
+### 5. 完善主应用
 
 在主应用的 `App.vue` 中，添加主子应用页面跳转。并使用 `ant-design-vue` 简单布局+样式。
 ```vue
@@ -515,5 +515,7 @@ watch(
 
 ```
 
-## 总结
+### 总结
 至此，我们简单的完成了一个微前端的搭建，当然这只是一个简单的demo，要达到部署生产真正投入使用，还有许多工作要做（主、子应用通信，子应用静态资源代理，子应用共享主应用登录凭证等问题）
+
+## Qiankun 代码隔离

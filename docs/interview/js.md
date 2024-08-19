@@ -106,5 +106,113 @@ document.getElementById('parent').addEventListener('click', function(event) {
 });
 ```
 
-## 闭包
-闭包是指有权访问另一个函数作用域中的变量的函数。闭包常常用来创建私有变量。
+## 拖拽功能
+实现拖拽功能需要监听鼠标的mousedown、mousemove和mouseup事件。具体步骤如下：
+
+1. 在mousedown事件中，记录鼠标按下时的初始位置和被拖拽元素的初始位置。
+2. 在mousemove事件中，计算鼠标移动的距离，并更新被拖拽元素的位置。
+3. 在mouseup事件中，停止拖拽操作。
+
+在监听事件的 event 对象中，有几个参数是比较重要的：`clientX`，`clientY` 标识的鼠标当前横坐标和纵坐标，`offsetX` 和 `offsetY `表示相对偏移量，可以在 `mousedown` 鼠标按下时记录初始坐标，在 `mouseup` 鼠标抬起时判断是否在目标区域中，如果是则用鼠标获取到的当前的偏移量 - 初始坐标得到元素实际在目标区域中的位置。
+
+
+```javascript
+let isDragging = false;
+let startX, startY, initialX, initialY;
+
+document.getElementById('draggable').addEventListener('mousedown', function(event) {
+  isDragging = true;
+  startX = event.clientX;
+  startY = event.clientY;
+  initialX = this.offsetLeft;
+  initialY = this.offsetTop;
+});
+
+document.addEventListener('mousemove', function(event) {
+  if (isDragging) {
+    const deltaX = event.clientX - startX;
+    const deltaY = event.clientY - startY;
+    const newX = initialX + deltaX;
+    const newY = initialY + deltaY;
+    this.style.left = newX + 'px';
+    this.style.top = newY + 'px';
+  }
+});
+
+document.addEventListener('mouseup', function() {
+  isDragging = false;
+});
+```
+
+## 内存泄漏 / 内存溢出
+内存泄漏是指程序中已分配的内存未被正确释放，导致内存空间逐渐被耗尽。内存溢出是指程序在运行过程中所需的内存超过了系统或程序所能提供的内存，导致程序崩溃。
+
+### 内存泄漏的常见原因包括：
+1. 全局变量：全局变量在程序结束时不会被自动回收，如果全局变量引用了大量的对象，可能会导致内存泄漏。
+2. 闭包：闭包会导致函数外部无法访问到函数内部的变量，如果闭包引用了大量的对象，可能会导致内存泄漏。
+3. DOM 元素引用：如果 DOM 元素被引用，即使 DOM 元素被移除，其引用仍然存在，可能会导致内存泄漏。
+4. 事件监听器：如果事件监听器没有被正确移除，可能会导致内存泄漏。
+解决内存泄漏的方法包括：避免全局变量、使用闭包时注意引用的释放、移除 DOM 元素引用、移除事件监听器等。
+
+### 内存溢出的常见原因包括：
+1. 数据结构过大：如果程序中使用了过大的数据结构，可能会导致内存溢出。
+2. 循环引用：如果两个对象相互引用，可能会导致内存泄漏，从而引发内存溢出。
+3. 缓存：如果缓存中的数据过多，可能会导致内存溢出。
+解决内存溢出的方法包括：优化数据结构、避免循环引用、优化缓存等。
+
+## 实现一个 once 函数，传入函数参数只执行一次
+```javascript
+function once(fn) {
+  let called = false;
+  return function() {
+    if (!called) {
+      called = true;
+      fn.apply(this, arguments);
+    }
+  };
+}
+
+// 使用示例
+function sayHello(name) {
+  console.log(`Hello, ${name}!`);
+}
+
+const sayHelloOnce = once(sayHello);
+
+sayHelloOnce('Alice'); // 输出: Hello, Alice!
+sayHelloOnce('Bob'); // 不会输出任何内容
+```
+
+## sleep 的效果
+```javascript
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function example() {
+  console.log('Start');
+  await sleep(1000);
+  console.log('End');
+}
+
+example();
+```
+
+## 数组常用的方法，哪些会返回新数组
+JavaScript 数组常用的方法包括：
+
+1. `push()`：在数组末尾添加一个或多个元素，并返回新数组的长度。
+2. `pop()`：删除数组末尾的一个元素，并返回被删除的元素。
+3. `shift()`：删除数组开头的一个元素，并返回被删除的元素。
+4. `unshift()`：在数组开头添加一个或多个元素，并返回新数组的长度。
+5. `slice()`：返回一个新数组，包含从开始到结束（不包括结束）的数组元素。
+6. `splice()`：通过删除或替换现有元素或者原地添加新的元素来修改数组，并以数组形式返回被修改的内容。此方法会改变原数组。
+7. `concat()`：合并两个或多个数组，并返回一个新数组。
+8. `map()`：创建一个新数组，其结果是该数组中的每个元素是调用一次提供的函数后的返回值。
+9. `filter()`：创建一个新数组, 其包含通过所提供函数实现的测试的所有元素。
+10. `reduce()`：对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。
+11. `forEach()`：对数组的每个元素执行一次提供的函数。
+12. `sort()`：对数组的元素进行排序，并返回数组。默认排序顺序是在将元素转换为字符串，然后比较它们的UTF-16代码单元值序列时构建的。
+13. `reverse()`：将数组中元素的位置颠倒，并返回该数组。该方法会改变原数组。
+
+## 

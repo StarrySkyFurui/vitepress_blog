@@ -368,19 +368,97 @@ list-style：列表风格，包括list-style-type、list-style-image等
 cursor：光标显示为何种形态
 
 ## CSS3 新特性
-* 选择器：`CSS3` 引入了更多实用的选择器，如动态伪类选择器、目标伪类选择器和伪元素选择器。
-* 边框：`CSS3` 允许给边框添加样式，如圆角、阴影和渐变。
-* 背景：`CSS3` 允许给背景添加渐变、阴影和透明度。
-* 文本效果：`CSS3` 允许添加阴影、嵌入图像、渐变和旋转文本。
-* 2D/3D转换：`CSS3` 允许元素的2D或3D转换，如旋转、缩放、移动和倾斜。
-* 动画：`CSS3` 允许创建动画，能够创建比简单的过渡更复杂的动画效果。
-* 布局：`CSS3` 允许创建弹性盒子布局或多列布局。
-* 媒体查询：`CSS3` 让可以针对不同的媒体类型定义不同的样式。
-* 字体：`CSS3` 允许加载字体文件，并可以定义文本的样式。
-* 颜色：`CSS3` 允许使用RGB、RGBA、HSL和HSLA函数定义颜色。
-* 渐变：`CSS3` 允许创建线性渐变和径向渐变。
-* 转换：`CSS3` 允许使用2D或3D转换元素，如旋转、缩放、移动和倾斜。
-* 过渡：`CSS3` 允许添加元素在改变样式时的过渡效果，如改变颜色或大小。
+### 选择器
+1. 基本选择器：
+* :root - 选择文档的根元素（通常为 <html>）。
+* :not(selector) - 选择不匹配给定选择器的元素。
+* :nth-child(n) - 选择属于其父元素的第 n 个子元素。
+* :nth-last-child(n) - 类似于 :nth-child，但是从最后一个子元素开始计数。
+* :only-child - 选择是其父元素唯一子元素的元素。
+
+2. 结构化伪类：
+* :first-child - 选择每个父元素的第一个子元素。
+* :last-child - 选择每个父元素的最后一个子元素。
+* :only-of-type - 选择是其父元素唯一同类型的子元素的元素。
+* :nth-of-type(n) - 选择属于其父元素的第 n 个同类型子元素。
+
+3. 属性选择器：
+* [attribute] - 选择具有指定属性的元素。
+* [attribute=value] - 选择具有指定属性和值的元素。
+* [attribute^=value] - 选择属性值以特定字符串开头的元素。
+* [attribute$=value] - 选择属性值以特定字符串结尾的元素。
+* [attribute*=value] - 选择属性值包含特定字符串的元素。
+
+4. 伪类：
+* :hover - 当用户将鼠标指针悬停在元素上时激活。
+* :active - 当元素被激活时激活（如点击或按下键盘键）。
+* :focus - 当元素获得焦点时激活（如通过键盘导航）。
+* :target - 选择当前活动的目标元素（如锚点链接的目标）。
+
+### 背景与边框
+1. 背景：
+* background-size - 控制背景图像的大小。
+* background-origin - 设置背景图像相对于哪个盒子绘制。
+* background-clip - 设置背景图像是否绘制到边框、内边距或内容区域。
+* background-repeat - 控制背景图像如何重复。
+
+2. 边框：
+* border-radius - 创建圆角边框。
+* box-shadow - 为元素添加阴影。
+* border-image - 使用图片来绘制边框。
+
+### 文本与字体
+1. 多列布局：
+* column-count - 设置元素内的列数。
+* column-gap - 设置列之间的间隙。
+* column-rule - 设置列之间的规则线。
+
+2. 字体：
+* @font-face - 定义自定义字体。
+* font-family - 指定字体家族。
+* text-shadow - 为文本添加阴影。
+
+### 过渡与动画
+1. 过渡：
+* transition-property - 规定应用过渡的 CSS 属性的名称。
+* transition-duration - 规定过渡效果花费的时间。
+* transition-timing-function - 规定过渡效果的时间曲线。
+* transition-delay - 规定过渡效果何时开始。
+
+2. 动画：
+* @keyframes - 定义动画序列。
+* animation-name - 规定 @keyframes 动画的名称。
+* animation-duration - 规定动画完成一个周期所花费的时间。
+* animation-timing-function - 规定动画的速度曲线。
+* animation-delay - 规定动画何时开始。
+* animation-iteration-count - 规定动画应该播放的次数。
+* animation-direction - 规定是否应反向播放动画。
+* animation-fill-mode - 规定动画在不播放时的状态。
+* animation-play-state - 规定动画是否正在运行或暂停。
+
+### 变换
+1. 2D 变换：
+* translate(x, y) - 移动元素。
+* scale(x, y) - 缩放元素。
+* rotate(angle) - 旋转元素。
+* skew(x-angle, y-angle) - 扭曲元素。
+
+2. 3D 变换：
+* perspective(length) - 设置透视距离。
+* translate3d(x, y, z) - 在三维空间中移动元素。
+* scale3d(x, y, z) - 在三维空间中缩放元素。
+* rotateX(angle) - 绕 X 轴旋转元素。
+* rotateY(angle) - 绕 Y 轴旋转元素。
+* rotateZ(angle) - 绕 Z 轴旋转元素。
+* rotate3d(x, y, z, angle) - 绕任意轴旋转元素。
+
+### 其他特性
+* 多背景 - 允许在一个元素上叠加多个背景图像。
+* 渐变 - 使用 linear-gradient, radial-gradient 或 repeating-linear-gradient 和 repeating-radial-gradient 创建渐变背景。
+* 媒体查询 - 根据不同的设备特性（如屏幕宽度）应用不同的样式。
+* Flexbox - 提供了一种更有效的对齐方式来布局元素。
+* Grid Layout - 提供了一个二维网格布局系统。
+* SVG in CSS - 直接在 CSS 中使用 SVG 图形作为背景或其他元素。
 
 ## transform 和 translate 具体定义和用法
 * transform：用于对元素进行2D或3D转换，如旋转、缩放、移动和倾斜。
@@ -755,3 +833,34 @@ margin 重叠是指两个或多个垂直排列的块级元素在垂直方向上�
 * 使用动画库可以简化动画的实现，提高开发效率。如 Animate.css。
 
 
+## CSS 工程化
+CSS 工程化是指在大型项目中管理和组织 CSS 代码的一种方法论，目的是提高 CSS 的可维护性、可扩展性和性能。随着项目的复杂度增加，传统的 CSS 写法可能会导致一系列问题，比如类名冲突、代码冗余、样式依赖混乱等。
+
+### 1. 宏观设计
+* 组织结构：确定 CSS 代码应该如何组织和拆分，以及模块结构的设计。
+* 命名约定：采用一致的命名规则，如 BEM (Block Element Modifier)
+* 抽象与复用：通过抽象出通用样式来减少重复代码，提高复用性。
+### 2. 编码优化
+* 响应式设计：确保样式适应不同屏幕尺寸和设备。
+* 性能优化：减少 CSS 文件的大小，避免不必要的重绘和布局变化。
+* 选择器优化：避免使用过于复杂的选择器，减少 CSS 特异性问题。
+### 3. 构建与自动化
+* 预处理器：使用如 Sass、Less 或 Stylus 这样的 CSS 预处理器来增强 CSS 的功能，如变量、混合、嵌套等。
+* 后处理器：使用 PostCSS 来优化最终输出的 CSS，例如自动前缀、压缩等。
+* 模块化：通过模块化的方式管理样式，例如 CSS Modules 或者 CSS-in-JS 解决方案。
+* 构建工具：利用 Webpack loader 来自动化 CSS 的编译、合并、压缩等过程。
+#### Webapck 怎么处理 CSS
+Webpack 本身是一个面向 JavaScript 且只能处理 JavaScript 代码的模块化打包工具；
+Webpack 在 loader 的辅助下，是可以处理 CSS 的。
+
+Webpack 中操作 CSS 需要使用的两个关键的 loader：css-loader 和 style-loader
+
+* css-loader：导入 CSS 模块，对 CSS 代码进行编译处理；
+* style-loader：创建style标签，把 CSS 内容写入标签。
+
+在实际使用中，css-loader 的执行顺序一定要安排在 style-loader 的前面。因为只有完成了编译过程，才可以对 css 代码进行插入；若提前插入了未编译的代码，那么 webpack 是无法理解这些东西的，会直接报错。
+
+### 4. 可维护性
+* 文档化：记录 CSS 的架构和约定，方便团队成员理解和协作。
+* 版本控制：使用 Git 等版本控制系统来追踪 CSS 文件的变化历史。
+* 持续集成/持续部署 (CI/CD)：自动化测试和部署流程，确保 CSS 的质量。
