@@ -15,28 +15,39 @@ npm install axios
 * 拦截器函数接收两个参数：`config` 和 `next`。`config` 表示当前的请求配置，`next` 表示一个函数，调用该函数可以传递处理后的配置给下一个拦截器或发送请求。
   
 ## 取消请求
-* `axios.CancelToken` 用于创建一个 `CancelToken` 源，然后在请求配置中传递这个源，之后可以通过调用`source.cancel()` 来取消请求。
+Axios 可以取消请求。官方文档指出有两种方法可以取消请求，分别是cancelToken和AbortController，示例代码如下：
+### 使用cancelToken的方法一：
 ```js
 const CancelToken = axios.CancelToken;
 const source = CancelToken.source();
-
-axios.get('/my/url', {
-    cancelToken: source.token
-}).catch(function(thrown) {
-    if (axios.isCancel(thrown)) {
-    console.log('Request canceled', thrown.message);
-    } else {
-    // 处理错误...
-    }
-});
-
-// 取消请求
-source.cancel('取消请求的原因');
+axios.post("/user/12345", { name: "new name" }, { cancelToken: source.token });
+source.cancel("Operation canceled by the user.");
 ```
-* `axios.isCancel` 用于判断一个错误是否是取消请求导致的。
-* `axios.Cancel` 用于创建一个取消请求的错误对象。
-* `axios.CancelToken.source()` 用于创建一个取消令牌的源对象，该源对象包含一个 `cancel` 函数，调用该函数可以取消请求。
-  
+### 使用 cancelToken的方法二：
+```js
+const CancelToken = axios.CancelToken;
+let cancel;
+axios.get("/user/12345", {
+  cancelToken: new CancelToken(function executor(c) {
+    cancel = c;
+  }),
+});
+cancel();
+```
+
+### 使用AbortController：
+```js
+const controller = new AbortController();
+axios.get("/foo/bar", { signal: controller.signal }).then(function (response) {
+  //...
+});
+controller.abort();
+```
+通过文档描述和示例代码，可以总结出以下功能点：
+* 支持cancelToken取消请求，cancelToken可以通过工厂函数产生，也可以通过构造函数生成；
+* 支持 Fetch API 的AbortController取消请求；
+* 一个token/signal可以取消多个请求，一个请求也可同时使用token/signal；
+* 如果在开始axios request之前执行了取消请求，则并不会发出真实的请求。
 
 ## 发送 JSON 数据
 * `axios.post()` 方法可以用于发送JSON数据，只需要将JSON数据作为请求体的一部分传递给该方法即可。

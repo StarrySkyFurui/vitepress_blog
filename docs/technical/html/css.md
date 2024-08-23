@@ -806,9 +806,7 @@ margin 重叠是指两个或多个垂直排列的块级元素在垂直方向上�
 ### 总结与归纳：
 1. display的优先级最低，但如果其值为none，则position和float将无效。
 2. position的优先级最高，特别是当值为absolute或fixed时，它会改变元素的定位方式，并使浮动失效。
-3. float的优先级介于display和position之间，它使元素浮动并可能影响display的设定值。
-
-## CSS 动画及适用场景
+3. float的优先级介于display和position之间，它使元素浮动并可能影响display的设定值。## CSS 动画及适用场景
 
 ### 1. transition
 * transition属性用于在元素从一种状态变为另一种状态时添加过渡效果。
@@ -864,3 +862,4 @@ Webpack 中操作 CSS 需要使用的两个关键的 loader：css-loader 和 sty
 * 文档化：记录 CSS 的架构和约定，方便团队成员理解和协作。
 * 版本控制：使用 Git 等版本控制系统来追踪 CSS 文件的变化历史。
 * 持续集成/持续部署 (CI/CD)：自动化测试和部署流程，确保 CSS 的质量。
+

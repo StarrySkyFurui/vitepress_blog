@@ -319,4 +319,84 @@ npx patch-package 包名
 * 错误码定义：定义清晰的错误码来标识各种登录状态异常，以便客户端能够准确地识别和处理这些情况。
 * 日志记录：在服务端记录登录相关的日志信息，以便在出现问题时进行故障排查和追踪。
 
+## 前端避免明文传输
+在前端开发中，避免明文传输敏感信息是非常重要的。以下是一些常见的方法来避免明文传输：
+
+### 1. 使用HTTPS
+HTTPS（HTTP Secure）是一种通过SSL/TLS协议加密的HTTP协议。它可以在客户端和服务器之间建立一个安全的连接，确保数据传输过程中的安全性。使用HTTPS可以防止中间人攻击和数据窃取。
+
+### 2. 使用加密算法
+在前端对敏感信息进行加密，然后再发送给服务器。常用的加密算法包括AES、RSA等，将敏感数据进行加密后再发送到服务器。这样即使数据在传输过程中被截获，也无法直接获取其内容。
+
+### 3. 使用Token
+Token是一种身份验证机制，可以在客户端和服务器之间传递身份信息。Token通常由服务器生成，并包含用户的身份信息。客户端在每次请求时，都需要将Token发送给服务器进行身份验证，以确保请求的合法性。Token通常使用HTTPS进行传输，以确保其安全性。
+
+### 4. 请求头加密处理
+在发送请求时，可以将请求头中的一些关键信息进行加密处理，然后再发送到服务器。服务器需要在接收到请求后对请求头进行解密，以获取其中的信息。
+
+### 5. 使用Base64编码
+Base64是一种将二进制数据转换为ASCII字符串的编码方式。它可以用于将敏感信息转换为可打印的字符，从而避免明文传输。但是，Base64编码并不是一种加密算法，它只是将数据转换为另一种格式，并不能提供真正的安全性。
+
+## 在划词选择的文本上添加右键菜单
+在前端开发中，如果你想在划词选择的文本上添加右键菜单，可以使用以下步骤：
+
+### 1. 监听右键事件
+首先，你需要监听文本元素的右键事件。这可以通过为文本元素添加 `contextmenu` 事件监听器来实现。例如，如果你有一个 `div` 元素包含选中的文本，你可以这样监听右键事件：
+```js
+document.querySelector('div').addEventListener('contextmenu', function(event) {
+  event.preventDefault(); // 阻止默认的右键菜单
+  // 在这里添加你的自定义菜单逻辑
+  // 在此处显示自定义右键菜单
+  showCustomMenu(event);
+});
+```
+
+### 2. 显示自定义菜单
+在 `contextmenu` 事件监听器中，可以使用 `showCustomMenu()` 方法来显示自定义菜单。例如：
+```js
+function showCustomMenu(event) {
+  const customMenu = document.createElement("div");
+  customMenu.style.position = "absolute";
+  customMenu.style.left = event.clientX + "px";
+  customMenu.style.top = event.clientY + "px";
+
+  // 添加菜单选项
+  const menuItem1 = document.createElement("div");
+  menuItem1.textContent = "复制";
+  menuItem1.addEventListener("click", function () {
+    // 处理复制操作
+    copySelectedText();
+  });
+  customMenu.appendChild(menuItem1);
+
+  // 可以添加更多的菜单选项
+
+  document.body.appendChild(customMenu);
+}
+```
+
+### 3. 处理菜单项的点击事件
+在自定义菜单中，你可以添加多个菜单项，并为每个菜单项添加点击事件监听器。例如，你可以添加一个“复制”菜单项，并在用户点击该菜单项时执行复制操作。例如：
+```js
+function copySelectedText() {
+  const selectedText = window.getSelection().toString();
+  // 将选中的文本复制到剪贴板
+  navigator.clipboard.writeText(selectedText);
+}
+```
+在上述代码中，我们使用 `window.getSelection().toString()` 方法获取选中的文本，并使用 `navigator.clipboard.writeText()` 方法将其复制到剪贴板。
+
+### 4. 隐藏右键菜单
+当用户点击自定义菜单项时隐藏自定义菜单。这可以通过在菜单项的点击事件监听器中移除自定义菜单元素来实现。例如：
+```js
+function hideCustomMenu() {
+  const customMenu = document.querySelector("div");
+  if (customMenu) {
+    document.body.removeChild(customMenu);
+  }
+}
+```
+在上述代码中，我们使用 `document.querySelector("div")` 方法获取自定义菜单元素，并使用 `document.body.removeChild()` 方法将其从文档中移除。
+
+## Eslint 代码检查的过程
 
