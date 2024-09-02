@@ -160,6 +160,7 @@ function getInterview() {
     { text: "Git 相关", link: "/interview/git" },
     { text: "部署相关", link: "/interview/deploy" },
     { text: "场景题", link: "/interview/scene" },
+    { text: "工程化", link: "/interview/engineered" },
     { text: "其他", link: "/interview/other" },
   ];
 }

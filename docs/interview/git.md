@@ -1,5 +1,3 @@
-## git 代码发生冲突
-
 ## git merge 和 rebase 的区别
 git merge 和 git rebase 都是 git 中用于合并分支的命令，但在合并方式、提交历史记录的处理以及冲突解决方面存在显著差异。以下是它们之间的主要区别：
 ### 合并方式
@@ -102,7 +100,55 @@ git clone repoA.bundle <仓库 B 目录>
 这两种方法都会保留所有分支、标签和提交历史。选择哪种方法取决于你的具体需求和迁移环境。
 
 ### 注意：
-
 * 使用 --mirror 或 --all 选项在 git clone 或 git bundle 中时，会将所有的分支和标签复制到目标仓库。
 * 在执行之前，请确保仓库 B 是空的或者是一个你可以覆盖的目标仓库，因为这些操作会覆盖目标仓库的内容。
 * 如果仓库 A 中包含子模块，你可能需要额外处理子模块的迁移。
+
+## Husky 和 lint-staged 的区别
+Husky 和 lint-staged 都是与 Git 钩子 (hooks) 配合使用的 Node.js 库，但它们的用途和工作方式有所不同：
+### Husky：
+* Husky 是一个 Git 钩子管理器，它允许你触发自定义脚本在 git 事件发生时运行，如 pre-commit, pre-push, post-merge 等。
+* 主要目的是自动化你的版本控制工作流程，例如在提交 (commit) 前运行代码检查、格式化代码或执行测试，以确保代码库的质量和一致性。
+### lint-staged：
+* lint-staged 是一个运行在 Husky 钩子之上的工具，它专门用于对暂存区 (staged) 文件的检查。
+* 当你运行 git commit 并且 Husky 触发 pre-commit 钩子时，lint-staged 会检查你即将提交的代码（即 git add 后的文件列表），并运行你配置好的检查脚本，如代码格式化程序、linter 或其他工具。
+* 目的是确保在提交之前，只有没有检查错误的代码会被提交。
+
+简而言之，Husky 是一个可以触发多种钩子事件的工具，而 lint-staged 是一种专门用于检查 Git 暂存区文件的工具。它们通常是配合使用的，因为 lint-staged 需要通过 Husky 来触发钩子。在你初始化项目并配置 CI/CD 流程时，通常会同时用到它们。
+
+### 搭配 eslint 在 前端项目中使用
+* 1. 安装 husky 和 lint-staged：
+```bash
+npm install husky lint-staged eslint --save-dev
+```
+* 2. 配置 husky：
+在 package.json 中，你可以使用 husky 字段来配置 git hooks。但是，从 Husky 5 开始，推荐使用 npx husky-init 命令来自动设置。运行：
+```bash
+npx husky-init && npm install
+```
+这将自动在 .husky 目录下创建 git hooks，并在 package.json 中添加一些配置。
+```json
+{
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
+```
+* 3. 配置 lint-staged
+在 package.json 中添加 lint-staged 配置。这通常位于 husky 配置的同一级别。
+```json
+{
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+            "eslint --fix",
+            "git add"
+        ]
+    },
+}
+```
+这个配置告诉 lint-staged 在 pre-commit hook 触发时，对暂存区中的 .js、.jsx、.ts、.tsx 文件运行 eslint --fix 命令，并自动将这些更改添加到暂存区。
+* 4. 测试配置
+在提交更改时，Husky 将触发 pre-commit hook，lint-staged 将运行 ESLint 对暂存区的文件进行检查和可能的修复，并将更改重新添加到暂存区。
+
