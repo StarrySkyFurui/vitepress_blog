@@ -86,7 +86,7 @@ git remote set-url --push origin <仓库 B URL>
 git push --mirror
 ```
 
-### 2. 使用 git bundle
+### 2. 使用 git bundlebase
 * 在仓库 A 中创建 bundle 文件：
 ```bash
 git bundle create repoA.bundle --all
@@ -151,4 +151,39 @@ npx husky-init && npm install
 这个配置告诉 lint-staged 在 pre-commit hook 触发时，对暂存区中的 .js、.jsx、.ts、.tsx 文件运行 eslint --fix 命令，并自动将这些更改添加到暂存区。
 * 4. 测试配置
 在提交更改时，Husky 将触发 pre-commit hook，lint-staged 将运行 ESLint 对暂存区的文件进行检查和可能的修复，并将更改重新添加到暂存区。
+
+## git 定位是哪个 commit 引入的错误
+当不确定哪个提交(commit)引入了错误时，Git 提供了一个非常强大的工具 git bisect 来帮助你通过二分法快速定位出问题的提交。这个命令通过逐步缩小导致问题的提交范围，最终帮助你找出导致错误的具体提交。使用方法如下：
+1. 开始二分查找： 在发现问题的分支上，首先使用 `git bisect start` 命令来启动二分查找过程。这会把你当前的 HEAD 指向一个“待测试”的状态。
+```bash
+git bisect start
+```
+
+2. 标记好的提交： 接下来，你需要告诉 Git 一个已知是好的提交（即在这个提交中，问题还未出现）。使用 `git bisect good <commit-hash>` 命令来标记这个提交。
+```bash
+git bisect good <good-commit-hash>
+```
+
+3. 标记坏的提交： 然后，你需要标记一个已知是坏的提交（即在这个提交中，问题已经出现）。这通常是你当前的 HEAD 指向的提交。你可以直接使用 `git bisect bad`（不需要指定提交哈希，因为 HEAD 默认是当前分支的最新提交）。
+```bash
+git bisect bad
+```
+4. Git 切换提交： Git 会自动选择一个位于已知好提交和已知坏提交之间的提交，并切换到这个提交。你需要在这个提交上测试问题是否仍然存在。
+
+5. 继续标记： 如果在这个提交上问题存在，使用 `git bisect bad`；如果问题不存在，使用 `git bisect good`。Git 会继续自动选择新的提交，直到找到引入问题的具体提交。
+
+6. 结束二分查找： 当 Git 找到了引入问题的提交时，它会告诉你这个提交的哈希。你可以使用 `git bisect reset` 来回到你开始二分查找之前的状态。
+```bash
+git bisect reset
+```
+
+7. 结束 bisect 会话
+一旦找到了问题提交，别忘了结束 bisect 会话，释放由 git bisect 占用的资源：
+```bash
+git bisect end
+```
+### 注意事项
+
+* git bisect 只会检查你告诉它的提交范围。如果你不确定范围，可以从项目的第一个提交开始，使用 git bisect start --first-parent，并标记项目的第一个提交为好的（假设那时还没有问题）。
+* git bisect 会修改你的工作目录和 HEAD 指针，但它不会改变任何分支指针或提交历史。因此，使用完毕后，你可以通过 git bisect reset 恢复到原始状态。
 

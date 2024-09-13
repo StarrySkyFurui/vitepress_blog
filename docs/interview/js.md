@@ -215,4 +215,43 @@ JavaScript 数组常用的方法包括：
 12. `sort()`：对数组的元素进行排序，并返回数组。默认排序顺序是在将元素转换为字符串，然后比较它们的UTF-16代码单元值序列时构建的。
 13. `reverse()`：将数组中元素的位置颠倒，并返回该数组。该方法会改变原数组。
 
-## 
+## js 如何判空？ 「空」包含了：空数组、空对象、空字符串、0、undefined、null、空 map、空 set , 都属于为空的数据
+
+```js
+function isEmpty(value) {
+  // 空字符串
+  if (typeof value === "string" && value.trim() === "") {
+    return true;
+  }
+  // 空数组
+  if (Array.isArray(value) && value.length === 0) {
+    return true;
+  }
+  // 空对象（不包括 `null`）
+  if (typeof value === "object" && value !== null && Object.keys(value).length === 0) {
+    return true;
+  }
+  // 数字 0
+  if (typeof value === "number" && value === 0) {
+    return true;
+  }
+  // `undefined`
+  if (typeof value === "undefined") {
+    return true;
+  }
+  // `null`
+  if (value === null) {
+    return true;
+  }
+  // 空 `Map`
+  if (value instanceof Map && value.size === 0) {
+    return true;
+  }
+  // 空 `Set`
+  if (value instanceof Set && value.size === 0) {
+    return true;
+  }
+  return false;
+}
+```
+

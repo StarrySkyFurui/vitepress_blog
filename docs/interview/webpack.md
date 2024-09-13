@@ -68,3 +68,112 @@ output: {
 }
 ```
 这会将输出的文件名设置为入口名称加上基于每个 chunk 内容的 hash。在使用 webpack-dev-server 或者 webpack --watch 时，不会生成实际的文件，所以这些 hash 值是在内存中计算并关联的。
+
+## Tree Shaking
+Tree shaking 是指通过静态代码分析，识别和移除未被使用的代码（被称为"dead code"）的一种 JavaScript 代码的技术。它依赖于 ES6 的模块系统，即 import 和 export。
+
+### 原理：
+Tree Shaking 的基本原理是：通过静态分析，找出代码中未使用的部分并删除它们。它只关注代码的执行路径，而不是变量声明和函数调用。因此，它不会删除未使用的全局变量或函数，因为这些变量和函数可能在其他模块中被引用。
+
+### webpack 如何做 Tree Shaking
+Webpack通过 Tree Shaking技术实现了JavaScript代码的优化和精简。Tree shaking是指通过静态代码分析，识别和移除未被使用的代码（被称为"dead code"），从而减小最终打包后的文件大小。
+
+* 代码标记：在代码中使用ES6模块化语法（如import和export）来明确指定模块的依赖关系。
+
+* 代码解析：Webpack会解析整个代码，并构建一个依赖图谱，记录模块之间的依赖关系。
+
+* 标记未使用代码：在构建依赖图谱的过程中，Webpack会标记那些未被使用的模块，以及这些模块中的未被使用的函数、类、变量等。
+
+* 无副作用标记：Webpack还会检查模块的副作用（例如对全局变量的修改、网络请求等），并将没有副作用的代码视为可安全移除的。
+
+* 未使用代码移除：在代码打包阶段，Webpack会根据标记的未使用代码信息，从最终的打包结果中移除这些未被使用的代码。
+
+通过 Tree Shaking，Webpack可以减小打包后的文件大小，提高应用的加载速度和性能。但要注意的是， Tree Shaking只对ES6模块化的代码有效，对于CommonJS模块化的代码则无法进行优化。另外，有些代码可能由于复杂的依赖关系无法被正确地标记为未使用，这就需要开发者自己进行配置或使用其他工具进行优化。
+
+### webpack 处理 Tree Shaking 配置
+
+1. 在webpack.config.js文件中，将mode设置为production，这会启用Webpack的优化功能，包括 Tree Shaking。
+```js
+module.exports = {
+  mode: 'production',
+  // 其他配置...
+};
+```
+2. 确保你的代码使用了ES6模块化语法（使用import和export），以便Webpack能够正确地进行静态代码分析。
+
+3. 确保你的代码库中没有副作用。Webpack会假设没有副作用的代码可以安全地移除。如果你的代码确实有副作用，可以在webpack配置文件中的optimization选项中设置sideEffects为false 来告诉Webpack可以安全地进行 Tree Shaking。
+```js
+module.exports = {
+  mode: 'production',
+  optimization: {
+    sideEffects: false,
+  },
+  // 其他配置...
+};
+```
+
+### 副作用
+副作用是指代码执行过程中对全局变量或网络请求等产生的影响。在ES6模块化中，如果一个模块有副作用，则该模块不会被Tree Shaking优化掉。因此，在编写模块化的代码时，应该尽量避免产生副作用，以减少不必要的代码被打包到最终的bundle文件中。
+
+以下是一些常见的副作用示例：
+
+* 修改全局变量或外部状态：函数修改了全局变量或外部状态，例如修改了一个共享的数组、对象或文件等。
+
+* 发送网络请求：函数通过网络发送了一个HTTP请求，这会触发网络交互并产生副作用。
+
+* 修改函数参数：函数修改了传入的参数值，这会影响函数外部的变量。
+
+* 控制台打印：函数在执行过程中使用了console.log()或其他打印语句，这会在控制台中产生可观察到的输出。
+
+* 异步操作：函数中包含了异步操作，例如定时器、Promise或通过回调函数实现的异步操作。
+
+### 申明代码是有副作用
+1. 在配置文件中指定副作用
+
+在Webpack配置文件中，可以使用sideEffects选项来指定哪些文件或模块具有副作用，不允许清理。sideEffects接受一个正则表达式、一个文件名或一个数组。例如：
+```js
+module.exports = {
+  //...
+  optimization: {
+    usedExports: true
+  },
+  mode: 'production',
+  sideEffects: ["./src/some-module.js"]
+};
+```
+在上面的例子中，sideEffects数组中的 `./src/some-module.js` 文件将会被标记为具有副作用，不会被清理。
+
+> 为了使sideEffects选项生效，你需要在配置文件中启用optimization.usedExports选项，并将mode设置为production。
+
+2. package.json 中配置 sideEffects 属性
+
+可以在package.json文件中使用sideEffects字段来申明哪些文件或模块具有副作用，不允许被清理。
+
+如果将sideEffects设置为布尔值false，表示所有导入的文件都被认为没有副作用，可以被tree shaking清理。这在大多数情况下是默认的行为。
+```js
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "sideEffects": false
+}
+```
+如果设置为布尔值true，表示所有导入的文件都被认为有副作用，不会被tree shaking清理。
+```js
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "sideEffects": true
+}
+```
+如果将sideEffects设置为一个数组，数组中的每个元素可以是一个字符串或一个正则表达式，表示具有副作用的文件或模块。
+```js
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "sideEffects": [
+    "./src/some-module.js",
+    "/\.css$/"
+  ]
+}
+```
+在上述示例中，./src/some-module.js文件和所有以.css结尾的文件都被认为有副作用，不会被tree shaking清理。

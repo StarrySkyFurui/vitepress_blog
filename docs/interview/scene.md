@@ -320,4 +320,109 @@ function hideCustomMenu() {
 8. 线上部署及反馈：修复完成后，进行线上部署，并收集用户反馈，验证问题是否得到解决。
 9. 问题总结：问题解决后，需要对问题的原因进行分析，总结经验教训，避免类似问题再次发生。
 
+## 前端应用国际化
+前端应用实现国际化（i18n）主要是为了支持多语言环境，提高用户体验。这里有几种常用的方案：
 
+### 1. 使用国际化库
+这是最常用的方法之一，可以通过引用第三方库来管理不同语言环境的资源文件。比如：
+* React：可以使用react-intl或react-i18next。
+* Vue：可以使用vue-i18n。
+* Angular：可以使用@ngx-translate/core。
+这些库允许你将文本资源分开管理，并根据用户的语言偏好动态加载相应的资源。
+
+### 2. 浏览器 API
+利用浏览器内置的国际化 API，如Intl对象，来格式化日期、时间、货币等。
+
+### 3. 自建国际化框架：根据项目的具体需求，自定义国际化实现。这通常包括：
+
+* 创建资源文件：为每种语言创建一个资源文件，用于存储翻译字符串。
+* 语言选择功能：允许用户选择偏好的语言。
+* 加载对应资源文件：根据用户的语言偏好，动态加载对应的资源文件并在界面上显示相应的文本。
+
+### 4. 服务端支持：有些情况下，前端应用可能需要服务端的支持来实现国际化，如动态提供不同语言的数据内容。
+
+### 5. URL 路由
+在 URL 中包含语言参数，来确定显示哪种语言的内容。例如，`/en/about` 显示英文版“关于”页面，而 `/zh/about `显示中文版。
+
+### 6. 浏览器语言检测
+通过检测浏览器的 `navigator.language` 属性来自动选择最合适的语言版本。
+
+在实际应用中，根据项目的大小、复杂度以及特定需求，可以选择一种或多种方案结合使用，以达到最佳的国际化效果。
+
+## 请求失败会弹出一个 toast , 如何保证批量请求失败， 只弹出一个 toast
+要确保批量请求失败时只弹出一个 toast，可以通过以下几种方式实现：
+
+### 设置全局标志位
+定义一个全局变量（如 isToastShown）来表示是否已经弹出过 toast。在请求失败的处理逻辑中，首先检查该标志位。如果尚未弹出 toast，则进行弹出操作，并设置标志位为 true；如果标志位已经为 true，则直接忽略后续的弹出操作。
+### 使用防抖或节流函数
+防抖（debounce）或节流（throttle）函数可以限制某个函数在一定时间内的执行次数。将弹出 toast 的操作封装在防抖或节流函数中，确保在短时间内的多个请求失败时，不会频繁弹出 toast。
+### 集中处理错误
+将所有请求的错误集中处理，而不是在每个请求的 catch 块中直接弹出 toast。例如，把所有请求的 Promise 添加到一个数组中，然后使用 Promise.all() 或其他类似方法来统一处理这些 Promise 的结果。如果所有请求都失败了，再弹出一个 toast。
+
+以下是使用全局标志位和集中处理错误的示例代码：
+```js
+let isToastShown = false; // 全局标志位
+
+function makeRequests() {
+  const requests = [fetchPost(), fetchComments()]; // 多个请求的 Promise
+
+  Promise.all(requests)
+  .then(() => {
+      // 所有请求成功的处理逻辑
+    })
+  .catch(errors => {
+      if (!isToastShown) { // 检查标志位
+        notify(errors[0]); // 弹出 toast
+        isToastShown = true; // 设置标志位为 true
+      }
+    });
+}
+
+function fetchJSON(url, input) {
+  return fetch(url, input)
+  .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      const err = new HttpError(res);
+      if (!isToastShown) { // 检查标志位
+        notify(err); // 弹出 toast
+        is toastShown = true; // 设置标志位为 true
+      }
+      throw err;
+    });
+}
+```
+在上述代码中，定义了一个全局变量 isToastShown 来标记是否已经弹出过 toast。在 fetchJSON 函数中，当请求失败时，如果 isToastShown 为 false，则弹出 toast 并设置其为 true。在 makeRequests 函数中，使用 Promise.all 来处理多个请求。如果所有请求都失败（即 errors 数组有内容），并且 isToastShown 为 false，则弹出 toast 并设置标志位。
+
+这样，无论有多少个请求失败，都只会弹出一个 toast。当有新的批量请求时，记得在请求开始前将 isToastShown 重置为 false。
+
+## 判断页签是否为活跃状态
+判断页面页签（Tab）是否为活跃状态，可以通过监听 visibilitychange 事件来实现。这个事件是由 document 对象触发的，可以用来判断页面是否对用户可见。当用户切换到其他标签页、最小化浏览器窗口、或是锁屏时，页面就会变为不可见状态。如果页面对用户可见，那么页面就处于活跃状态。
+
+使用 document.visibilityState 属性可以检查页面的当前可视状态，这个属性有以下可能的值：
+
+* "visible"：页面至少部分可见。在桌面端，这通常意味着页面是当前激活的标签页。
+* "hidden"：页面对用户不可见。
+* "prerender" 和 "unloaded"：这两个值用于特殊情况，通常较少用到。
+
+### 示例代码
+下面的代码演示了如何使用 visibilitychange 事件和 document.visibilityState 来判断页面是否为活跃状态：
+```js
+document.addEventListener("visibilitychange", function () {
+  if (document.visibilityState === "visible") {
+    console.log("页面现在是活跃状态。");
+  } else {
+    console.log("页面现在不是活跃状态。");
+  }
+});
+```
+每当用户切换到该页签或从该页签切换走时，会触发 visibilitychange 事件。通过检查 document.visibilityState 的值，你可以判断页面是变为活跃状态还是变为非活跃状态。
+
+这个功能可以用于多种场合，比如：
+
+* 停止或开始运行页面上的动画。
+* 控制媒体播放（比如自动暂停视频播放）。
+* 调整页面或应用的资源消耗（对于非活跃页签减少资源使用）。
+* 发送用户行为统计数据，以记录用户实际查看页面的时间。
+这种方法的优点是兼容性好，现代浏览器都支持 visibilitychange 事件，可以用于构建响应用户行为的 web 应用。
